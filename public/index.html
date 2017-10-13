@@ -4,124 +4,36 @@
 <head>
   <meta charset="utf-8">
   <title>Write Databese</title>
+  <link rel="stylesheet" type="text/css" href="memorability.css">
 </head>
 
 <body>
-
   <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+  <script src=write_firebase.js></script>
+  <script src=html1.js></script>
 
-  <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyAmw_qUkLApLVvcpJZ8FthhAiWM0-7Z5AU",
-      authDomain: "memorability-a0c21.firebaseapp.com",
-      databaseURL: "https://memorability-a0c21.firebaseio.com",
-      projectId: "memorability-a0c21",
-      storageBucket: "memorability-a0c21.appspot.com",
-      messagingSenderId: "355761335744"
-    };
-    firebase.initializeApp(config);
-  </script>
-
-  <div>
-    <button class="authBtn" disabled></button>
-    <span class="userId"></span>
-  </div>
-  <script>
-    var AuthUI = {
-      init: function() {
-        AuthUI.provider = new firebase.auth.GoogleAuthProvider();
-        AuthUI.elAuthBtn = document.querySelector('.authBtn');
-        AuthUI.elUserId = document.querySelector('.userId');
-        AuthUI.draw();
-        AuthUI.elAuthBtn.addEventListener('click', function() {
-          AuthUI.doAuth();
-        });
-        firebase.auth().getRedirectResult().then(function(result) {
-          AuthUI.elAuthBtn.disabled = false;
-          if (result.credential) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-          }
-          if (result.user) {
-            AuthUI.data.authed = true;
-            AuthUI.data.userId = result.user.email;
-            AuthUI.draw();
-          }
-        }).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          // ...
-        });
-      },
-      data: {
-        authed: false,
-        userId: '',
-        info: ''
-      },
-      draw: function() {
-        AuthUI.elAuthBtn.textContent = AuthUI.data.authed ? 'LOGOUT' : 'LOGIN';
-        AuthUI.elUserId.textContent = AuthUI.data.userId;
-      },
-      doAuth: function() {
-        if (AuthUI.data.authed) {
-          firebase.auth().signOut().then(function() {
-            AuthUI.data.authed = false;
-            AuthUI.data.userId = '';
-            AuthUI.draw();
-          }, function(error) {
-            // An error happened.
-          });
-        } else {
-          firebase.auth().signInWithRedirect(AuthUI.provider);
-        }
-      }
-    };
-    AuthUI.init();
-  </script>
-
-  <div>
-    <p>
-      <tr>
-        <td>メッセージ：</td>
-        <td><input type="text" name="message" size="30" maxlength="20"></td>
-        <td><input type="button" value="送信" onclick='writeNewPost("uid", "username", "picture", "title", "body")'></td>
-
-      </tr>
-    </p>
+  <div class="content" id="auth">
+      <input type="button" value="表示" id ="displayAuth">
   </div>
 
-  <script>
-    var writeNewPost = function(uid, username, picture, title, body) {
-      // A post entry.
-      var postData = {
-        author: username,
-        uid: uid,
-        body: body,
-        title: title,
-        starCount: 0,
-        authorPic: picture
-      };
-      console.log("processing...")
-      // Get a key for a new Post.
-      var newPostKey = firebase.database().ref().child('posts').push().key;
+  <div class="content" id="userInfo">
+    <dl>
+      <dt>username</dt>
+      <dd id="showNameHtml"></dd>
+      <dt>email address</dt>
+      <dd id="showAddressHtml"></dd>
+      <dt>userID</dt>
+      <dd id="showIdHtml"></dd>
+    </dl> <br>
+    <p class="text">"送信"を押すとこれらの情報を送信し実験に進みます。</p>
+    <input type="button" value="送信" id="btnChangeData">
+  </div>
 
-      // Write the new post's data simultaneously in the posts list and the user's post list.
-      var updates = {};
-      updates['/posts/' + newPostKey] = postData;
-      updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-
-      return firebase.database().ref().update(updates);
-      console.log("update is impremented.")
-    }
-    //writeNewPost("01", "testuser", "pic", "Test", "This is a test.")
-  </script>
+  <div class="content" id="howTo">
+    <p class="text">How to do this experiment</p>
+        
 
 
+  <div class="content" id="imgSample" style="width:200px;height:200px;"></div>
 
 </body>
