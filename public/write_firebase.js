@@ -97,7 +97,9 @@ var clickWrite = function() {
   divInfo.style.display="none"
   document.getElementById("auth").style.display="none"
   document.getElementById("howTo").style.display="block"
+  document.getElementById("imgSample").style.display="block"
   writeNewPost(userData.displayName, userData.uid, userData.email, userData.emailVerified)
+  downloadImg();
 }
 //htmlロードが完了したらボタンにイベントを設定
 window.addEventListener("load", function() {
@@ -108,16 +110,31 @@ window.addEventListener("load", function() {
 
 //display image file in firebase storage
 //get reference to firebase storage
-var storageRef = firebase.storage().ref("image")
+var storageRef = firebase.storage().ref("sampleImage")
 //get reference of a image in image folder
-var imgSample = storageRef.child('economist_daily_chart_18.png')
+let stringPng = ".png"
+let imgNumber = 0
 //after html are loaded, displaying image
-window.addEventListener("load", function(){
-  document.getElementById("btnDisplay").addEventListener("click", downloadImg, false)
-}, false)
-var downloadImg = function(e){
+//window.addEventListener("load", function(){
+//  document.getElementById("btnDisplay").addEventListener("click", downloadImg, false)
+//}, false)
+var downloadImg = function(){
+  console.log(imgNumber.toString)
+  let imgName = ''+imgNumber + stringPng
+  console.log(imgName)
+  imgNumber += 1
+  var imgSample = storageRef.child(imgName)
+  console.log("download start.")
   imgSample.getDownloadURL().then(function(url){
-    document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
+    //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
+    let imgPlace = document.getElementById("imgSample")
+    let img = new Image(1000,1000)
+    img.addEventListener("load", function(){
+      //img.size = ImageGetNaturalSize(img)
+      imgPlace.appendChild(img)
+    }, false)
+    img.src = url
+    console.log("download finished.")
   }).catch(function(error){
     //Handle any Errors
     console.log(error)
