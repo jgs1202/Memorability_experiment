@@ -143,17 +143,17 @@ var downloadImg = function(images){
     })
   }
 }
-
-let imagePlace = document.getElementById("imgSample")
-document.getElementById("imgSample").style.display="block"
-images.number = 0
+window.addEventListener("load",function(){
+  images.place = document.getElementById("placeForImage")
+console.log(images.place)
+images.number = 0}, false)
 let startIntervalDisplay = function(){
-  console.log(imagePlace)
   images.place.style.display = "block"
-  setInterval(diaplayImages, 1000)
+  setInterval(displayImages, 1000)
 }
 let displayImages = function(){
-  images.place.appendChild(image[img.number])
+  while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+  images.place.appendChild(images[images.number])
   images.number += 1
-  if (img.number > 5){img.number = 0}
+  if (images.number > 5){images.number = 0}
 }
