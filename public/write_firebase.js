@@ -110,6 +110,7 @@ window.addEventListener("load", function() {
 //display image file in firebase storage
 //get reference to firebase storage
 var storageRef = firebase.storage().ref("sampleImage")
+let imgBlack = storageRef.child("black.png")
 //get reference of a image in image folder
 //after html are loaded, displaying image
 //window.addEventListener("load", function(){
@@ -117,7 +118,13 @@ var storageRef = firebase.storage().ref("sampleImage")
 //}, false)
 let images={}
 var downloadImg = function(images){
-  console.log(images[5])
+  imgBlack.getDownloadURL().then(function(url){
+    images.black = new Image(1000,1000)
+    images.black.addEventListener("load",downloadImg2,false)
+    images.black.src = url
+  })
+}
+let downloadImg2= function(){
   for(let n=0; n<6; n++){
     let stringPng = ".png"
     let imgName = ''+ n + stringPng
@@ -145,15 +152,24 @@ var downloadImg = function(images){
 }
 window.addEventListener("load",function(){
   images.place = document.getElementById("placeForImage")
-console.log(images.place)
-images.number = 0}, false)
+  console.log(images.place)
+  images.number = 0
+}, false)
 let startIntervalDisplay = function(){
   images.place.style.display = "block"
-  setInterval(displayImages, 1000)
+  setInterval(displayImages, 500)
+  images.time=0
 }
 let displayImages = function(){
-  while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
-  images.place.appendChild(images[images.number])
-  images.number += 1
-  if (images.number > 5){images.number = 0}
+  if((images.time % 3) === 0){
+    while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+    images.place.appendChild(images[images.number])
+    images.number += 1
+    if (images.number > 5){images.number = 0}
+  }
+  else if ((images.time % 3) === 2) {
+    while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+    images.place.appendChild(images.black)
+  }
+  images.time += 1
 }
