@@ -97,6 +97,7 @@ var clickWrite = function() {
   divInfo.style.display="none"
   document.getElementById("auth").style.display="none"
   document.getElementById("howTo").style.display="block"
+  document.getElementById("loadImageTime").style.display="block"
   writeNewPost(userData.displayName, userData.uid, userData.email, userData.emailVerified)
   downloadImg(images);
 }
@@ -119,7 +120,7 @@ let imgBlack = storageRef.child("black.png")
 let images={}
 var downloadImg = function(images){
   imgBlack.getDownloadURL().then(function(url){
-    images.black = new Image(1000,1000)
+    images.black = new Image(500,400)
     images.black.addEventListener("load",downloadImg2,false)
     images.black.src = url
   })
@@ -133,12 +134,14 @@ let downloadImg2= function(){
     console.log("download start"+imgName)
     imgSample.getDownloadURL().then(function(url){
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images[n] = new Image(1000,1000)
+      images[n] = new Image(500,400)
       images[n].addEventListener("load", function(){
         //img.size = ImageGetNaturalSize(img)
         if (typeof images[5] !== "undefined"){
           let imageButton = document.getElementById("imageHowTo")
           imageButton.style.display="block"
+
+          document.getElementById("loadImageTime").style.display="none"
           imageButton.addEventListener("click", startIntervalDisplay, false)
         }
             }, false)
@@ -157,7 +160,11 @@ window.addEventListener("load",function(){
 }, false)
 let startIntervalDisplay = function(){
   images.place.style.display = "block"
+  document.getElementById("imageHowTo").style.display="none"
   setInterval(displayImages, 500)
+  document.getElementById("explain").style.display="block"
+  document.getElementById("toTutorialButton").addEventListener("click", startTutorial, false)
+  console.log("event set")
   images.time=0
 }
 let displayImages = function(){
@@ -172,4 +179,13 @@ let displayImages = function(){
     images.place.appendChild(images.black)
   }
   images.time += 1
+}
+
+let startTutorial = function(e){
+  console.log("This is tutorial.")
+  document.getElementById("howTo").style.display = "none"
+  document.getElementById("placeForImage").style.display = "none"
+  document.getElementById("explain").style.display = "none"
+  document.getElementById("tutorialFirst").style.display = "block"
+  console.log(document.getElementById("tutorialFirst"))
 }
