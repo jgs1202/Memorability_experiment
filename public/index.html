@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>Write Databese</title>
   <link rel="stylesheet" type="text/css" href="memorability.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -50,11 +51,16 @@
 
   <div class="content" id="tutorialFirst">
     <p >Tutorial</p>
-    <input type="button" id="startTutorialButton"  value="Start tutorial">
-    <p class="text">
+    <input type="button" id="startTutorialButton"  value="Go tutorial">
+    <p class="text" id="tutorialExplain">
       Push the bottun above and start tutorial.<br>
       Once tutorial starts, the data will be recorded.
     </p>
+  </div>
+  <div class="content text" id="loadingTutorial">loading...</div>
+  <div class="content" id="tutorialSecond">
+    <div id="tutorialImage"></div>
+    <input type="button" id="giveTutorialImage" value="Start Tutorial">
   </div>
 
 </body>
