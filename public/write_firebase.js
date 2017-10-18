@@ -142,7 +142,7 @@ let downloadImg2 = function() {
           imageButton.style.display = "block"
 
           document.getElementById("loadImageTime").style.display = "none"
-          imageButton.addEventListener("click",startIntervalDisplay, false)
+          imageButton.addEventListener("click", startIntervalDisplay, false)
         }
       }, false)
       images[n].src = url
@@ -161,9 +161,12 @@ window.addEventListener("load", function() {
 let startIntervalDisplay = function() {
   images.place.style.display = "block"
   document.getElementById("imageHowTo").style.display = "none"
-  setInterval(displayImages, 500)
+  var timerEx = setInterval(displayImages, 500)
   document.getElementById("explain").style.display = "block"
-  document.getElementById("toTutorialButton").addEventListener("click", startTutorial, false)
+  document.getElementById("toTutorialButton").addEventListener("click", function() {
+    startTutorial()
+    clearInterval(timerEx)
+  }, false)
   console.log("event set")
   images.time = 0
 }
@@ -182,7 +185,7 @@ let displayImages = function() {
   images.time += 1
 }
 
-let startTutorial = function(e) {
+let startTutorial = function() {
   console.log("This is tutorial.")
   document.getElementById("howTo").style.display = "none"
   document.getElementById("placeForImage").style.display = "none"
@@ -227,7 +230,7 @@ let downloadImageTutorial = function() {
   let tutorialRef = firebase.storage().ref("tutorial")
   images.tutorial = {}
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < 30; n++) {
+  for (let n = 0; n < 32; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -254,32 +257,50 @@ let downloadImageTutorial = function() {
   }
 }
 let startIntervalTutorial = function() {
-  document.getElementById("giveTutorialImage").style.display = "none"
-  var timerTutorial = setInterval(displayTutorial, 500)
-  //document.getElementById("explain").style.display = "block"
-  images.time = 0
-}
-let displayTutorial = function() {
-  images.tutorial.place = document.getElementById("tutorial")
-  if(images.time === 0){
-    images.tutorial.place.appendChild(images.tutorial[images.number])
-    images.number += 1
-  }
-  if ((images.time % 3) === 0) {
-    while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
-    images.tutorial.place.appendChild(images.tutorial[images.number])
-    images.number += 1
-    if (images.number > 30) {
-      images.number = 0
-      clearInterval(timerTutorial)
-    }
-  } else if ((images.time % 3) === 2) {
-    while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
-    images.tutorial.place.appendChild(images.black)
-  }
-  images.time += 1
-}
 
+  let showTutorialResult = function(){
+    document.getElementById("tutorialImage").style.display = "none"
+    document.getElementById("showResultTutorial").style.display = "block"
+  }
+
+  let keyDownFunc = function(e){
+    if (e.keyCode ===32){
+      images.tutorial.result[images.number]=1
+    }
+
+  }
+
+  let displayTutorial = function() {
+    images.tutorial.result={}
+    document.addEventLister("keydown", kwyDownFunc, false)
+    images.tutorial.place = document.getElementById("tutorialImage")
+    if (images.time === 0) {
+      console.log(images.number)
+      images.tutorial.place.appendChild(images.tutorial[images.number])
+      images.number += 1
+    } else if ((images.time % 3) === 0) {
+      console.log(images.number)
+      while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+      images.tutorial.place.appendChild(images.tutorial[images.number])
+      images.number += 1
+      if (images.number > 31) {
+        clearInterval(timerTutorial)
+        console.log("timer clear")
+      }
+    } else if ((images.time % 3) === 2) {
+      while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+      images.tutorial.place.appendChild(images.black)
+      showTutorialResult()
+    }
+    images.time += 1
+  }
+
+  document.getElementById("giveTutorialImage").style.display = "none"
+  images.time = 0
+  images.number = 0
+  var timerTutorial = setInterval(displayTutorial, 50)//00)
+  //document.getElementById("explain").style.display = "block"
+}
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
 // var imgHeight = $('img#sample').height();　 //img#sampleのheightを調べてimgHeightに代入
 //
