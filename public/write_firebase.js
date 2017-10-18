@@ -241,7 +241,7 @@ let downloadImageTutorial = function() {
       images.tutorial[n] = new Image(500, 400)
       images.tutorial[n].addEventListener("load", function() {
         //img.size = ImageGetNaturalSize(img)
-        if (typeof images.tutorial[29] !== "undefined") {
+        if (typeof images.tutorial[31] !== "undefined") {
           document.getElementById("loadingTutorial").style.display = "none"
           document.getElementById("tutorialSecond").style.display = "block"
           //document.getElementById("loadImageTime").style.display="none"
@@ -257,22 +257,38 @@ let downloadImageTutorial = function() {
   }
 }
 let startIntervalTutorial = function() {
-
-  let showTutorialResult = function(){
-    document.getElementById("tutorialImage").style.display = "none"
-    document.getElementById("showResultTutorial").style.display = "block"
+  images.tutorial.result = {}
+  for (let N = 0; N < 31; N++) {
+    images.tutorial.result[N] = 0
   }
 
-  let keyDownFunc = function(e){
-    if (e.keyCode ===32){
-      images.tutorial.result[images.number]=1
+  let showTutorialResult = function() {
+    document.getElementById("tutorialImage").style.display = "none"
+    document.getElementById("showResultTutorial").style.display = "block"
+    document.getElementById("ButtonTutorialResult").addEventListener("click", function() {
+      for (let N = 0; N < 31; N++) {
+        console.log(images.tutorial.result[N])
+      }
+      //実際はここでTutorialの結果により本番に進めるか判定
+      document.getElementById("ButtonTutorialResult").style.display = "none"
+      document.getElementById("goToRealPart").style.display = "block"
+      document.getElementById("goToRealPart").addEventListener("click", function(){
+        document.getElementById("goToRealPart").style.display="none"
+        document.getElementById("tutorialFirst").style.display="none"
+      }, false)
+    }, false)
+  }
+
+  let keyDownFunc = function(e) {
+    if (e.keyCode === 32) {
+      images.tutorial.result[(images.number - 1)] = 1
+      console.log("number " + (images.number - 1) + " was memorized.")
     }
 
   }
 
   let displayTutorial = function() {
-    images.tutorial.result={}
-    document.addEventLister("keydown", kwyDownFunc, false)
+    document.addEventListener("keydown", keyDownFunc, false)
     images.tutorial.place = document.getElementById("tutorialImage")
     if (images.time === 0) {
       console.log(images.number)
@@ -286,11 +302,11 @@ let startIntervalTutorial = function() {
       if (images.number > 31) {
         clearInterval(timerTutorial)
         console.log("timer clear")
+        showTutorialResult()
       }
     } else if ((images.time % 3) === 2) {
       while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
       images.tutorial.place.appendChild(images.black)
-      showTutorialResult()
     }
     images.time += 1
   }
@@ -298,7 +314,7 @@ let startIntervalTutorial = function() {
   document.getElementById("giveTutorialImage").style.display = "none"
   images.time = 0
   images.number = 0
-  var timerTutorial = setInterval(displayTutorial, 50)//00)
+  var timerTutorial = setInterval(displayTutorial, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
