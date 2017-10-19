@@ -188,4 +188,64 @@ let startTutorial = function(e){
   document.getElementById("explain").style.display = "none"
   document.getElementById("tutorialFirst").style.display = "block"
   console.log(document.getElementById("tutorialFirst"))
+  document.getElementById("startTutorialButton").addEventListener("click", TutorialEx, false)
+}
+
+let TutorialEx = function(){
+  document.getElementById("startTutorialButton").style.display="none"
+  document.getElementById("tutorialExplain").style.display="none"
+  document.getElementById("tutorialImage").style.display="block"
+  images.one = new Image(500,400)
+  images.two = new Image(500,400)
+  images.three = new Image(500,400)
+  images.one.srcurl = storageRef.child("one.png")
+  images.two.srcurl = storageRef.child("two.png")
+  images.three.srcurl = storageRef.child("three.png")
+
+let downloadOne = function(images){
+  images.one.srcurl.getDownloadURL().then(function(url){
+    images.one.addEventListener("load",downloadTwo,false)
+    images.one.src=url
+  })
+}
+let downloadTwo = function(images){
+  images.two.srcurl.getDownloadURL().then(function(url){
+    images.two.addEventListener("load",downloadTree,false)
+    images.two.src = url
+  })
+}
+let downloadThree = function(images){
+  images.three.srcurl.getDownloadURL().then(function(url){
+    images.three.addEventListener("load",downloadImageTutorial,false)
+    images.three.src = url
+    let tutorialRef = firebase.storage.ref("tutorial")
+  })
+}
+let downloadImageTutorial = function(){
+  for(let n=0; n<30; n++){
+    let stringPng = ".png"
+    let imgName = ''+ n + stringPng
+    console.log(imgName)
+    var imgTutorial = tutorialRef.child(imgName)
+    console.log("download start"+imgName)
+    imgTutorial.getDownloadURL().then(function(url){
+      //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
+      images.tutorial[n] = new Image(500,400)
+      images.tutorial[n].addEventListener("load", function(){
+        //img.size = ImageGetNaturalSize(img)
+        if (typeof images.tutorial[29] !== "undefined"){
+          let imageTutorialButton = document.getElementById("giveTutorialImage")
+          imageButton.style.display="block"
+          //document.getElementById("loadImageTime").style.display="none"
+          imageTutorialButton.addEventListener("click", startIntervalDisplay, false)
+          console.log("download finished.")
+        }
+            }, false)
+      images.tutorial[n].src = url
+    }).catch(function(error){
+      //Handle any Errors
+      console.log(error)
+    })
+  }
+}
 }
