@@ -367,13 +367,9 @@ let startIntervalTutorial = function() {
         if ((images.number) > 30) {
           clearInterval(timerTutorial)
           console.log("timer clear")
-<<<<<<< HEAD
-          document.removeEventListener("keydown", event)
-          concole.log("remove keydown")
-=======
           while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
           document.removeEventListener("keydown", keyDownFunc)
->>>>>>> d97dd831bc57bf698d7ba96fdd3dfbe6e2aedfc9
+
           showTutorialResult()
         }
       } else if ((images.time % 3) === 2) {
@@ -450,12 +446,12 @@ let downloadImageReal = function() {
   let realRef = firebase.storage().ref("tutorial")
   images.real = {}
   //images.real.verifyを初期化
-  for (let M = 0; M < 32; M++) {
+  for (let M = 0; M < 31; M++) {
     images.real[M] = 0
     images.real[M].verify = 0
   }
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < 32; n++) {
+  for (let n = 0; n < 31; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -483,7 +479,7 @@ let downloadImageReal = function() {
   }
   let verifyDownloadR = function() {
     let completeR = images.real[0].verify
-    for (let j = 1; j < 32; j++) {
+    for (let j = 1; j < 30; j++) {
       completeR = completeR * images.real[j].verify
     }
     return completeR
@@ -498,7 +494,7 @@ let downloadImageReal = function() {
 
 let startIntervalReal = function() {
   images.real.result = {}
-  for (let N = 0; N < 31; N++) {
+  for (let N = 0; N < 30; N++) {
     images.real.result[N] = 0
   }
 
@@ -506,7 +502,7 @@ let startIntervalReal = function() {
     document.getElementById("realImage").style.display = "none"
     document.getElementById("showResultReal").style.display = "block"
     document.getElementById("ButtonRealResult").addEventListener("click", function() {
-      for (let N = 0; N < 31; N++) {
+      for (let N = 0; N < 30; N++) {
         console.log(images.real.result[N])
       }
       //実際はここでTutorialの結果により本番に進めるか判定
@@ -543,7 +539,7 @@ let startIntervalReal = function() {
         while (images.real.place.firstChild) images.real.place.removeChild(images.real.place.firstChild);
         images.real.place.appendChild(images.real[(images.number)])
         images.number += 1
-        if ((images.number) > 31) {
+        if ((images.number) > 30) {
           clearInterval(timerReal)
           console.log("timer clear")
           document.removeEventListener("keydown", event)
