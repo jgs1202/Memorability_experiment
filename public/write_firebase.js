@@ -112,6 +112,7 @@ window.addEventListener("load", function() {
 //get reference to firebase storage
 var storageRef = firebase.storage().ref("sampleImage")
 let imgBlack = storageRef.child("black.png")
+
 //get reference of a image in image folder
 //after html are loaded, displaying image
 //window.addEventListener("load", function(){
@@ -119,6 +120,11 @@ let imgBlack = storageRef.child("black.png")
 //}, false)
 let images = {}
 var downloadImg = function(images) {
+  //get MetaData
+  imgBlack.getMetadata().then(function(metadata) {
+    console.log(metadata)
+  })
+
   imgBlack.getDownloadURL().then(function(url) {
     images.black = new Image(500, 400)
     images.black.addEventListener("load", downloadImg2, false)
@@ -159,16 +165,18 @@ window.addEventListener("load", function() {
   images.number = 0
 }, false)
 let startIntervalDisplay = function() {
-  images.place.style.display = "block"
   document.getElementById("imageHowTo").style.display = "none"
+  images.place.style.display = "block"
   var timerEx = setInterval(displayImages, 500)
-  document.getElementById("explain").style.display = "block"
-  document.getElementById("toTutorialButton").addEventListener("click", function() {
-    startTutorial()
-    clearInterval(timerEx)
-  }, false)
-  console.log("event set")
   images.time = 0
+  setTimeout(function() {
+    document.getElementById("explain").style.display = "block"
+    document.getElementById("toTutorialButton").addEventListener("click", function() {
+      startTutorial()
+      clearInterval(timerEx)
+      console.log("event set")
+    }, false)
+  }, 500)
 }
 let displayImages = function() {
   if ((images.time % 3) === 0) {
@@ -191,12 +199,11 @@ let startTutorial = function() {
   document.getElementById("placeForImage").style.display = "none"
   document.getElementById("explain").style.display = "none"
   document.getElementById("tutorialFirst").style.display = "block"
-  document.getElementById("startTutorialButton").addEventListener("click", TutorialEx, false)
-}
-
-let TutorialEx = function() {
+//   document.getElementById("startTutorialButton").addEventListener("click", TutorialEx, false)
+// }
+//
+// let TutorialEx = function() {
   document.getElementById("startTutorialButton").style.display = "none"
-  document.getElementById("tutorialExplain").style.display = "none"
   document.getElementById("loadingTutorial").style.display = "block"
   images.one = new Image(500, 400)
   images.two = new Image(500, 400)
@@ -235,7 +242,7 @@ let downloadImageTutorial = function() {
     images.tutorial[M].verify = 0
   }
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < 32; n++) {
+  for (let n = 0; n < 31; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -261,9 +268,9 @@ let downloadImageTutorial = function() {
       console.log(error)
     })
   }
-  let verifyDownloadTu = function () {
+  let verifyDownloadTu = function() {
     let completeTu = images.tutorial[0].verify
-    for (let j = 1; j < 32; j++) {
+    for (let j = 1; j < 31; j++) {
       completeTu = completeTu * images.tutorial[j].verify
     }
     return completeTu
@@ -278,9 +285,11 @@ let downloadImageTutorial = function() {
 
 let startIntervalTutorial = function() {
   console.log("start")
+
+  //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
   images.tutorial.result = {}
   //images.tutorial.resultの初期化
-  for (let N = 0; N < 31; N++) {
+  for (let N = 0; N < 30; N++) {
     images.tutorial.result[N] = 0
   }
 
@@ -288,15 +297,40 @@ let startIntervalTutorial = function() {
     document.getElementById("tutorialImage").style.display = "none"
     document.getElementById("showResultTutorial").style.display = "block"
     document.getElementById("ButtonTutorialResult").addEventListener("click", function() {
-      for (let N = 0; N < 31; N++) {
+      images.tutorial.sumFar = 0
+      images.tutorial.sumMiss = 0
+      for (let N = 0; N < 30; N++) {
         console.log(images.tutorial.result[N])
+        if (N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29) {
+          if (images.tutorial.result[N] !== 1) {
+            images.tutorial.sumMiss += 1
+          }
+        } else { //if( N !== 5 && N !== 13 && N !==15 && N !== 21 && N !== 23 && N !== 24 && N !== 27 && N !== 29){
+          if (images.tutorial.result[N] === 1) {
+            images.tutorial.sumFar += 1
+          }
+        }
       }
+      images.tutorial.Far = images.tutorial.sumFar / 22
+      images.tutorial.Miss = images.tutorial.sumMiss / 8
+      console.log("FAR = " + images.tutorial.Far)
+      console.log("Miss = " + images.tutorial.Miss)
+
       //実際はここでTutorialの結果により本番に進めるか判定
-      document.getElementById("ButtonTutorialResult").style.display = "none"
+      document.getElementById("showResultTutorial").style.display = "none"
       document.getElementById("goToRealPart").style.display = "block"
+      document.getElementById("backToTutorial").style.display = "block"
+      document.getElementById("backToTutorial").addEventListener("click", function() {
+        document.getElementById("backToTutorial").style.display = "none"
+        document.getElementById("goToRealPart").style.display = "none"
+        document.getElementById("giveTutorialImage").style.display = "block"
+        document.getElementById("tutorialImage").style.display = "block"
+        document.getElementById("tutorialExplain").style.display = "block"
+      }, false)
       document.getElementById("goToRealPart").addEventListener("click", function() {
         document.getElementById("goToRealPart").style.display = "none"
         document.getElementById("tutorialFirst").style.display = "none"
+        document.getElementById("backToTutorial").style.display = "none"
         startReal()
       }, false)
     }, false)
@@ -304,8 +338,12 @@ let startIntervalTutorial = function() {
 
   let keyDownFunc = function(e) {
     if (e.keyCode === 32) {
+      document.addEventListener("keyup", function(){
+        document.getElementById("Memorized").style.display = "none"
+      })
       images.tutorial.result[(images.number - 1)] = 1
       console.log("number " + (images.number - 1) + " was memorized.")
+      document.getElementById("Memorized").style.display = "block"
     }
   }
 
@@ -326,10 +364,11 @@ let startIntervalTutorial = function() {
         while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
         images.tutorial.place.appendChild(images.tutorial[(images.number)])
         images.number += 1
-        if ((images.number) > 31) {
+        if ((images.number) > 30) {
           clearInterval(timerTutorial)
           console.log("timer clear")
-          document.removeEventListener("keydown", event)
+          while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+          document.removeEventListener("keydown", keyDownFunc)
           showTutorialResult()
         }
       } else if ((images.time % 3) === 2) {
@@ -340,6 +379,7 @@ let startIntervalTutorial = function() {
     images.time += 1
   }
 
+  document.getElementById("tutorialExplain").style.display = "none"
   document.getElementById("giveTutorialImage").style.display = "none"
   images.time = 0
   images.number = 0
@@ -365,11 +405,12 @@ let startReal = function() {
   //document.getElementById("placeForImage").style.display = "none"
   //document.getElementById("explain").style.display = "none"
   document.getElementById("realFirst").style.display = "block"
-  document.getElementById("ButtonLv1").addEventListener("click", RealEx, false)
+  document.getElementById("ButtonCourse").style.display = "block"
+  document.getElementById("ButtonCourse1").addEventListener("click", RealEx, false)
 }
 
 let RealEx = function() {
-  document.getElementById("ButtonLv1").style.display = "none"
+  document.getElementById("ButtonCourse").style.display = "none"
   document.getElementById("realExplain").style.display = "none"
   document.getElementById("loadingReal").style.display = "block"
   images.one = new Image(500, 400)
@@ -435,7 +476,7 @@ let downloadImageReal = function() {
       console.log(error)
     })
   }
-  let verifyDownloadR = function () {
+  let verifyDownloadR = function() {
     let completeR = images.real[0].verify
     for (let j = 1; j < 32; j++) {
       completeR = completeR * images.real[j].verify

@@ -3,18 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Write Databese</title>
+  <title>Memorability Test</title>
   <link rel="stylesheet" type="text/css" href="memorability.css">
-  <!script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"/script>
 </head>
 
 <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
   <script src="write_firebase.js"></script>
   <script src="html1.js"></script>
 
   <div class="content" id="auth">
-      <input type="button" value="表示" id ="displayAuth">
+    <input type="button" value="Display information" id="displayAuth">
   </div>
 
   <div class="content" id="userInfo">
@@ -26,8 +26,10 @@
       <dt>userID</dt>
       <dd id="showIdHtml"></dd>
     </dl> <br>
-    <p class="text">"送信"を押すとこれらの情報を送信し実験に進みます。</p>
-    <input type="button" value="送信" id="btnChangeData">
+    <p class="text">
+      Send these information and go to tutorial.<br> The way to deal with the information follow the <a href="http://www.kyoto-u.ac.jp/en/privacy_policy/" target="_blank">Privacy Policy</a> of Kyoto University.
+    </p>
+    <input type="button" value="Send" id="btnChangeData">
   </div>
 
   <div class="content" id="howTo">
@@ -37,44 +39,55 @@
     <p>loading images...</p>
   </div>
   <div class="content" id="imageHowTo">
-    <input type="button" id="showImmageButton" value="click and show images"><br>
-    Please push the bottun then the explaination will be showed.
+    <input type="button" id="showImmageButton" value="click and show images"><br> Please push the bottun then the explaination will be showed.
   </div>
-  <div class="content" id="placeForImage" ></div>
+  <div class="content" id="placeForImage"></div>
 
   <div class="content" id="explain">
-    <p>Various Images and a only-black image are showed alternately.<br>
-    Push "Space key" when you feel that you see the image showed for the second time.
+    <p>Various Images and a only-black image are showed alternately.<br> Push "Space key" when you feel that you see the image showed for the second time.
     </p>
     <input type="button" id="toTutorialButton" name="toTutorial" value="Go to tutorial">
   </div>
 
   <div class="content" id="tutorialFirst">
-    <p >Tutorial</p>
-    <input type="button" id="startTutorialButton"  value="Go tutorial">
-    <p class="text" id="tutorialExplain">
-      Push the bottun above and start tutorial.<br>
-      Once tutorial starts, the data will be recorded.
-    </p>
+    <p>Tutorial</p>
+    <input type="button" id="startTutorialButton" value="Go tutorial">
   </div>
   <div class="content text" id="loadingTutorial">loading images...</div>
   <div class="content" id="tutorialSecond">
     <div id="tutorialImage"></div>
     <input type="button" id="giveTutorialImage" value="Start Tutorial">
+    <p class="text" id="tutorialExplain">
+      Push the bottun above and start tutorial.<br> Once tutorial starts, the data will be recorded.
+    </p>
+  </div>
+  <div class="content text" id="Memorized">
+    <p>Memorized</p>
   </div>
   <div class="content" id="showResultTutorial">
-    <input type="button"  id="ButtonTutorialResult" value="Show result of tutorial">
+    <input type="button" id="ButtonTutorialResult" value="Show result of tutorial">
+  </div>
+  <div class="content" id="backToTutorial">
+    <input type="button" value="Back to Tutorial">
   </div>
   <div class="content" id="goToRealPart">
     <input type="button" value="Go to real part">
   </div>
 
   <div class="content" id="realFirst">
-    <p >Real Part</p>
-    <input type="button" id="ButtonLv1"  value="Lv. 1">
+    <p>Real Part</p>
+  </div>
+  <div class="content" id="ButtonCourse">
     <p class="text" id="realExplain">
-      Push the bottun above and start real part.<br>
+      Select the course and start real part.<br>
     </p>
+    <input type="button" id="ButtonCourse1" value="Course. 1">
+    <input type="button" id="ButtonCourse2" value="Course. 2">
+    <input type="button" id="ButtonCourse3" value="Course. 3">
+    <input type="button" id="ButtonCourse4" value="Course. 4">
+    <input type="button" id="ButtonCourse5" value="Course. 5">
+    <input type="button" id="ButtonCourse6" value="Course. 6">
+    <input type="button" id="ButtonCourse7" value="Course. 7">
   </div>
   <div class="content text" id="loadingReal">loading images...</div>
   <div class="content" id="realSecond">
@@ -82,7 +95,8 @@
     <input type="button" id="giveRealImage" value="Start Real">
   </div>
   <div class="content" id="showResultReal">
-    <input type="button"  id="ButtonRealResult" value="Show result of real">
+    <input type="button" id="ButtonRealResult" value="Show result of real">
   </div>
 </body>
+
 </html>
