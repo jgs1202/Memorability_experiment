@@ -1,0 +1,15 @@
+[debug] [2017-10-20T07:39:45.025Z] ----------------------------------------------------------------------
+[debug] [2017-10-20T07:39:45.028Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-10-20T07:39:45.029Z] CLI Version:   3.13.1
+[debug] [2017-10-20T07:39:45.029Z] Platform:      darwin
+[debug] [2017-10-20T07:39:45.029Z] Node Version:  v6.11.4
+[debug] [2017-10-20T07:39:45.030Z] Time:          Fri Oct 20 2017 16:39:45 GMT+0900 (JST)
+[debug] [2017-10-20T07:39:45.030Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-20T07:39:45.049Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-20T07:39:45.049Z] > authorizing via signed-in user
+[debug] [2017-10-20T07:39:45.052Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/memorability-a0c21  
+ Fri Oct 20 2017 16:39:45 GMT+0900 (JST)
+[debug] [2017-10-20T07:39:45.786Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-20T07:39:45.788Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/memorability-a0c21/tokens  
+ Fri Oct 20 2017 16:39:45 GMT+0900 (JST)

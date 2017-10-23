@@ -330,6 +330,7 @@ let startIntervalTutorial = function() {
           clearInterval(timerTutorial)
           console.log("timer clear")
           document.removeEventListener("keydown", event)
+          concole.log("remove keydown")
           showTutorialResult()
         }
       } else if ((images.time % 3) === 2) {
