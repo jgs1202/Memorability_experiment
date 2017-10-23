@@ -1,6 +1,6 @@
 .content {
   display:none;
-}
+  table-layout: auto;
 
 body{
   width: 100%;
