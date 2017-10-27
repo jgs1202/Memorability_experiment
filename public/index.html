@@ -9,22 +9,18 @@
 
 <body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
   <script src="write_firebase.js"></script>
   <script src="html1.js"></script>
 
-  <div class="content" id="auth">
-    <input type="button" value="Display information" id="displayAuth">
-  </div>
-
   <div class="content" id="userInfo">
     <dl>
-      <dt>username</dt>
-      <dd id="showNameHtml"></dd>
-      <dt>email address</dt>
-      <dd id="showAddressHtml"></dd>
-      <dt>userID</dt>
-      <dd id="showIdHtml"></dd>
+      <dt>Name</dt>
+      <dd id="showNameHtml"><input type="text"></dd>
+      <dt>Age</dt>
+      <dd id="showAddressHtml"><input type="text"></dd>
+      <dt>Gender</dt>
+      <dd id="showIdHtml"><input type="text"></dd>
     </dl> <br>
     <p class="text">
       Send these information and go to tutorial.<br> The way to deal with the information follow the <a href="http://www.kyoto-u.ac.jp/en/privacy_policy/" target="_blank">Privacy Policy</a> of Kyoto University.

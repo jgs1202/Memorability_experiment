@@ -1,39 +1,29 @@
 // Initialize Firebase
 console.log("init")
-var config = {
-  apiKey: "AIzaSyAmw_qUkLApLVvcpJZ8FthhAiWM0-7Z5AU",
-  authDomain: "memorability-a0c21.firebaseapp.com",
-  databaseURL: "https://memorability-a0c21.firebaseio.com",
-  projectId: "memorability-a0c21",
-  storageBucket: "memorability-a0c21.appspot.com",
-  messagingSenderId: "355761335744"
-};
-firebase.initializeApp(config);
-
-//authentication start
-console.log("auth start")
-var provider = new firebase.auth.GoogleAuthProvider()
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
-firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Google Access Token. You can use it to access the Google API.
-  var token = result.credential.accessToken;
-  // The signed-in user info.
-  var user = result.user;
-  // ...
-  console.log("auth ended")
-  document.getElementById("auth").style.display = "block"
-}).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBrIVYPj_FoDe8MKkzs6QuFGfkQrY0vM-8",
+    authDomain: "memorability-8c35d.firebaseapp.com",
+    databaseURL: "https://memorability-8c35d.firebaseio.com",
+    projectId: "memorability-8c35d",
+    storageBucket: "memorability-8c35d.appspot.com",
+    messagingSenderId: "86526497736"
+  };
+  firebase.initializeApp(config);
 
 
+//htmlロードが完了したらボタンにイベントを設定
+window.addEventListener("load", function() {
+  document.getElementById("userInfo").style.display = "block"
+  document.getElementById("showNameHtml").style.display = "block"
+  document.getElementById("btnChangeData").style.display = "block"
+  document.getElementById("btnChangeData").addEventListener("click", clickWrite, false)
+}, false)
+// window.addEventListener("load", function() {
+//   images.place = document.getElementById("placeForImage")
+//   console.log(images.place)
+//   images.number = 0
+// }, false)
 
 
 //function to post user data
@@ -57,11 +47,6 @@ function writeNewPost(username, uid, emailaddress, verified) {
 }
 //writeNewPost("01", "testuser", "pic", "Test", "This is a test.")
 
-window.addEventListener("load", function() {
-
-  document.getElementById("displayAuth").addEventListener("click", viewAuth, false)
-  console.log("event is set.")
-}, false)
 
 var viewAuth = function(e) {
   const authData = firebase.auth().currentUser
@@ -101,11 +86,6 @@ var clickWrite = function() {
   writeNewPost(userData.displayName, userData.uid, userData.email, userData.emailVerified)
   downloadImg(images);
 }
-//htmlロードが完了したらボタンにイベントを設定
-window.addEventListener("load", function() {
-  console.log(document.getElementById("btnChangeData"))
-  document.getElementById("btnChangeData").addEventListener("click", clickWrite, false)
-}, false)
 
 
 //display image file in firebase storage
@@ -159,11 +139,8 @@ let downloadImg2 = function() {
     })
   }
 }
-window.addEventListener("load", function() {
-  images.place = document.getElementById("placeForImage")
-  console.log(images.place)
-  images.number = 0
-}, false)
+
+
 let startIntervalDisplay = function() {
   document.getElementById("imageHowTo").style.display = "none"
   images.place.style.display = "block"
