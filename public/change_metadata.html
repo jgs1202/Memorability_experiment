@@ -11,52 +11,43 @@
   <script type="text/javascript">
     (function() {
       var config = {
-        apiKey: "AIzaSyAmw_qUkLApLVvcpJZ8FthhAiWM0-7Z5AU",
-        authDomain: "memorability-a0c21.firebaseapp.com",
-        databaseURL: "https://memorability-a0c21.firebaseio.com",
-        projectId: "memorability-a0c21",
-        storageBucket: "memorability-a0c21.appspot.com",
-        messagingSenderId: "355761335744"
+        apiKey: "AIzaSyBrIVYPj_FoDe8MKkzs6QuFGfkQrY0vM-8",
+        authDomain: "memorability-8c35d.firebaseapp.com",
+        databaseURL: "https://memorability-8c35d.firebaseio.com",
+        projectId: "memorability-8c35d",
+        storageBucket: "memorability-8c35d.appspot.com",
+        messagingSenderId: "86526497736"
       };
+
       firebase.initializeApp(config);
-
-      //authentication start
-      console.log("auth start")
-      var provider = new firebase.auth.GoogleAuthProvider()
-      provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
-      firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // ...
-        console.log("auth ended")
-        update()
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-      });
-
+      console.log("start")
       let number = [5, 13, 15, 21, 23, 24, 27, 29]
       let update = function() {
-        for (i = 0; i < 8; i++) {
-          let ref = firebase.storage().ref("tutorial").child(number[i] + ".png")
-          let metaData = {
-            contentType: 'image/png',
-            customMetadata: {
-              'visType': 'vigilance'
+        for (i = 0; i < 31; i++) {
+          if (number.indexOf(i) >= 0) {
+            let ref = firebase.storage().ref("tutorial").child(i + ".png")
+            let metaData = {
+              contentType: 'image/png',
+              customMetadata: {
+                'visType': 'vigilance'
+              }
             }
+            ref.updateMetadata(metaData)
+          } else {
+            let ref = firebase.storage().ref("tutorial").child(i + ".png")
+            let metaData = {
+              contentType: 'image/png',
+              customMetadata: {
+                'visType': 'other'
+              }
+            }
+            ref.updateMetadata(metaData)
           }
-          ref.updateMetadata(metaData)
           console.log("end")
         }
       }
+
+      update()
     })()
   </script>
 </body>

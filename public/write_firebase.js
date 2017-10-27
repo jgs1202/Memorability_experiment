@@ -1,47 +1,48 @@
 // Initialize Firebase
 console.log("init")
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBrIVYPj_FoDe8MKkzs6QuFGfkQrY0vM-8",
-    authDomain: "memorability-8c35d.firebaseapp.com",
-    databaseURL: "https://memorability-8c35d.firebaseio.com",
-    projectId: "memorability-8c35d",
-    storageBucket: "memorability-8c35d.appspot.com",
-    messagingSenderId: "86526497736"
-  };
-  firebase.initializeApp(config);
+
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyBrIVYPj_FoDe8MKkzs6QuFGfkQrY0vM-8",
+  authDomain: "memorability-8c35d.firebaseapp.com",
+  databaseURL: "https://memorability-8c35d.firebaseio.com",
+  projectId: "memorability-8c35d",
+  storageBucket: "memorability-8c35d.appspot.com",
+  messagingSenderId: "86526497736"
+};
+firebase.initializeApp(config);
 
 
 //htmlロードが完了したらボタンにイベントを設定
 window.addEventListener("load", function() {
   document.getElementById("userInfo").style.display = "block"
-  document.getElementById("showNameHtml").style.display = "block"
-  document.getElementById("btnChangeData").style.display = "block"
   document.getElementById("btnChangeData").addEventListener("click", clickWrite, false)
 }, false)
-// window.addEventListener("load", function() {
-//   images.place = document.getElementById("placeForImage")
-//   console.log(images.place)
-//   images.number = 0
-// }, false)
+window.addEventListener("load", function() {
+  images.place = document.getElementById("placeForImage")
+  console.log(images.place)
+  images.number = 0
+}, false)
 
+window.onerror = function() {
+  alert("An error occured.\nPlease restart.")
+}
 
 //function to post user data
-function writeNewPost(username, uid, emailaddress, verified) {
+writeNewPost = function(name, age, gender) {
   // A post entry.
   var postData = {
-    author: username,
-    uid: uid,
-    email: emailaddress,
-    emailVerified: verified
-  };
+    author: name,
+    uid: age,
+    sex: gender
+  }
   // Get a key for a new Post.
   var newPostKey = firebase.database().ref().child('posts').push().key;
 
   // Write the new post's data simultaneously in the posts list and the user's post list.
   var updates = {};
   updates['/posts/' + newPostKey] = postData;
-  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+  updates['/user-posts/' + name + '/' + newPostKey] = postData;
 
   return firebase.database().ref().update(updates);
 }
@@ -60,31 +61,23 @@ var viewAuth = function(e) {
   showIdJs.textContent = authData.uid
 }
 
-
-var db = firebase.database();
-// var chatAll = db.ref("/chat/all");
-// //DB内容が変更されたとき実行される
-// chatAll.on("value", function(snapshot) {
-//   document.getElementById("textMessage").innerText = snapshot.val().message;
-// });
-// //入力内容を更新した時
-// var changeData = function() {
-//   var message = document.getElementById("message").value;
-//   chatAll.set({
-//     message: message
-//   });
-// }
 var clickWrite = function() {
   console.log("click")
-  var userData = firebase.auth().currentUser
-  console.log(firebase.auth().currentUser.displayName) //.displayName, userData.uid, userData.email, userData.emailVerified)
-  let divInfo = document.getElementById("userInfo")
-  divInfo.style.display = "none"
-  document.getElementById("auth").style.display = "none"
-  document.getElementById("howTo").style.display = "block"
-  document.getElementById("loadImageTime").style.display = "block"
-  writeNewPost(userData.displayName, userData.uid, userData.email, userData.emailVerified)
-  downloadImg(images);
+  let user = {}
+  console.log(typeof document.getElementById("showNameHtml").value)
+  user.Name = document.getElementById("showNameHtml").value
+  user.Age = document.getElementById("showAgeHtml").value
+  user.Gender = document.getElementById("showGenderHtml").value
+  console.log(user.Name, user.Age, user.Gender) //.displayName, userData.uid, userData.email, userData.emailVerified)
+  if ((typeof user.Name !== "undefined") && (typeof user.Age !== "undefined") && (typeof user.Gender !== "undefined")) {
+    writeNewPost(user.Name, user.Age, user.Gender)
+    document.getElementById("userInfo").style.display = "none"
+    document.getElementById("howTo").style.display = "block"
+    document.getElementById("loadImageTime").style.display = "block"
+    downloadImg(images);
+  } else {
+    alert("Please fill all.")
+  }
 }
 
 
@@ -176,10 +169,10 @@ let startTutorial = function() {
   document.getElementById("placeForImage").style.display = "none"
   document.getElementById("explain").style.display = "none"
   document.getElementById("tutorialFirst").style.display = "block"
-//   document.getElementById("startTutorialButton").addEventListener("click", TutorialEx, false)
-// }
-//
-// let TutorialEx = function() {
+  //   document.getElementById("startTutorialButton").addEventListener("click", TutorialEx, false)
+  // }
+  //
+  // let TutorialEx = function() {
   document.getElementById("startTutorialButton").style.display = "none"
   document.getElementById("loadingTutorial").style.display = "block"
   images.one = new Image(500, 400)
@@ -223,8 +216,12 @@ let downloadImageTutorial = function() {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
-    var imgTutorial = tutorialRef.child(imgName)
+    let imgTutorial = tutorialRef.child(imgName)
     console.log("download start" + imgName)
+    imgTutorial.getMetadata().then(function(metadata) {
+      images.tutorial[n].meta = metadata.customMetadata.visType
+      console.log(images.tutorial[n].meta)
+    })
     imgTutorial.getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
       images.tutorial[n] = new Image(500, 400)
@@ -246,13 +243,30 @@ let downloadImageTutorial = function() {
     })
   }
   let verifyDownloadTu = function() {
-    let completeTu = images.tutorial[0].verify
-    for (let j = 1; j < 31; j++) {
-      completeTu = completeTu * images.tutorial[j].verify
-    }
-    return completeTu
+    setTimeout(function() {
+      let completeTu = images.tutorial[0].verify
+      for (let j = 1; j < 31; j++) {
+        completeTu = completeTu * images.tutorial[j].verify
+      }
+      return completeTu
+    }, 200)
+  }
+  let verify2 = function() {
+    setTimeout(function() {
+      let completeTu2 = 1
+      for (let t = 0; t < 31; t++) {
+        if (typeof images.tutorial[t].meta !== "undefined") {
+          completeTu2 = completeTu2 * 1
+        } else {
+          completeTu2 = 0
+        }
+      }
+      return completeTu2
+    }, 500)
   }
   while (verifyDownloadTu() === 0) {}
+  console.log(images.tutorial[30].meta)
+  while (verify2() === 0) {}
   document.getElementById("loadingTutorial").style.display = "none"
   document.getElementById("tutorialSecond").style.display = "block"
   //document.getElementById("loadImageTime").style.display="none"
@@ -277,8 +291,9 @@ let startIntervalTutorial = function() {
       images.tutorial.sumFar = 0
       images.tutorial.sumMiss = 0
       for (let N = 0; N < 30; N++) {
-        console.log(images.tutorial.result[N])
-        if (N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29) {
+        console.log(images.tutorial[N].meta)
+        if (//N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
+        images.tutorial[N].meta === "vigilance") {
           if (images.tutorial.result[N] !== 1) {
             images.tutorial.sumMiss += 1
           }
@@ -315,7 +330,7 @@ let startIntervalTutorial = function() {
 
   let keyDownFunc = function(e) {
     if (e.keyCode === 32) {
-      document.addEventListener("keyup", function(){
+      document.addEventListener("keyup", function() {
         document.getElementById("Memorized").style.display = "none"
       })
       images.tutorial.result[(images.number - 1)] = 1
