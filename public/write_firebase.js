@@ -1,4 +1,4 @@
-// Initialize Firebase
+//////////////// Initialize Firebase/////////////////////////////////
 console.log("init")
 
 // Initialize Firebase
@@ -11,25 +11,24 @@ var config = {
   messagingSenderId: "86526497736"
 };
 firebase.initializeApp(config);
+//////////////////////////////////////////////////////////////////////
 
+
+
+/////////////////// input use data   ////////////////////////////
 
 //htmlロードが完了したらボタンにイベントを設定
 window.addEventListener("load", function() {
   document.getElementById("userInfo").style.display = "block"
   document.getElementById("btnChangeData").addEventListener("click", clickWrite, false)
 }, false)
-window.addEventListener("load", function() {
-  images.place = document.getElementById("placeForImage")
-  console.log(images.place)
-  images.number = 0
-}, false)
 
 window.onerror = function() {
-  alert("An error occured.\nPlease restart.")
+//  alert("An error occured.\nPlease restart.")
 }
 
 //function to post user data
-writeNewPost = function(name, age, gender) {
+let writeNewPost = function(name, age, gender) {
   // A post entry.
   var postData = {
     author: name,
@@ -48,19 +47,6 @@ writeNewPost = function(name, age, gender) {
 }
 //writeNewPost("01", "testuser", "pic", "Test", "This is a test.")
 
-
-var viewAuth = function(e) {
-  const authData = firebase.auth().currentUser
-  let divInfo = document.getElementById("userInfo")
-  divInfo.style.display = "block"
-  let showNameJs = document.getElementById("showNameHtml")
-  let showAddressJs = document.getElementById("showAddressHtml")
-  let showIdJs = document.getElementById("showIdHtml")
-  showNameJs.textContent = authData.displayName
-  showAddressJs.textContent = authData.email
-  showIdJs.textContent = authData.uid
-}
-
 var clickWrite = function() {
   console.log("click")
   let user = {}
@@ -74,16 +60,43 @@ var clickWrite = function() {
     document.getElementById("userInfo").style.display = "none"
     document.getElementById("howTo").style.display = "block"
     document.getElementById("loadImageTime").style.display = "block"
-    downloadImg(images);
+    downloadImg();
   } else {
     alert("Please fill all.")
   }
 }
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////// set global variable //////////////////////////////
+
+let images = {}
+images.tutorial = {}
+images.tutorial.img = []
+images.tutorial.verify = []
+images.tutorial.meta = []
+images.tutorial.result = []
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+
+
+//////////////////////// Explaination////////////////////////////////
+
+
+window.addEventListener("load", function() {
+  images.place = document.getElementById("placeForImage")
+  console.log(images.place)
+  images.number = 0
+}, false)
 
 
 //display image file in firebase storage
 //get reference to firebase storage
-var storageRef = firebase.storage().ref("sampleImage")
+let storageRef = firebase.storage().ref("sampleImage")
 let imgBlack = storageRef.child("black.png")
 
 //get reference of a image in image folder
@@ -91,8 +104,8 @@ let imgBlack = storageRef.child("black.png")
 //window.addEventListener("load", function(){
 //  document.getElementById("btnDisplay").addEventListener("click", downloadImg, false)
 //}, false)
-let images = {}
-var downloadImg = function(images) {
+
+let downloadImg = function() {
   //get MetaData
   imgBlack.getMetadata().then(function(metadata) {
     console.log(metadata)
@@ -104,12 +117,14 @@ var downloadImg = function(images) {
     images.black.src = url
   })
 }
+
+
 let downloadImg2 = function() {
   for (let n = 0; n < 6; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
-    var imgSample = storageRef.child(imgName)
+    let imgSample = storageRef.child(imgName)
     console.log("download start" + imgName)
     imgSample.getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
@@ -135,9 +150,10 @@ let downloadImg2 = function() {
 
 
 let startIntervalDisplay = function() {
+  console.log(images.place)
   document.getElementById("imageHowTo").style.display = "none"
   images.place.style.display = "block"
-  var timerEx = setInterval(displayImages, 500)
+  let timerEx = setInterval(displayImages, 500)
   images.time = 0
   setTimeout(function() {
     document.getElementById("explain").style.display = "block"
@@ -148,6 +164,7 @@ let startIntervalDisplay = function() {
     }, false)
   }, 500)
 }
+
 let displayImages = function() {
   if ((images.time % 3) === 0) {
     while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
@@ -165,6 +182,7 @@ let displayImages = function() {
 
 let startTutorial = function() {
   console.log("This is tutorial.")
+  console.log(images.tutorial.meta[31])
   document.getElementById("howTo").style.display = "none"
   document.getElementById("placeForImage").style.display = "none"
   document.getElementById("explain").style.display = "none"
@@ -183,7 +201,17 @@ let startTutorial = function() {
   images.three.srcurl = storageRef.child("theree.png")
   downloadOne()
 }
-//var storageRef = firebase.storage().ref("sampleImage")
+////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+///////////////////////// Tutorial ///////////////////////////////////////////
+//let storageRef = firebase.storage().ref("sampleImage")
 
 let downloadOne = function() {
   images.one.srcurl.getDownloadURL().then(function(url) {
@@ -205,30 +233,28 @@ let downloadThree = function() {
 }
 let downloadImageTutorial = function() {
   let tutorialRef = firebase.storage().ref("tutorial")
-  images.tutorial = {}
   //images.tutorial.verifyを初期化
-  for (let M = 0; M < 32; M++) {
-    images.tutorial[M] = 0
-    images.tutorial[M].verify = 0
+  for (let M = 0; M < 31; M++) {
+    images.tutorial.img[M] = 0
+    images.tutorial.verify[M] = 0
   }
+
+  let imgTutorial = []
   console.log("one, two, threee have been downloaded.")
   for (let n = 0; n < 31; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
-    let imgTutorial = tutorialRef.child(imgName)
+    imgTutorial[n] = tutorialRef.child(imgName)
     console.log("download start" + imgName)
-    imgTutorial.getMetadata().then(function(metadata) {
-      images.tutorial[n].meta = metadata.customMetadata.visType
-      console.log(images.tutorial[n].meta)
-    })
-    imgTutorial.getDownloadURL().then(function(url) {
+
+    imgTutorial[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.tutorial[n] = new Image(500, 400)
-      images.tutorial[n].addEventListener("load", function() {
-        images.tutorial[n].verify = 1
+      images.tutorial.img[n] = new Image(500, 400)
+      images.tutorial.img[n].addEventListener("load", function() {
+        images.tutorial.verify[n] = 1
         //   //img.size = ImageGetNaturalSize(img)
-        //   if ((typeof images.tutorial[31]) !== "undefined") {
+        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
         //     document.getElementById("loadingTutorial").style.display = "none"
         //     document.getElementById("tutorialSecond").style.display = "block"
         //     //document.getElementById("loadImageTime").style.display="none"
@@ -236,17 +262,23 @@ let downloadImageTutorial = function() {
         //     console.log("download finished.")
         //   }
       }, false)
-      images.tutorial[n].src = url
+      images.tutorial.img[n].src = url
     }).catch(function(error) {
       //Handle any Errors
       console.log(error)
     })
   }
+
+  for (n = 0; n < 31; n++) {
+    imgTutorial[n].getMetadata().then(function(metadata) {
+      images.tutorial.meta[n] = metadata.customMetadata.visType
+    })
+  }
   let verifyDownloadTu = function() {
     setTimeout(function() {
-      let completeTu = images.tutorial[0].verify
+      let completeTu = images.tutorial.verify[0]
       for (let j = 1; j < 31; j++) {
-        completeTu = completeTu * images.tutorial[j].verify
+        completeTu = completeTu * images.tutorial.verify[j]
       }
       return completeTu
     }, 200)
@@ -255,7 +287,7 @@ let downloadImageTutorial = function() {
     setTimeout(function() {
       let completeTu2 = 1
       for (let t = 0; t < 31; t++) {
-        if (typeof images.tutorial[t].meta !== "undefined") {
+        if (typeof images.tutorial.meta[t] !== "undefined") {
           completeTu2 = completeTu2 * 1
         } else {
           completeTu2 = 0
@@ -265,20 +297,19 @@ let downloadImageTutorial = function() {
     }, 500)
   }
   while (verifyDownloadTu() === 0) {}
-  console.log(images.tutorial[30].meta)
   while (verify2() === 0) {}
   document.getElementById("loadingTutorial").style.display = "none"
   document.getElementById("tutorialSecond").style.display = "block"
   //document.getElementById("loadImageTime").style.display="none"
   document.getElementById("giveTutorialImage").addEventListener("click", startIntervalTutorial, false)
   console.log("download finished.")
+  console.log(images.tutorial.meta[31])
 }
 
 let startIntervalTutorial = function() {
   console.log("start")
-
+  console.log(images.tutorial.meta[31])
   //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
-  images.tutorial.result = {}
   //images.tutorial.resultの初期化
   for (let N = 0; N < 30; N++) {
     images.tutorial.result[N] = 0
@@ -291,9 +322,9 @@ let startIntervalTutorial = function() {
       images.tutorial.sumFar = 0
       images.tutorial.sumMiss = 0
       for (let N = 0; N < 30; N++) {
-        console.log(images.tutorial[N].meta)
-        if (//N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
-        images.tutorial[N].meta === "vigilance") {
+        console.log(images.tutorial.meta[N])
+        if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
+          images.tutorial.meta[N] === "vigilance") {
           if (images.tutorial.result[N] !== 1) {
             images.tutorial.sumMiss += 1
           }
@@ -354,9 +385,10 @@ let startIntervalTutorial = function() {
       if ((images.time % 3) === 0) {
         console.log((images.number))
         while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
-        images.tutorial.place.appendChild(images.tutorial[(images.number)])
+        images.tutorial.place.appendChild(images.tutorial.img[images.number])
         images.number += 1
-        if ((images.number) > 30) {
+        console.log("images.nuber was plussed.")
+        if ((images.number) > 29) {
           clearInterval(timerTutorial)
           console.log("timer clear")
           while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
