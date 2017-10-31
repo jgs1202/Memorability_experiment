@@ -25,7 +25,7 @@
       let update = function() {
         for (i = 0; i < 31; i++) {
           if (number.indexOf(i) >= 0) {
-            let ref = firebase.storage().ref("tutorial").child(i + ".png")
+            let ref = firebase.storage().ref("real1").child(i + ".png")
             let metaData = {
               contentType: 'image/png',
               customMetadata: {
@@ -34,7 +34,7 @@
             }
             ref.updateMetadata(metaData)
           } else {
-            let ref = firebase.storage().ref("tutorial").child(i + ".png")
+            let ref = firebase.storage().ref("real1").child(i + ".png")
             let metaData = {
               contentType: 'image/png',
               customMetadata: {

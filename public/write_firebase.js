@@ -24,7 +24,7 @@ window.addEventListener("load", function() {
 }, false)
 
 window.onerror = function() {
-//  alert("An error occured.\nPlease restart.")
+  //  alert("An error occured.\nPlease restart.")
 }
 
 //function to post user data
@@ -77,6 +77,7 @@ images.tutorial.img = []
 images.tutorial.verify = []
 images.tutorial.meta = []
 images.tutorial.result = []
+images.real = {}
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -269,7 +270,7 @@ let downloadImageTutorial = function() {
     })
   }
 
-  for (n = 0; n < 31; n++) {
+  for (let n = 0; n < 31; n++) {
     imgTutorial[n].getMetadata().then(function(metadata) {
       images.tutorial.meta[n] = metadata.customMetadata.visType
     })
@@ -431,13 +432,19 @@ let startReal = function() {
   //document.getElementById("explain").style.display = "none"
   document.getElementById("realFirst").style.display = "block"
   document.getElementById("ButtonCourse").style.display = "block"
-  document.getElementById("ButtonCourse1").addEventListener("click", RealEx, false)
+  for (let n = 0; n < 7; n++) {
+    document.getElementById('' + "ButtonCourse" + (n + 1)).addEventListener("click", function() {
+      images.real.course = n + 1
+      RealEx();
+    }, false)
+  }
 }
 
 let RealEx = function() {
   document.getElementById("ButtonCourse").style.display = "none"
   document.getElementById("realExplain").style.display = "none"
   document.getElementById("loadingReal").style.display = "block"
+  console.log(images.real.course)
   images.one = new Image(500, 400)
   images.two = new Image(500, 400)
   images.three = new Image(500, 400)
@@ -449,6 +456,7 @@ let RealEx = function() {
 //var storageRef = firebase.storage().ref("sampleImage")
 
 let downloadOneR = function() {
+  console.log("one")
   images.one.srcurl.getDownloadURL().then(function(url) {
     images.one.addEventListener("load", downloadTwoR, false)
     images.one.src = url
@@ -467,25 +475,27 @@ let downloadThreeR = function() {
   })
 }
 let downloadImageReal = function() {
-  let realRef = firebase.storage().ref("tutorial")
-  images.real = {}
+  let realRef = firebase.storage().ref('' + 'real' + images.real.course)
   //images.real.verifyを初期化
+    images.real.img=[]
+    images.real.verify = []
   for (let M = 0; M < 31; M++) {
-    images.real[M] = 0
-    images.real[M].verify = 0
+    images.real.img[M] = 0
+    images.real.verify[M] = 0
   }
+  let imgReal = []
   console.log("one, two, threee have been downloaded.")
   for (let n = 0; n < 31; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
-    var imgReal = realRef.child(imgName)
+    imgReal[n] = realRef.child(imgName)
     console.log("download start" + imgName)
-    imgReal.getDownloadURL().then(function(url) {
+    imgReal[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.real[n] = new Image(500, 400)
-      images.real[n].addEventListener("load", function() {
-        images.real[n].verify = 1
+      images.real.img[n] = new Image(500, 400)
+      images.real.img[n].addEventListener("load", function() {
+        images.real.img[n].verify = 1
         //img.size = ImageGetNaturalSize(img)
         // if (typeof images.real[31] !== "undefined") {
         //   document.getElementById("loadingReal").style.display = "none"
@@ -495,20 +505,42 @@ let downloadImageReal = function() {
         //   console.log("download finished.")
         // }
       }, false)
-      images.real[n].src = url
+      images.real.img[n].src = url
     }).catch(function(error) {
       //Handle any Errors
       console.log(error)
     })
   }
+
+  for (let n = 0; n < 31; n++) {
+    imgReal[n].getMetadata().then(function(metadata) {
+      images.real.meta[n] = metadata.customMetadata.visType
+    })
+  }
   let verifyDownloadR = function() {
-    let completeR = images.real[0].verify
-    for (let j = 1; j < 30; j++) {
-      completeR = completeR * images.real[j].verify
-    }
-    return completeR
+    setTimeout(function() {
+      let completeR = images.real.verify[0]
+      for (let j = 1; j < 30; j++) {
+        completeR = completeR * images.real.verify[j]
+      }
+      return completeR
+    }, 200)
+  }
+  let verify2 = function(){
+    setTimeout(function(){
+      let complete2 = 1
+      for(let t=0; t<31; t++){
+        if (typeof images.real.meta[t] !== "undefined"){
+          complete2 = complete2* 1
+        } else {
+          complete2 = 0
+        }
+      }
+      return complete2
+    }, 500)
   }
   while (verifyDownloadR() === 0) {}
+  while (verify2() === 0){}
   document.getElementById("loadingReal").style.display = "none"
   document.getElementById("realSecond").style.display = "block"
   //document.getElementById("loadImageTime").style.display="none"
@@ -526,11 +558,25 @@ let startIntervalReal = function() {
     document.getElementById("realImage").style.display = "none"
     document.getElementById("showResultReal").style.display = "block"
     document.getElementById("ButtonRealResult").addEventListener("click", function() {
+      images.real.sumFar = 0
+      iamges.real.sumMiss = 0
       for (let N = 0; N < 30; N++) {
-        console.log(images.real.result[N])
+        console.log(images.real.meta[N])
+        if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
+          images.real.meta[N] === "vigilance") {
+          if (images.real.result[N] !== 1) {
+            images.real.sumMiss += 1
+          }
+        } else { //if( N !== 5 && N !== 13 && N !==15 && N !== 21 && N !== 23 && N !== 24 && N !== 27 && N !== 29){
+          if (images.real.result[N] === 1) {
+            images.real.sumFar += 1
+          }
+        }
       }
       //実際はここでTutorialの結果により本番に進めるか判定
       document.getElementById("ButtonRealResult").style.display = "none"
+      console.log("FAR = " + images.tutorial.Far)
+      console.log("Miss = " + images.tutorial.Miss)
       //document.getElementById("goToRealPart").style.display = "block"
       //document.getElementById("goToRealPart").addEventListener("click", function() {
       //   document.getElementById("goToRealPart").style.display = "none"
@@ -561,11 +607,12 @@ let startIntervalReal = function() {
       if ((images.time % 3) === 0) {
         console.log((images.number))
         while (images.real.place.firstChild) images.real.place.removeChild(images.real.place.firstChild);
-        images.real.place.appendChild(images.real[(images.number)])
+        images.real.place.appendChild(images.real.img[(images.number)])
         images.number += 1
-        if ((images.number) > 30) {
+        if ((images.number) > 29) {
           clearInterval(timerReal)
           console.log("timer clear")
+          while (images.real.place.firstChild) images.real.place.removeChild(images.tutorial.place.firstChild);
           document.removeEventListener("keydown", event)
           showRealResult()
         }
@@ -580,6 +627,6 @@ let startIntervalReal = function() {
   document.getElementById("giveRealImage").style.display = "none"
   images.time = 0
   images.number = 0
-  var timerReal = setInterval(displayReal, 500) //00)
+  var timerReal = setInterval(displayReal, 100) //00)
   //document.getElementById("explain").style.display = "block"
 }
