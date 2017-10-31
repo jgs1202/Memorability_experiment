@@ -78,6 +78,7 @@ images.tutorial.verify = []
 images.tutorial.meta = []
 images.tutorial.result = []
 images.real = {}
+images.real.meta = []
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -559,7 +560,7 @@ let startIntervalReal = function() {
     document.getElementById("showResultReal").style.display = "block"
     document.getElementById("ButtonRealResult").addEventListener("click", function() {
       images.real.sumFar = 0
-      iamges.real.sumMiss = 0
+      images.real.sumMiss = 0
       for (let N = 0; N < 30; N++) {
         console.log(images.real.meta[N])
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
@@ -612,7 +613,7 @@ let startIntervalReal = function() {
         if ((images.number) > 29) {
           clearInterval(timerReal)
           console.log("timer clear")
-          while (images.real.place.firstChild) images.real.place.removeChild(images.tutorial.place.firstChild);
+          while (images.real.place.firstChild) images.real.place.removeChild(images.real.place.firstChild);
           document.removeEventListener("keydown", event)
           showRealResult()
         }
