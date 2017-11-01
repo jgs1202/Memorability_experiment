@@ -437,7 +437,16 @@ let startReal = function() {
   for (let n = 0; n < 7; n++) {
     document.getElementById('' + "ButtonCourse" + (n + 1)).addEventListener("click", function() {
       images.real.course = n + 1
-      RealEx();
+      //既にプレイしたか判定
+      firebase.database().ref("/user-posts/"+user.Name+"/"+images.newPostKey+"/course"+''+images.real.course+"/Far").once('value').then(function(snapshot){
+        console.log(snapshot._e.T)
+        if(typeof snapshot._e.T === "undefined"){
+          RealEx();
+        } else {
+          alert("You have done this course.")
+            RealEx();
+        }
+      })
     }, false)
   }
 }
@@ -637,7 +646,7 @@ let startIntervalReal = function() {
           clearInterval(timerReal)
           console.log("timer clear")
           while (images.real.place.firstChild) images.real.place.removeChild(images.real.place.firstChild);
-          document.removeEventListener("keydown", event)
+          document.removeEventListener("keydown", keyDownFuncR)
           showRealResult()
         }
       } else if ((images.time % 3) === 2) {
@@ -702,17 +711,17 @@ let sendData = function() {
           images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real.course + "/vigilance/" + images.result[images.real.course].nameV[n])
           images.addressVP = db.ref("/per-image/course" + '' + images.real.course + "/vigilance/" + images.result[images.real.course].nameV[n])
           images.addressVPU = db.ref("/per-image-user/course" + '' + images.real.course + "/vigilance/" + images.result[images.real.course].nameV[n] + "/" + images.newPostKey)
-          images.addressV.set({
+          images.addressV.update({
             "result": images.result[images.real.course].resultV[n]
           })
-          images.addressVP.set({
-            "result": images.result[images.real.course].resultV[n]
-          })
-          // if ((images.real.FarV <= 1) && (images.real.MissV >= 0)) {
-          //   images.addressVPU.set({
-          //     "result": images.result[images.real.course].resultV[n]
-          //   })
-          // }
+          // images.addressVP.set({
+          //   "result": images.result[images.real.course].resultV[n]
+          // })
+          if ((images.real.FarV <= 1) && (images.real.MissV >= 0)) {
+            images.addressVPU.set({
+              "result": images.result[images.real.course].resultV[n]
+            })
+          }
         }
       }
       for (let n = 0; n < 10; n++) {
@@ -723,14 +732,14 @@ let sendData = function() {
           images.addressT.set({
             "result": images.result[images.real.course].resultT[n]
           })
-          images.addressTP.set({
-            "result": images.result[images.real.course].resultT[n]
-          })
-          // if ((images.real.FarV <= 1) && (images.real.MissV >= 0)) {
-          //   images.addressTPU.set({
-          //     "result": images.result[images.real.course].resultT[n]
-          //   })
-          // }
+          // images.addressTP.set({
+          //   "result": images.result[images.real.course].resultT[n]
+          // })
+          if ((images.real.FarV <= 1) && (images.real.MissV >= 0)) {
+            images.addressTPU.set({
+              "result": images.result[images.real.course].resultT[n]
+            })
+          }
         }
       }
 
