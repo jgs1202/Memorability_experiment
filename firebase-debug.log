@@ -1,0 +1,16 @@
+[debug] [2017-11-01T16:25:10.767Z] ----------------------------------------------------------------------
+[debug] [2017-11-01T16:25:10.770Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\望\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-11-01T16:25:10.771Z] CLI Version:   3.13.1
+[debug] [2017-11-01T16:25:10.771Z] Platform:      win32
+[debug] [2017-11-01T16:25:10.771Z] Node Version:  v6.11.4
+[debug] [2017-11-01T16:25:10.771Z] Time:          Thu Nov 02 2017 01:25:10 GMT+0900 (東京 (標準時))
+[debug] [2017-11-01T16:25:10.772Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-01T16:25:10.789Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-01T16:25:10.789Z] > authorizing via signed-in user
+[debug] [2017-11-01T16:25:10.792Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/memorability-8c35d  
+ Thu Nov 02 2017 01:25:10 GMT+0900 (東京 (標準時))
+[debug] [2017-11-01T16:25:11.830Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-01T16:25:11.834Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/memorability-8c35d/tokens  
+ Thu Nov 02 2017 01:25:11 GMT+0900 (東京 (標準時))
+[debug] [2017-11-01T16:25:12.876Z] <<< HTTP RESPONSE 200

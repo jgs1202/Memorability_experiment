@@ -15,6 +15,22 @@ firebase.initializeApp(config);
 
 
 
+//////////////////// set global variable //////////////////////////////
+
+let images = {}
+images.tutorial = {}
+images.tutorial.img = []
+images.tutorial.verify = []
+images.tutorial.meta = []
+images.tutorial.result = []
+images.real = {}
+images.real.meta = []
+let user = {}
+
+///////////////////////////////////////////////////////////////////////
+
+
+
 /////////////////// input use data   ////////////////////////////
 
 //htmlロードが完了したらボタンにイベントを設定
@@ -36,20 +52,18 @@ let writeNewPost = function(name, age, gender) {
     sex: gender
   }
   // Get a key for a new Post.
-  var newPostKey = firebase.database().ref().child('posts').push().key;
+  images.newPostKey = firebase.database().ref().child('posts').push().key;
 
   // Write the new post's data simultaneously in the posts list and the user's post list.
   var updates = {};
-  updates['/posts/' + newPostKey] = postData;
-  updates['/user-posts/' + name + '/' + newPostKey] = postData;
+  updates['/posts/' + images.newPostKey] = postData;
+  updates['/user-posts/' + name + '/' + images.newPostKey] = postData;
 
   return firebase.database().ref().update(updates);
 }
 //writeNewPost("01", "testuser", "pic", "Test", "This is a test.")
 
 var clickWrite = function() {
-  console.log("click")
-  let user = {}
   console.log(typeof document.getElementById("showNameHtml").value)
   user.Name = document.getElementById("showNameHtml").value
   user.Age = document.getElementById("showAgeHtml").value
@@ -66,21 +80,6 @@ var clickWrite = function() {
   }
 }
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
-//////////////////// set global variable //////////////////////////////
-
-let images = {}
-images.tutorial = {}
-images.tutorial.img = []
-images.tutorial.verify = []
-images.tutorial.meta = []
-images.tutorial.result = []
-images.real = {}
-images.real.meta = []
-
-///////////////////////////////////////////////////////////////////////
 
 
 
@@ -109,6 +108,8 @@ let imgBlack = storageRef.child("black.png")
 
 let downloadImg = function() {
   //get MetaData
+
+  console.log(images.newPostKey)
   imgBlack.getMetadata().then(function(metadata) {
     console.log(metadata)
   })
@@ -122,6 +123,7 @@ let downloadImg = function() {
 
 
 let downloadImg2 = function() {
+  console.log(images.newPostKey)
   for (let n = 0; n < 6; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
@@ -138,7 +140,7 @@ let downloadImg2 = function() {
           imageButton.style.display = "block"
 
           document.getElementById("loadImageTime").style.display = "none"
-          imageButton.addEventListener("click", startIntervalDisplay, false)
+          document.getElementById("showImageButton").addEventListener("click", startIntervalDisplay, false)
         }
       }, false)
       images[n].src = url
@@ -152,8 +154,9 @@ let downloadImg2 = function() {
 
 
 let startIntervalDisplay = function() {
-  console.log(images.place)
+  console.log(images.newPostKey)
   document.getElementById("imageHowTo").style.display = "none"
+  document.getElementById("showImageButton").style.display = "none"
   images.place.style.display = "block"
   let timerEx = setInterval(displayImages, 500)
   images.time = 0
@@ -184,7 +187,6 @@ let displayImages = function() {
 
 let startTutorial = function() {
   console.log("This is tutorial.")
-  console.log(images.tutorial.meta[31])
   document.getElementById("howTo").style.display = "none"
   document.getElementById("placeForImage").style.display = "none"
   document.getElementById("explain").style.display = "none"
@@ -310,7 +312,6 @@ let downloadImageTutorial = function() {
 
 let startIntervalTutorial = function() {
   console.log("start")
-  console.log(images.tutorial.meta[31])
   //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
   //images.tutorial.resultの初期化
   for (let N = 0; N < 30; N++) {
@@ -320,6 +321,7 @@ let startIntervalTutorial = function() {
   let showTutorialResult = function() {
     document.getElementById("tutorialImage").style.display = "none"
     document.getElementById("showResultTutorial").style.display = "block"
+    document.getElementById("ButtonRealResult").style.display = "block"
     document.getElementById("ButtonTutorialResult").addEventListener("click", function() {
       images.tutorial.sumFar = 0
       images.tutorial.sumMiss = 0
@@ -389,7 +391,6 @@ let startIntervalTutorial = function() {
         while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
         images.tutorial.place.appendChild(images.tutorial.img[images.number])
         images.number += 1
-        console.log("images.nuber was plussed.")
         if ((images.number) > 29) {
           clearInterval(timerTutorial)
           console.log("timer clear")
@@ -410,7 +411,7 @@ let startIntervalTutorial = function() {
   document.getElementById("giveTutorialImage").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial, 100) //00)
+  let timerTutorial = setInterval(displayTutorial, 50) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
@@ -478,8 +479,8 @@ let downloadThreeR = function() {
 let downloadImageReal = function() {
   let realRef = firebase.storage().ref('' + 'real' + images.real.course)
   //images.real.verifyを初期化
-    images.real.img=[]
-    images.real.verify = []
+  images.real.img = []
+  images.real.verify = []
   for (let M = 0; M < 31; M++) {
     images.real.img[M] = 0
     images.real.verify[M] = 0
@@ -527,12 +528,12 @@ let downloadImageReal = function() {
       return completeR
     }, 200)
   }
-  let verify2 = function(){
-    setTimeout(function(){
+  let verify2 = function() {
+    setTimeout(function() {
       let complete2 = 1
-      for(let t=0; t<31; t++){
-        if (typeof images.real.meta[t] !== "undefined"){
-          complete2 = complete2* 1
+      for (let t = 0; t < 31; t++) {
+        if (typeof images.real.meta[t] !== "undefined") {
+          complete2 = complete2 * 1
         } else {
           complete2 = 0
         }
@@ -541,9 +542,11 @@ let downloadImageReal = function() {
     }, 500)
   }
   while (verifyDownloadR() === 0) {}
-  while (verify2() === 0){}
+  while (verify2() === 0) {}
   document.getElementById("loadingReal").style.display = "none"
   document.getElementById("realSecond").style.display = "block"
+  document.getElementById("realImage").style.display = "block"
+  document.getElementById("giveRealImage").style.display = "block"
   //document.getElementById("loadImageTime").style.display="none"
   document.getElementById("giveRealImage").addEventListener("click", startIntervalReal, false)
   console.log("download finished.")
@@ -558,26 +561,46 @@ let startIntervalReal = function() {
   let showRealResult = function() {
     document.getElementById("realImage").style.display = "none"
     document.getElementById("showResultReal").style.display = "block"
+    document.getElementById("ButtonRealResult").style.display = "block"
     document.getElementById("ButtonRealResult").addEventListener("click", function() {
-      images.real.sumFar = 0
-      images.real.sumMiss = 0
+      images.real.sumFarV = 0
+      images.real.sumMissV = 0
+      images.real.sumFarT = 0
+      images.real.sumMissT = 0
       for (let N = 0; N < 30; N++) {
         console.log(images.real.meta[N])
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
           images.real.meta[N] === "vigilance") {
           if (images.real.result[N] !== 1) {
-            images.real.sumMiss += 1
+            images.real.sumMissV += 1
           }
         } else { //if( N !== 5 && N !== 13 && N !==15 && N !== 21 && N !== 23 && N !== 24 && N !== 27 && N !== 29){
           if (images.real.result[N] === 1) {
-            images.real.sumFar += 1
+            images.real.sumFarV += 1
           }
         }
       }
-      //実際はここでTutorialの結果により本番に進めるか判定
+      for (let N = 0; N < 30; N++) {
+        if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
+          images.real.meta[N] === "target") {
+          if (images.real.result[N] !== 1) {
+            images.real.sumMissT += 1
+          }
+        } else { //if( N !== 5 && N !== 13 && N !==15 && N !== 21 && N !== 23 && N !== 24 && N !== 27 && N !== 29){
+          if (images.real.result[N] === 1) {
+            images.real.sumFarT += 1
+          }
+        }
+      }
+      images.real.FarV = images.real.sumFarV / 22
+      images.real.MissV = images.real.sumMissV / 8
+      images.real.FarT = images.real.sumFarT / 22
+      images.real.MissT = images.real.sumMissT / 8
       document.getElementById("ButtonRealResult").style.display = "none"
-      console.log("FAR = " + images.tutorial.Far)
-      console.log("Miss = " + images.tutorial.Miss)
+      document.getElementById("showResultReal").style.display = "none"
+      console.log("Vigilance FAR = " + images.real.FarV)
+      console.log("Vigilance Miss = " + images.real.MissV)
+      sendData()
       //document.getElementById("goToRealPart").style.display = "block"
       //document.getElementById("goToRealPart").addEventListener("click", function() {
       //   document.getElementById("goToRealPart").style.display = "none"
@@ -628,6 +651,81 @@ let startIntervalReal = function() {
   document.getElementById("giveRealImage").style.display = "none"
   images.time = 0
   images.number = 0
-  var timerReal = setInterval(displayReal, 100) //00)
+  var timerReal = setInterval(displayReal, 50) //00)
   //document.getElementById("explain").style.display = "block"
+}
+
+let sendData = function() {
+  console.log(images.newPostKey)
+  let sendButton = document.getElementById("sendResult")
+  sendButton.style.display = "block"
+  sendButton.addEventListener("click", function() {
+    let db = firebase.database()
+    setTimeout(function() {
+      images.address = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/result" + '' + images.real.course)
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      // var updates = {};
+      // updates['/posts/' + newPostKey] = postData;
+      // updates['/user-posts/' + name + '/' + newPostKey] = postData;
+      images.address.set({
+        "Far": images.real.FarV,
+        "Miss": images.real.MissV
+      })
+      images.result = []
+      for (let n = 0; n < 10; n++) {
+        images.result[n]=0
+        images.result[n].nameV = []
+        images.result[n].nameT = []
+        images.result[n].resultV = []
+        images.result[n].resultT = []
+      }
+      let N = 0
+      for (let n = 0; n < 30; n++) {
+        if (images.real.meta[n] === "vigilance") {
+          images.result[images.real.course].nameV[N] = n
+          images.reault[images.real.course].resultT[N] = images.real.result[N]
+          N += 1
+        }
+      }
+      N = 0
+      for (let n = 0; n < 30; n++) {
+        if (images.real.meta[n] === "target") {
+          images.result[images.real.course].nameT[N] = '' + n + ".png"
+          images.result[images.real.course].resultT[N] = images.real.result[N]
+          N += 1
+        }
+      }
+      for (let n = 0; n < 10; n++) {
+        if (typeof images.result[images.real.course].nameV !== "undefined") {
+          images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/result" + '' + images.real.course + "vigilance" + images.result[images.real.course].nameV[n],)
+          images.addressV.set({
+            "result": images.result[images.real.course].resultV[n]
+          })
+        }
+      }
+      for (let n = 0; n < 10; n++) {
+        if (typeof images.result[images.real.course].nameT !== "undefined") {
+          images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/result" + '' + images.real.course + "target" + images.result[images.real.course].nameT[n])
+          images.addressT.set({
+            "result": images.result[images.real.course].resultT[n]
+          })
+        }
+      }
+
+    }, 2000)
+    sendButton.style.display = "none"
+    document.getElementById("lastPage").style.display = "block"
+    document.getElementById("onemore").addEventListener("click", function() {
+      document.getElementById("lastPage").style.display = "none"
+      document.getElementById("realFirst").style.display = "block"
+      document.getElementById("ButtonCourse").style.display = "block"
+    }, false)
+    document.getElementById("end").addEventListener("click", function() {
+      document.getElementById("lastPage").style.display = "none"
+      document.getElementById("realFirst").style.display = "none"
+      document.getElementById("thank").style.display = "block"
+    }, false)
+
+  }, false)
+
 }
