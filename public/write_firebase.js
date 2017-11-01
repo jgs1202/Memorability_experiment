@@ -662,7 +662,7 @@ let sendData = function() {
   sendButton.addEventListener("click", function() {
     let db = firebase.database()
     setTimeout(function() {
-      images.address = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/result" + '' + images.real.course)
+      images.address = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real.course)
       // Write the new post's data simultaneously in the posts list and the user's post list.
       // var updates = {};
       // updates['/posts/' + newPostKey] = postData;
@@ -673,7 +673,7 @@ let sendData = function() {
       })
       images.result = []
       for (let n = 0; n < 10; n++) {
-        images.result[n]=0
+        images.result[n] = {}
         images.result[n].nameV = []
         images.result[n].nameT = []
         images.result[n].resultV = []
@@ -682,35 +682,58 @@ let sendData = function() {
       let N = 0
       for (let n = 0; n < 30; n++) {
         if (images.real.meta[n] === "vigilance") {
-          images.result[images.real.course].nameV[N] = n
-          images.reault[images.real.course].resultT[N] = images.real.result[N]
+          console.log(n)
+          images.result[images.real.course].nameV[N] = '' + n
+          images.result[images.real.course].resultV[N] = images.real.result[N]
           N += 1
         }
       }
       N = 0
       for (let n = 0; n < 30; n++) {
         if (images.real.meta[n] === "target") {
-          images.result[images.real.course].nameT[N] = '' + n + ".png"
+          console.log(n)
+          images.result[images.real.course].nameT[N] = '' + n
           images.result[images.real.course].resultT[N] = images.real.result[N]
           N += 1
         }
       }
       for (let n = 0; n < 10; n++) {
-        if (typeof images.result[images.real.course].nameV !== "undefined") {
-          images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/result" + '' + images.real.course + "vigilance" + images.result[images.real.course].nameV[n],)
+        if (typeof images.result[images.real.course].resultV[n] !== "undefined") {
+          images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real.course + "/vigilance/" + images.result[images.real.course].nameV[n])
+          images.addressVP = db.ref("/per-image/course" + '' + images.real.course + "/vigilance/" + images.result[images.real.course].nameV[n])
+          images.addressVPU = db.ref("/per-image-user/course" + '' + images.real.course + "/vigilance/" + images.result[images.real.course].nameV[n] + "/" + images.newPostKey)
           images.addressV.set({
             "result": images.result[images.real.course].resultV[n]
           })
+          images.addressVP.set({
+            "result": images.result[images.real.course].resultV[n]
+          })
+          // if ((images.real.FarV <= 1) && (images.real.MissV >= 0)) {
+          //   images.addressVPU.set({
+          //     "result": images.result[images.real.course].resultV[n]
+          //   })
+          // }
         }
       }
       for (let n = 0; n < 10; n++) {
-        if (typeof images.result[images.real.course].nameT !== "undefined") {
-          images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/result" + '' + images.real.course + "target" + images.result[images.real.course].nameT[n])
+        if (typeof images.result[images.real.course].resultT[n] !== "undefined") {
+          images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real.course + "/target/" + images.result[images.real.course].nameT[n])
+          images.addressTP = db.ref("/per-image/course" + '' + images.real.course + "/target/" + images.result[images.real.course].nameT[n])
+          images.addressTPU = db.ref("/per-image-user/course" + '' + images.real.course + "/target/" + images.result[images.real.course].nameT[n] + "/" + images.newPostKey)
           images.addressT.set({
             "result": images.result[images.real.course].resultT[n]
           })
+          images.addressTP.set({
+            "result": images.result[images.real.course].resultT[n]
+          })
+          // if ((images.real.FarV <= 1) && (images.real.MissV >= 0)) {
+          //   images.addressTPU.set({
+          //     "result": images.result[images.real.course].resultT[n]
+          //   })
+          // }
         }
       }
+
 
     }, 2000)
     sendButton.style.display = "none"
