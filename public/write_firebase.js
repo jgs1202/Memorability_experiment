@@ -321,7 +321,7 @@ let startIntervalTutorial = function() {
   let showTutorialResult = function() {
     document.getElementById("tutorialImage").style.display = "none"
     document.getElementById("showResultTutorial").style.display = "block"
-    document.getElementById("ButtonRealResult").style.display = "block"
+    //document.getElementById("ButtonTutorialResult").style.display = "block"
     document.getElementById("ButtonTutorialResult").addEventListener("click", function() {
       images.tutorial.sumFar = 0
       images.tutorial.sumMiss = 0
@@ -555,7 +555,7 @@ let downloadImageReal = function() {
   document.getElementById("loadingReal").style.display = "none"
   document.getElementById("realSecond").style.display = "block"
   document.getElementById("realImage").style.display = "block"
-  document.getElementById("giveRealImage").style.display = "block"
+  document.getElementById("giveRealButton").style.display = "block"
   //document.getElementById("loadImageTime").style.display="none"
   document.getElementById("giveRealImage").addEventListener("click", startIntervalReal, false)
   console.log("download finished.")
@@ -569,8 +569,9 @@ let startIntervalReal = function() {
 
   let showRealResult = function() {
     document.getElementById("realImage").style.display = "none"
-    document.getElementById("showResultReal").style.display = "block"
-    document.getElementById("ButtonRealResult").style.display = "block"
+    console.log("button")
+    //document.getElementById("showResultReal").style.display = "block"
+    document.getElementById("resultReal").style.display = "block"
     document.getElementById("ButtonRealResult").addEventListener("click", function() {
       images.real.sumFarV = 0
       images.real.sumMissV = 0
@@ -605,8 +606,8 @@ let startIntervalReal = function() {
       images.real.MissV = images.real.sumMissV / 8
       images.real.FarT = images.real.sumFarT / 22
       images.real.MissT = images.real.sumMissT / 8
-      document.getElementById("ButtonRealResult").style.display = "none"
-      document.getElementById("showResultReal").style.display = "none"
+      document.getElementById("resultReal").style.display = "none"
+      //document.getElementById("showResultReal").style.display = "none"
       console.log("Vigilance FAR = " + images.real.FarV)
       console.log("Vigilance Miss = " + images.real.MissV)
       sendData()
@@ -657,7 +658,7 @@ let startIntervalReal = function() {
     images.time += 1
   }
 
-  document.getElementById("giveRealImage").style.display = "none"
+  document.getElementById("giveRealButton").style.display = "none"
   images.time = 0
   images.number = 0
   var timerReal = setInterval(displayReal, 50) //00)
