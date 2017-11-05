@@ -14,8 +14,9 @@
   <script src="html1.js"></script>
 
   <div class="content" id="userInfo">
+    <p class="title">User Informarion</p>
     <dl>
-      <dt>Name</dt>
+      <dt>Name  (ex. Taro Yamada)</dt>
       <dd><input type="text" id="showNameHtml"></dd>
       <dt>Age</dt>
       <dd><input type="text" id="showAgeHtml"></dd>
@@ -29,13 +30,13 @@
   </div>
 
   <div class="content" id="howTo">
-    <p class="text">How to do this experiment</p>
+    <p class="text title">How to do this experiment</p>
   </div>
   <div class="content text" id="loadImageTime">
     <p>loading images...</p>
   </div>
   <div class="content" id="imageHowTo">
-    <input type="button" id="showImmageButton" value="click and show images"><br> Please push the bottun then the explaination will be showed.
+    <input type="button" id="showImageButton" value="click and show images"><br> Please push the bottun then the explaination will be showed.
   </div>
   <div class="content" id="placeForImage"></div>
 
@@ -46,7 +47,7 @@
   </div>
 
   <div class="content" id="tutorialFirst">
-    <p>Tutorial</p>
+    <p class="title">Tutorial</p>
     <input type="button" id="startTutorialButton" value="Go tutorial">
   </div>
   <div class="content text" id="loadingTutorial">loading images...</div>
@@ -63,15 +64,17 @@
   <div class="content" id="showResultTutorial">
     <input type="button" id="ButtonTutorialResult" value="Show result of tutorial">
   </div>
-  <div class="content" id="backToTutorial">
+  <div class="content" id="backToTutorial" >
+    <p>You failed to pass the tutorial. Please try again.</p>
     <input type="button" value="Back to Tutorial">
   </div>
   <div class="content" id="goToRealPart">
+    <p>You passed the tutorial. Please go on to the real part.</p>
     <input type="button" value="Go to real part">
   </div>
 
   <div class="content" id="realFirst">
-    <p>Real Part</p>
+    <p class="title">Real Part</p>
   </div>
   <div class="content" id="ButtonCourse">
     <p class="text" id="realExplain">
@@ -92,6 +95,22 @@
   </div>
   <div class="content" id="showResultReal">
     <input type="button" id="ButtonRealResult" value="Show result of real">
+  </div>
+
+  <div class="content" id="sendResult">
+      <input type="button" value="Send Data">
+  </div>
+  <div class="content" id ="lastPage">
+      <p>
+        Thank you for joining our experiment.<br>
+        If you can do one more, please push the "One More" button.
+      </p>
+      <input type="button" id="onemore" value="One More">
+      <input type="button" id="end" value="FInish">
+  </div>
+  <div class="content" id="thank">
+    Thank you very much!
+    You can close this tab.
   </div>
 </body>
 
