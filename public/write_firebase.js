@@ -182,7 +182,6 @@ let displayImages = function() {
 
 let startTutorial = function() {
   console.log("This is tutorial.")
-  console.log(images.tutorial.meta[31])
   document.getElementById("howTo").style.display = "none"
   document.getElementById("placeForImage").style.display = "none"
   document.getElementById("explain").style.display = "none"
@@ -269,9 +268,10 @@ let downloadImageTutorial = function() {
     })
   }
 
-  for (n = 0; n < 31; n++) {
+  for (let n = 0; n < 31; n++) {
     imgTutorial[n].getMetadata().then(function(metadata) {
       images.tutorial.meta[n] = metadata.customMetadata.visType
+      console.log(images.tutorial.meta[n])
     })
   }
   let verifyDownloadTu = function() {
@@ -303,12 +303,10 @@ let downloadImageTutorial = function() {
   //document.getElementById("loadImageTime").style.display="none"
   document.getElementById("giveTutorialImage").addEventListener("click", startIntervalTutorial, false)
   console.log("download finished.")
-  console.log(images.tutorial.meta[31])
 }
 
 let startIntervalTutorial = function() {
   console.log("start")
-  console.log(images.tutorial.meta[31])
   //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
   //images.tutorial.resultの初期化
   for (let N = 0; N < 30; N++) {
@@ -387,7 +385,6 @@ let startIntervalTutorial = function() {
         while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
         images.tutorial.place.appendChild(images.tutorial.img[images.number])
         images.number += 1
-        console.log("images.nuber was plussed.")
         if ((images.number) > 29) {
           clearInterval(timerTutorial)
           console.log("timer clear")
