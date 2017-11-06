@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Memorability Test</title>
+  <link rel="stylesheet" type="text/css" href="memorability.css">
+</head>
+
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="write_firebase.js"></script>
+  <script src="html1.js"></script>
+
+  <div class="content" id="userInfo">
+    <p class="title">User Informarion</p>
+    <dl>
+      <dt>Name  (ex. Taro Yamada)</dt>
+      <dd><input type="text" id="showNameHtml"></dd>
+      <dt>Age</dt>
+      <dd><input type="text" id="showAgeHtml"></dd>
+      <dt>Gender</dt>
+      <dd><input type="text" id="showGenderHtml"></dd>
+    </dl> <br>
+    <p class="text">
+      Send these information and go to tutorial.<br> The way to deal with the information follow the <a href="http://www.kyoto-u.ac.jp/en/privacy_policy/" target="_blank">Privacy Policy</a> of Kyoto University.
+    </p>
+    <input type="button" value="Send" id="btnChangeData">
+  </div>
+
+  <div class="content" id="howTo">
+    <p class="text title">How to do this experiment</p>
+  </div>
+  <div class="content text" id="loadImageTime">
+    <p>loading images...</p>
+  </div>
+  <div class="content" id="imageHowTo">
+    <input type="button" id="showImageButton" value="click and show images"><br> Please push the bottun then the explaination will be showed.
+  </div>
+  <div class="content" id="placeForImage"></div>
+
+  <div class="content" id="explain">
+    <p>Various Images and a only-black image are showed alternately.<br> Push "Space key" when you feel that you see the image showed for the second time.
+    </p>
+    <input type="button" id="toTutorialButton" name="toTutorial" value="Go to tutorial">
+  </div>
+
+  <div class="content" id="tutorialFirst">
+    <p class="title">Tutorial</p>
+    <input type="button" id="startTutorialButton" value="Go tutorial">
+  </div>
+  <div class="content text" id="loadingTutorial">loading images...</div>
+  <div class="content" id="tutorialSecond">
+    <div id="tutorialImage"></div>
+    <input type="button" id="giveTutorialImage" value="Start Tutorial">
+    <p class="text" id="tutorialExplain">
+      Push the bottun above and start tutorial.<br> Once tutorial starts, the data will be recorded.
+    </p>
+  </div>
+  <div class="content text" id="Memorized">
+    <p>Memorized</p>
+  </div>
+  <div class="content" id="showResultTutorial">
+    <input type="button" id="ButtonTutorialResult" value="Show result of tutorial">
+  </div>
+  <div class="content" id="backToTutorial" >
+    <p>You failed to pass the tutorial. Please try again.</p>
+    <input type="button" value="Back to Tutorial">
+  </div>
+  <div class="content" id="goToRealPart">
+    <p>You passed the tutorial. Please go on to the real part.</p>
+    <input type="button" value="Go to real part">
+  </div>
+
+  <div class="content" id="realFirst">
+    <p class="title">Real Part</p>
+  </div>
+  <div class="content" id="ButtonCourse">
+    <p class="text content" id="realExplain">
+      Select the course and start real part.<br>
+    </p>
+    <input type="button" id="ButtonCourse1" value="Course. 1">
+    <input type="button" id="ButtonCourse2" value="Course. 2">
+    <input type="button" id="ButtonCourse3" value="Course. 3">
+    <input type="button" id="ButtonCourse4" value="Course. 4">
+    <input type="button" id="ButtonCourse5" value="Course. 5">
+    <input type="button" id="ButtonCourse6" value="Course. 6">
+    <input type="button" id="ButtonCourse7" value="Course. 7">
+  </div>
+  <div class="content text" id="loadingReal">loading images...</div>
+  <div class="content" id="realSecond">
+    <div id="realImage"></div>
+  </div>
+  <div class="content" id="giveRealButton">
+    <input type="button" id="giveRealImage" value="Start Real">
+  </div>
+  <div class="content" id="resultReal">
+    <input type="button" id="ButtonRealResult" value="Show result of real">
+  </div>
+
+  <div class="content" id="sendResult">
+      <input type="button" value="Send Data">
+  </div>
+  <div class="content" id ="lastPage">
+      <p>
+        Thank you for joining our experiment.<br>
+        If you can do one more, please push the "One More" button.
+      </p>
+      <input type="button" id="onemore" value="One More">
+      <input type="button" id="end" value="FInish">
+  </div>
+  <div class="content" id="thank">
+    Thank you very much!
+    You can close this tab.
+  </div>
+</body>
+
+</html>
