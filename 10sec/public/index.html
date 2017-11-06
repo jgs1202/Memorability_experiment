@@ -41,8 +41,14 @@
   <div class="content" id="placeForImage"></div>
 
   <div class="content" id="explain">
-    <p>Various Images and a only-black image are showed alternately.<br> Push "Space key" when you feel that you see the image showed for the second time.
+    <p>First, various Images and a only-black image are showed alternately.<br>
+    The target images we want you to memorize are showed for 10 seconds.
     </p>
+    <input type="button" id="nextExplain" name="toTutorial" value="Next">
+  </div>
+
+  <div class="content" id="explain2">
+    <p>Second, push "Space key" when you feel that you see the image showed for the second time.</p>
     <input type="button" id="toTutorialButton" name="toTutorial" value="Go to tutorial">
   </div>
 
@@ -53,7 +59,7 @@
   <div class="content text" id="loadingTutorial">loading images...</div>
   <div class="content" id="tutorialSecond">
     <div id="tutorialImage"></div>
-    <input type="button" id="giveTutorialImage" value="Start Tutorial">
+    <input type="button" id="giveTutorialImage" value="Start Tutorial 1st Section">
     <p class="text" id="tutorialExplain">
       Push the bottun above and start tutorial.<br> Once tutorial starts, the data will be recorded.
     </p>
@@ -64,7 +70,7 @@
   <div class="content" id="showResultTutorial">
     <input type="button" id="ButtonTutorialResult" value="Show result of tutorial">
   </div>
-  <div class="content" id="backToTutorial" >
+  <div class="content" id="backToTutorial">
     <p>You failed to pass the tutorial. Please try again.</p>
     <input type="button" value="Back to Tutorial">
   </div>
@@ -100,19 +106,17 @@
   </div>
 
   <div class="content" id="sendResult">
-      <input type="button" value="Send Data">
+    <input type="button" value="Send Data">
   </div>
-  <div class="content" id ="lastPage">
-      <p>
-        Thank you for joining our experiment.<br>
-        If you can do one more, please push the "One More" button.
-      </p>
-      <input type="button" id="onemore" value="One More">
-      <input type="button" id="end" value="FInish">
+  <div class="content" id="lastPage">
+    <p>
+      Thank you for joining our experiment.<br> If you can do one more, please push the "One More" button.
+    </p>
+    <input type="button" id="onemore" value="One More">
+    <input type="button" id="end" value="FInish">
   </div>
   <div class="content" id="thank">
-    Thank you very much!
-    You can close this tab.
+    Thank you very much! You can close this tab.
   </div>
 </body>
 

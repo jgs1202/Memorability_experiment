@@ -3,12 +3,12 @@ console.log("init")
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyBrIVYPj_FoDe8MKkzs6QuFGfkQrY0vM-8",
-  authDomain: "memorability-8c35d.firebaseapp.com",
-  databaseURL: "https://memorability-8c35d.firebaseio.com",
-  projectId: "memorability-8c35d",
-  storageBucket: "memorability-8c35d.appspot.com",
-  messagingSenderId: "86526497736"
+  apiKey: "AIzaSyAmw_qUkLApLVvcpJZ8FthhAiWM0-7Z5AU",
+  authDomain: "memorability-a0c21.firebaseapp.com",
+  databaseURL: "https://memorability-a0c21.firebaseio.com",
+  projectId: "memorability-a0c21",
+  storageBucket: "memorability-a0c21.appspot.com",
+  messagingSenderId: "355761335744"
 };
 firebase.initializeApp(config);
 //////////////////////////////////////////////////////////////////////
@@ -18,11 +18,14 @@ firebase.initializeApp(config);
 //////////////////// set global variable //////////////////////////////
 
 let images = {}
-images.tutorial = {}
-images.tutorial.img = []
-images.tutorial.verify = []
-images.tutorial.meta = []
-images.tutorial.result = []
+images.tutorial1 = {}
+images.tutorial2 = {}
+images.tutorial1.img = []
+images.tutorial1.verify = []
+images.tutorial2.img = []
+images.tutorial2.verify = []
+images.tutorial2.meta = []
+images.tutorial2.result = []
 images.real = {}
 images.real.meta = []
 let user = {}
@@ -162,23 +165,49 @@ let startIntervalDisplay = function() {
   images.time = 0
   setTimeout(function() {
     document.getElementById("explain").style.display = "block"
-    document.getElementById("toTutorialButton").addEventListener("click", function() {
-      startTutorial()
+    document.getElementById("nextExplain").addEventListener("click", function() {
+      Explain2()
       clearInterval(timerEx)
       console.log("event set")
     }, false)
   }, 500)
 }
 
+let Explain2 = function() {
+  document.getElementById("explain").style.display = "none"
+  document.getElementById("explain2").style.display = "block"
+  images.number = 0
+  let timerEx2 = setInterval(displayEx, 500)
+  document.getElementById("toTutorialButton").addEventListener("click", function() {
+    startTutorial()
+    clearInterval(timerEx2)
+  }, false)
+}
+
 let displayImages = function() {
-  if ((images.time % 3) === 0) {
+  if ((images.time % 21) === 0) {
     while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
     images.place.appendChild(images[images.number])
     images.number += 1
     if (images.number > 5) {
       images.number = 0
     }
-  } else if ((images.time % 3) === 2) {
+  } else if ((images.time % 21) === 20) {
+    while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+    images.place.appendChild(images.black)
+  }
+  images.time += 1
+}
+
+let displayEx = function() {
+  if ((images.time % 5) === 0) {
+    while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+    images.place.appendChild(images[images.number])
+    images.number += 1
+    if (images.number > 5) {
+      images.number = 0
+    }
+  } else if ((images.time % 5) === 4) {
     while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
     images.place.appendChild(images.black)
   }
@@ -189,7 +218,7 @@ let startTutorial = function() {
   console.log("This is tutorial.")
   document.getElementById("howTo").style.display = "none"
   document.getElementById("placeForImage").style.display = "none"
-  document.getElementById("explain").style.display = "none"
+  document.getElementById("explain2").style.display = "none"
   document.getElementById("tutorialFirst").style.display = "block"
   //   document.getElementById("startTutorialButton").addEventListener("click", TutorialEx, false)
   // }
@@ -236,27 +265,31 @@ let downloadThree = function() {
   })
 }
 let downloadImageTutorial = function() {
-  let tutorialRef = firebase.storage().ref("tutorial")
+  let tutorialRef1 = firebase.storage().ref("tutorial1st")
+  let tutorialRef2 = firebase.storage().ref("tutorial2nd")
   //images.tutorial.verifyを初期化
-  for (let M = 0; M < 31; M++) {
-    images.tutorial.img[M] = 0
-    images.tutorial.verify[M] = 0
+  for (let M = 0; M < 15; M++) {
+    images.tutorial1.img[M] = 0
+    images.tutorial1.verify[M] = 0
+    images.tutorial2.img[M] = 0
+    images.tutorial2.verify[M] = 0
   }
 
-  let imgTutorial = []
+  let imgTutorial1 = []
+  let imgTutorial2 = []
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < 31; n++) {
+  for (let n = 0; n < 15; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
-    imgTutorial[n] = tutorialRef.child(imgName)
+    imgTutorial1[n] = tutorialRef1.child(imgName)
     console.log("download start" + imgName)
 
-    imgTutorial[n].getDownloadURL().then(function(url) {
+    imgTutorial1[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.tutorial.img[n] = new Image(500, 400)
-      images.tutorial.img[n].addEventListener("load", function() {
-        images.tutorial.verify[n] = 1
+      images.tutorial1.img[n] = new Image(500, 400)
+      images.tutorial1.img[n].addEventListener("load", function() {
+        images.tutorial1.verify[n] = 1
         //   //img.size = ImageGetNaturalSize(img)
         //   if ((typeof images.tutorial.img[31]) !== "undefined") {
         //     document.getElementById("loadingTutorial").style.display = "none"
@@ -266,43 +299,65 @@ let downloadImageTutorial = function() {
         //     console.log("download finished.")
         //   }
       }, false)
-      images.tutorial.img[n].src = url
+      images.tutorial1.img[n].src = url
     }).catch(function(error) {
       //Handle any Errors
       console.log(error)
     })
   }
-
   for (let n = 0; n < 31; n++) {
-    imgTutorial[n].getMetadata().then(function(metadata) {
-      images.tutorial.meta[n] = metadata.customMetadata.visType
-      console.log(images.tutorial.meta[n])
+    let stringPng = ".png"
+    let imgName = '' + n + stringPng
+    console.log(imgName)
+    imgTutorial2[n] = tutorialRef2.child(imgName)
+    console.log("download start" + imgName)
+
+    imgTutorial2[n].getDownloadURL().then(function(url) {
+      //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
+      images.tutorial2.img[n] = new Image(500, 400)
+      images.tutorial2.img[n].addEventListener("load", function() {
+        images.tutorial2.verify[n] = 1
+        //   //img.size = ImageGetNaturalSize(img)
+        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+        //     document.getElementById("loadingTutorial").style.display = "none"
+        //     document.getElementById("tutorialSecond").style.display = "block"
+        //     //document.getElementById("loadImageTime").style.display="none"
+        //     document.getElementById("giveTutorialImage").addEventListener("click", startIntervalTutorial, false)
+        //     console.log("download finished.")
+        //   }
+      }, false)
+      images.tutorial2.img[n].src = url
+    }).catch(function(error) {
+      //Handle any Errors
+      console.log(error)
     })
   }
-  let verifyDownloadTu = function() {
+  for (let n = 0; n < 31; n++) {
+    imgTutorial2[n].getMetadata().then(function(metadata) {
+      images.tutorial2.meta[n] = metadata.customMetadata.visType
+      console.log(images.tutorial2.meta[n])
+    })
+  }
+  let verifyDownloadTu1 = function() {
     setTimeout(function() {
-      let completeTu = images.tutorial.verify[0]
-      for (let j = 1; j < 31; j++) {
-        completeTu = completeTu * images.tutorial.verify[j]
+      let completeTu = images.tutorial1.verify[0]
+      for (let j = 1; j < 15; j++) {
+        completeTu = completeTu * images.tutorial1.verify[j]
       }
       return completeTu
     }, 200)
   }
-  let verify2 = function() {
+  let verifyDownloadTu2 = function() {
     setTimeout(function() {
-      let completeTu2 = 1
-      for (let t = 0; t < 31; t++) {
-        if (typeof images.tutorial.meta[t] !== "undefined") {
-          completeTu2 = completeTu2 * 1
-        } else {
-          completeTu2 = 0
-        }
+      let completeTu = images.tutorial2.verify[0]
+      for (let j = 1; j < 31; j++) {
+        completeTu = completeTu * images.tutorial2.verify[j]
       }
-      return completeTu2
-    }, 500)
+      return completeTu
+    }, 200)
   }
-  while (verifyDownloadTu() === 0) {}
-  while (verify2() === 0) {}
+  while (verifyDownloadTu1() === 0) {}
+  while (verifyDownloadTu2() === 0) {}
   document.getElementById("loadingTutorial").style.display = "none"
   document.getElementById("tutorialSecond").style.display = "block"
   //document.getElementById("loadImageTime").style.display="none"
@@ -315,7 +370,7 @@ let startIntervalTutorial = function() {
   //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
   //images.tutorial.resultの初期化
   for (let N = 0; N < 30; N++) {
-    images.tutorial.result[N] = 0
+    images.tutorial2.result[N] = 0
   }
 
   let showTutorialResult = function() {
@@ -421,6 +476,186 @@ let startIntervalTutorial = function() {
 
 
 
+let downloadImageTutorial2 = function() {
+  let tutorialRef = firebase.storage().ref("tutorial")
+  //images.tutorial.verifyを初期化
+  for (let M = 0; M < 31; M++) {
+    images.tutorial.img[M] = 0
+    images.tutorial.verify[M] = 0
+  }
+
+  let imgTutorial = []
+  console.log("one, two, threee have been downloaded.")
+  for (let n = 0; n < 31; n++) {
+    let stringPng = ".png"
+    let imgName = '' + n + stringPng
+    console.log(imgName)
+    imgTutorial[n] = tutorialRef.child(imgName)
+    console.log("download start" + imgName)
+
+    imgTutorial[n].getDownloadURL().then(function(url) {
+      //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
+      images.tutorial.img[n] = new Image(500, 400)
+      images.tutorial.img[n].addEventListener("load", function() {
+        images.tutorial.verify[n] = 1
+        //   //img.size = ImageGetNaturalSize(img)
+        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+        //     document.getElementById("loadingTutorial").style.display = "none"
+        //     document.getElementById("tutorialSecond").style.display = "block"
+        //     //document.getElementById("loadImageTime").style.display="none"
+        //     document.getElementById("giveTutorialImage").addEventListener("click", startIntervalTutorial, false)
+        //     console.log("download finished.")
+        //   }
+      }, false)
+      images.tutorial.img[n].src = url
+    }).catch(function(error) {
+      //Handle any Errors
+      console.log(error)
+    })
+  }
+
+  for (let n = 0; n < 31; n++) {
+    imgTutorial[n].getMetadata().then(function(metadata) {
+      images.tutorial.meta[n] = metadata.customMetadata.visType
+      console.log(images.tutorial.meta[n])
+    })
+  }
+  let verifyDownloadTu = function() {
+    setTimeout(function() {
+      let completeTu = images.tutorial.verify[0]
+      for (let j = 1; j < 31; j++) {
+        completeTu = completeTu * images.tutorial.verify[j]
+      }
+      return completeTu
+    }, 200)
+  }
+  let verify2 = function() {
+    setTimeout(function() {
+      let completeTu2 = 1
+      for (let t = 0; t < 31; t++) {
+        if (typeof images.tutorial.meta[t] !== "undefined") {
+          completeTu2 = completeTu2 * 1
+        } else {
+          completeTu2 = 0
+        }
+      }
+      return completeTu2
+    }, 500)
+  }
+  while (verifyDownloadTu() === 0) {}
+  while (verify2() === 0) {}
+  document.getElementById("loadingTutorial").style.display = "none"
+  document.getElementById("tutorialSecond").style.display = "block"
+  //document.getElementById("loadImageTime").style.display="none"
+  document.getElementById("giveTutorialImage").addEventListener("click", startIntervalTutorial, false)
+  console.log("download finished.")
+}
+
+let startIntervalTutorial2 = function() {
+  console.log("start")
+  //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
+  //images.tutorial.resultの初期化
+  for (let N = 0; N < 30; N++) {
+    images.tutorial.result[N] = 0
+  }
+
+  let showTutorialResult = function() {
+    document.getElementById("tutorialImage").style.display = "none"
+    document.getElementById("showResultTutorial").style.display = "block"
+    //document.getElementById("ButtonTutorialResult").style.display = "block"
+    document.getElementById("ButtonTutorialResult").addEventListener("click", function() {
+      images.tutorial.sumFar = 0
+      images.tutorial.sumMiss = 0
+      for (let N = 0; N < 30; N++) {
+        console.log(images.tutorial.meta[N])
+        if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
+          images.tutorial.meta[N] === "vigilance") {
+          if (images.tutorial.result[N] !== 1) {
+            images.tutorial.sumMiss += 1
+          }
+        } else { //if( N !== 5 && N !== 13 && N !==15 && N !== 21 && N !== 23 && N !== 24 && N !== 27 && N !== 29){
+          if (images.tutorial.result[N] === 1) {
+            images.tutorial.sumFar += 1
+          }
+        }
+      }
+      images.tutorial.Far = images.tutorial.sumFar / 22
+      images.tutorial.Miss = images.tutorial.sumMiss / 8
+      console.log("FAR = " + images.tutorial.Far)
+      console.log("Miss = " + images.tutorial.Miss)
+
+      //実際はここでTutorialの結果により本番に進めるか判定
+      document.getElementById("showResultTutorial").style.display = "none"
+      document.getElementById("goToRealPart").style.display = "block"
+      document.getElementById("backToTutorial").style.display = "block"
+      document.getElementById("backToTutorial").addEventListener("click", function() {
+        document.getElementById("backToTutorial").style.display = "none"
+        document.getElementById("goToRealPart").style.display = "none"
+        document.getElementById("giveTutorialImage").style.display = "block"
+        document.getElementById("tutorialImage").style.display = "block"
+        document.getElementById("tutorialExplain").style.display = "block"
+      }, false)
+      document.getElementById("goToRealPart").addEventListener("click", function() {
+        document.getElementById("goToRealPart").style.display = "none"
+        document.getElementById("tutorialFirst").style.display = "none"
+        document.getElementById("backToTutorial").style.display = "none"
+        startReal()
+      }, false)
+    }, false)
+  }
+
+  let keyDownFunc = function(e) {
+    if (e.keyCode === 32) {
+      document.addEventListener("keyup", function() {
+        document.getElementById("Memorized").style.display = "none"
+      })
+      images.tutorial.result[(images.number - 1)] = 1
+      console.log("number " + (images.number - 1) + " was memorized.")
+      document.getElementById("Memorized").style.display = "block"
+    }
+  }
+
+  let displayTutorial = function() {
+    images.tutorial.place = document.getElementById("tutorialImage")
+    if (images.time === 0) {
+      images.tutorial.place.appendChild(images.three)
+    } else if (images.time === 2) {
+      while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+      images.tutorial.place.appendChild(images.two)
+    } else if (images.time === 4) {
+      while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+      images.tutorial.place.appendChild(images.one)
+    } else if (images.time > 5) {
+      document.addEventListener("keydown", keyDownFunc, false)
+      if ((images.time % 3) === 0) {
+        console.log((images.number))
+        while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+        images.tutorial.place.appendChild(images.tutorial.img[images.number])
+        images.number += 1
+        if ((images.number) > 29) {
+          clearInterval(timerTutorial)
+          console.log("timer clear")
+          while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+          document.removeEventListener("keydown", keyDownFunc)
+
+          showTutorialResult()
+        }
+      } else if ((images.time % 3) === 2) {
+        while (images.tutorial.place.firstChild) images.tutorial.place.removeChild(images.tutorial.place.firstChild);
+        images.tutorial.place.appendChild(images.black)
+      }
+    }
+    images.time += 1
+  }
+
+  document.getElementById("tutorialExplain").style.display = "none"
+  document.getElementById("giveTutorialImage").style.display = "none"
+  images.time = 0
+  images.number = 0
+  let timerTutorial = setInterval(displayTutorial, 50) //00)
+  //document.getElementById("explain").style.display = "block"
+}
+
 
 
 
@@ -438,13 +673,13 @@ let startReal = function() {
     document.getElementById('' + "ButtonCourse" + (n + 1)).addEventListener("click", function() {
       images.real.course = n + 1
       //既にプレイしたか判定
-      firebase.database().ref("/user-posts/"+user.Name+"/"+images.newPostKey+"/course"+''+images.real.course+"/Far").once('value').then(function(snapshot){
+      firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real.course + "/Far").once('value').then(function(snapshot) {
         console.log(snapshot._e.T)
-        if(typeof snapshot._e.T === "undefined"){
+        if (typeof snapshot._e.T === "undefined") {
           RealEx();
         } else {
           alert("You have done this course.")
-            RealEx();
+          RealEx();
         }
       })
     }, false)
