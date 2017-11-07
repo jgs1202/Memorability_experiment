@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "memorability-a0c21"
+    "default": "memorability-a0c21",
+    "develop": "memorability-a0c21"
   }
 }

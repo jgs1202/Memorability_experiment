@@ -41,8 +41,7 @@
   <div class="content" id="placeForImage"></div>
 
   <div class="content" id="explain">
-    <p>First, various Images and a only-black image are showed alternately.<br>
-    The target images we want you to memorize are showed for 10 seconds.
+    <p>First, various Images and a only-black image are showed alternately.<br> The target images we want you to memorize are showed for 10 seconds.
     </p>
     <input type="button" id="nextExplain" name="toTutorial" value="Next">
   </div>
@@ -54,16 +53,29 @@
 
   <div class="content" id="tutorialFirst">
     <p class="title">Tutorial</p>
-    <input type="button" id="startTutorialButton" value="Go tutorial">
+  </div>
+  <div class="content">
+    <input type="button" id="startTutorialButton1" value="Go tutorial">
   </div>
   <div class="content text" id="loadingTutorial">loading images...</div>
-  <div class="content" id="tutorialSecond">
-    <div id="tutorialImage"></div>
-    <input type="button" id="giveTutorialImage" value="Start Tutorial 1st Section">
-    <p class="text" id="tutorialExplain">
-      Push the bottun above and start tutorial.<br> Once tutorial starts, the data will be recorded.
-    </p>
+  <div id="tutorialImage1"></div>
+  <div class="content" id="tutorialSecond1">
+    <input type="button" id="giveTutorialImage1" value="Start Tutorial 1st Section">
+    <p class="text" id="tutorialExplain1">
+      Push the bottun above and start the 1st section of tutorial.<br> 15 target images will be showed, realize them.</p>
   </div>
+  <div class="content" id="goTutorial2">
+    <input type="button" id="buttonGoTutorial2" value="Go to the 2nd section">
+    <p>The 1st section is over. Please go on to the 2nd section.</p>
+  </div>
+
+  <div id="tutorialImage2"></div>
+  <div class="content" id="tutorial2">
+    <input type="button" id="giveTutorialImage2" value="Start Tutorial 2nd Section">
+    <p class="text" id="tutorialExplain2">
+      Push the bottun above and start the 2nd section of tutorial.<br> 30 images will be showed, push <b>space key</b> when a image you have seen is shown.</p>
+  </div>
+
   <div class="content text" id="Memorized">
     <p>Memorized</p>
   </div>
