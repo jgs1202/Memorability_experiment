@@ -1021,7 +1021,7 @@ let sendData = function() {
         }
       }
       for (let n = 0; n < 10; n++) {
-        if (typeof images.result[images.real2.course].resultV[n] !== "undefined") {
+        if (typeof images.result[images.real1.course].resultV[n] !== "undefined") {
           images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
           images.addressVP = db.ref("/per-image/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
           images.addressVPU = db.ref("/per-image-user/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n] + "/" + images.newPostKey)

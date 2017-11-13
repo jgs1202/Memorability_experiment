@@ -1,0 +1,26 @@
+[debug] [2017-11-13T02:31:37.842Z] ----------------------------------------------------------------------
+[debug] [2017-11-13T02:31:37.846Z] Command:       /home/nozomi/.nvm/versions/node/v9.0.0/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-11-13T02:31:37.846Z] CLI Version:   3.14.0
+[debug] [2017-11-13T02:31:37.847Z] Platform:      linux
+[debug] [2017-11-13T02:31:37.847Z] Node Version:  v9.0.0
+[debug] [2017-11-13T02:31:37.847Z] Time:          Mon Nov 13 2017 11:31:37 GMT+0900 (JST)
+[debug] [2017-11-13T02:31:37.847Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-13T02:31:37.907Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-13T02:31:37.907Z] > authorizing via signed-in user
+[debug] [2017-11-13T02:31:37.912Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/memorability-a0c21  
+ Mon Nov 13 2017 11:31:37 GMT+0900 (JST)
+[debug] [2017-11-13T02:31:38.525Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-13T02:31:38.527Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/memorability-a0c21/tokens  
+ Mon Nov 13 2017 11:31:38 GMT+0900 (JST)
+[debug] [2017-11-13T02:31:39.251Z] <<< HTTP RESPONSE 200
+[info] 1
+[info] 
+[info] === Deploying to 'memorability-a0c21'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing public directory for upload...
+[debug] [2017-11-13T02:31:39.701Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/memorability-a0c21/uploads/-KynCwIR4J_CphMhlLV7?fileCount=6&message=  
+ Mon Nov 13 2017 11:31:39 GMT+0900 (JST)
+[debug] [2017-11-13T02:31:40.376Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-13T02:31:40.377Z] [hosting] .tgz uploaded successfully, waiting for extraction
