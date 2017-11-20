@@ -207,6 +207,21 @@ let displayImages = function() {
   images.time += 1
 }
 
+// let displayImages = function() {
+//   if ((images.time % 3) === 0) {
+//     while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+//     images.place.appendChild(images[images.number])
+//     images.number += 1
+//     if (images.number > 5) {
+//       images.number = 0
+//     }
+//   } else if ((images.time % 3) === 2) {
+//     while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
+//     images.place.appendChild(images.black)
+//   }
+//   images.time += 1
+// }
+
 let displayEx = function() {
   if ((images.time % 5) === 0) {
     while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
@@ -403,13 +418,13 @@ let startIntervalTutorial1 = function() {
       while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
       images.tutorial1.place.appendChild(images.one)
     } else if (images.time > 5) {
-      if ((images.number) > 14) {
-        clearInterval(timerTutorial)
-        console.log("timer clear")
-        while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
-        goTutorialSecond()
-      }
-      else if (( (images.time-6) % 21) === 0) {
+      if (( (images.time-6) % 21) === 0) {
+        if ((images.number) > 14) {
+          clearInterval(timerTutorial)
+          console.log("timer clear")
+          while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
+          goTutorialSecond()
+        }
         console.log((images.number))
         while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
         images.tutorial1.place.appendChild(images.tutorial1.img[images.number])
@@ -418,6 +433,21 @@ let startIntervalTutorial1 = function() {
         while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
         images.tutorial1.place.appendChild(images.black)
       }
+      // if (( (images.time-6) % 3) === 0) {
+      //   if ((images.number) > 14) {
+      //     clearInterval(timerTutorial)
+      //     console.log("timer clear")
+      //     while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
+      //     goTutorialSecond()
+      //   }
+      //   console.log((images.number))
+      //   while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
+      //   images.tutorial1.place.appendChild(images.tutorial1.img[images.number])
+      //   images.number += 1
+      // } else if (( (images.time-6) % 3) === 2) {
+      //   while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
+      //   images.tutorial1.place.appendChild(images.black)
+      // }
     }
     console.log(images.time)
     images.time += 1
@@ -426,7 +456,7 @@ let startIntervalTutorial1 = function() {
   document.getElementById("tutorialSecond1").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial1, 10) //00)
+  let timerTutorial = setInterval(displayTutorial1, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
@@ -510,14 +540,14 @@ let startIntervalTutorial2 = function() {
       images.tutorial2.place.appendChild(images.one)
     } else if (images.time > 5) {
       document.addEventListener("keypress", keyDownFunc, false)
-      if ((images.number) > 29) {
-        clearInterval(timerTutorial)
-        console.log("timer clear")
-        while (images.tutorial2.place.firstChild) images.tutorial2.place.removeChild(images.tutorial2.place.firstChild);
-        document.removeEventListener("keypress", keyDownFunc)
-        showTutorialResult()
-      }
       if (( (images.time-6) % 5) === 0) {
+        if ((images.number) > 29) {
+          clearInterval(timerTutorial)
+          console.log("timer clear")
+          while (images.tutorial2.place.firstChild) images.tutorial2.place.removeChild(images.tutorial2.place.firstChild);
+          document.removeEventListener("keypress", keyDownFunc)
+          showTutorialResult()
+        }
         console.log((images.number))
         while (images.tutorial2.place.firstChild) images.tutorial2.place.removeChild(images.tutorial2.place.firstChild);
         images.tutorial2.place.appendChild(images.tutorial2.img[images.number])
@@ -533,7 +563,7 @@ let startIntervalTutorial2 = function() {
   document.getElementById("tutorial2").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial2, 50) //00)
+  let timerTutorial = setInterval(displayTutorial2, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 
@@ -733,13 +763,13 @@ let startIntervalReal1 = function() {
       while (images.real1.place.firstChild) images.real1.place.removeChild(images.real1.place.firstChild);
       images.real1.place.appendChild(images.one)
     } else if (images.time > 5) {
-      if ((images.number) > 14) {
+      if (( (images.time-6) % 21) === 0) {
+        if ((images.number) > 14) {
         clearInterval(timerReal)
         console.log("timer clear")
         while (images.real1.place.firstChild) images.real1.place.removeChild(images.real1.place.firstChild);
         goRealSecond()
       }
-      else if (( (images.time-6) % 21) === 0) {
         console.log((images.number))
         while (images.real1.place.firstChild) images.real1.place.removeChild(images.real1.place.firstChild);
         images.real1.place.appendChild(images.real1.img[images.number])
@@ -756,7 +786,7 @@ let startIntervalReal1 = function() {
   document.getElementById("realSecond1").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerReal = setInterval(displayReal1, 10) //00)
+  let timerReal = setInterval(displayReal1, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
@@ -848,14 +878,14 @@ let startIntervalReal2 = function() {
       images.real2.place.appendChild(images.one)
     } else if (images.time > 5) {
       document.addEventListener("keypress", keyDownFunc, false)
-      if ((images.number) > 29) {
+      if (( (images.time-6) % 5) === 0) {
+        if ((images.number) > 29) {
         clearInterval(timerReal)
         console.log("timer clear")
         while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
         document.removeEventListener("keypress", keyDownFunc)
         showRealResult()
       }
-      if (( (images.time-6) % 5) === 0) {
         console.log((images.number))
         while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
         images.real2.place.appendChild(images.real2.img[images.number])
@@ -871,7 +901,7 @@ let startIntervalReal2 = function() {
   document.getElementById("real2").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerReal = setInterval(displayReal2, 50) //00)
+  let timerReal = setInterval(displayReal2, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 //
@@ -995,7 +1025,7 @@ let sendData = function() {
         "Miss": images.real2.MissV
       })
       images.result = []
-      for (let n = 0; n < 10; n++) {
+      for (let n = 0; n < 15; n++) {
         images.result[n] = {}
         images.result[n].nameV = []
         images.result[n].nameT = []
@@ -1020,7 +1050,7 @@ let sendData = function() {
           N += 1
         }
       }
-      for (let n = 0; n < 10; n++) {
+      for (let n = 0; n < 15; n++) {
         if (typeof images.result[images.real1.course].resultV[n] !== "undefined") {
           images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
           images.addressVP = db.ref("/per-image/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
@@ -1038,7 +1068,7 @@ let sendData = function() {
           }
         }
       }
-      for (let n = 0; n < 10; n++) {
+      for (let n = 0; n < 15; n++) {
         if (typeof images.result[images.real1.course].resultT[n] !== "undefined") {
           images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
           images.addressTP = db.ref("/per-image/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
