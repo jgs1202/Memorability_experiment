@@ -3,12 +3,12 @@ console.log("init")
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyAmw_qUkLApLVvcpJZ8FthhAiWM0-7Z5AU",
-  authDomain: "memorability-a0c21.firebaseapp.com",
-  databaseURL: "https://memorability-a0c21.firebaseio.com",
-  projectId: "memorability-a0c21",
-  storageBucket: "memorability-a0c21.appspot.com",
-  messagingSenderId: "355761335744"
+  apiKey: "AIzaSyBrIVYPj_FoDe8MKkzs6QuFGfkQrY0vM-8",
+  authDomain: "memorability-8c35d.firebaseapp.com",
+  databaseURL: "https://memorability-8c35d.firebaseio.com",
+  projectId: "memorability-8c35d",
+  storageBucket: "memorability-8c35d.appspot.com",
+  messagingSenderId: "86526497736"
 };
 firebase.initializeApp(config);
 //////////////////////////////////////////////////////////////////////
