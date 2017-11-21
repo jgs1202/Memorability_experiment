@@ -27,7 +27,7 @@ for file in os.listdir():
 			filepath = targetpath +"/"+ file
 			image = Image.open(filepath)
 			tarList.append(image)
-			
+
 os.chdir(fillerpath)
 for file in os.listdir():
 	if (file != ".DS_Store"):

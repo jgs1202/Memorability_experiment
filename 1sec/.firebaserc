@@ -1,8 +1,7 @@
 {
   "projects": {
     "default": "memorability-a0c21",
-    "development": "memorability-8c35d",
-    "develop": "memorability-8c35d",
-    "decelop": "memorability-a0c21"
+    "develop": "memorability-a0c21",
+    "a": "memorability-a0c21"
   }
 }
