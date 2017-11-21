@@ -58,7 +58,7 @@ let writeNewPost = function(name, age, gender) {
   // A post entry.
   var postData = {
     author: name,
-    uid: age,
+    age: age,
     sex: gender
   }
   // Get a key for a new Post.
@@ -78,7 +78,7 @@ var clickWrite = function() {
   user.Name = document.getElementById("showNameHtml").value
   user.Age = document.getElementById("showAgeHtml").value
   user.Gender = document.getElementById("showGenderHtml").value
-  console.log(user.Name, user.Age, user.Gender) //.displayName, userData.uid, userData.email, userData.emailVerified)
+  console.log(user.Name, user.Age, user.Gender) //.displayName, userData, userData.email, userData.emailVerified)
   if ((typeof user.Name !== "undefined") && (typeof user.Age !== "undefined") && (typeof user.Gender !== "undefined")) {
     writeNewPost(user.Name, user.Age, user.Gender)
     document.getElementById("userInfo").style.display = "none"
@@ -177,7 +177,7 @@ let startIntervalDisplay = function() {
       clearInterval(timerEx)
       console.log("event set")
     }, false)
-  }, 500)
+  }, 50)
 }
 
 let Explain2 = function() {
@@ -433,7 +433,7 @@ let startIntervalTutorial1 = function() {
         console.log("timer clear")
         while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
         goTutorialSecond()
-      }
+        }
         console.log((images.number))
         while (images.tutorial1.place.firstChild) images.tutorial1.place.removeChild(images.tutorial1.place.firstChild);
         images.tutorial1.place.appendChild(images.tutorial1.img[images.number])
@@ -477,7 +477,7 @@ let startIntervalTutorial2 = function() {
       for (let N = 0; N < 30; N++) {
         console.log(images.tutorial2.meta[N])
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
-          images.tutorial2.meta[N] === "vigilance") {
+          images.tutorial2.meta[N] === "target") {
           if (images.tutorial2.result[N] !== 1) {
             images.tutorial2.sumMiss += 1
           }
@@ -584,7 +584,6 @@ let startReal = function() {
           RealEx();
         } else {
           alert("You have done this course.")
-          RealEx();
         }
       })
     }, false)
@@ -626,12 +625,12 @@ let downloadThreeR = function() {
   })
 }
 let downloadImageReal = function() {
-  let realRef1 = firebase.storage().ref(images.real1.course + "/1st")
-  let realRef2 = firebase.storage().ref(images.real1.course + "/2nd")
+  let realRef1 = firebase.storage().ref("course" + images.real1.course + "/1st")
+  let realRef2 = firebase.storage().ref("course" + images.real1.course + "/2nd")
   //let realRef1 = firebase.storage().ref("course" + '' + images.real1.course +"/real1st")
   //let realRef2 = firebase.storage().ref("course" + '' + images.real1.course +"/real2nd")
   //images.tutorial.verifyを初期化
-  for (let M = 0; M < 15; M++) {
+  for (let M = 0; M < 30; M++) {
     images.real1.img[M] = 0
     images.real1.verify[M] = 0
     images.real2.img[M] = 0
@@ -641,7 +640,7 @@ let downloadImageReal = function() {
   let imgReal1 = []
   let imgReal2 = []
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < 15; n++) {
+  for (let n = 0; n < 30; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -668,7 +667,7 @@ let downloadImageReal = function() {
       console.log(error)
     })
   }
-  for (let n = 0; n < 31; n++) {
+  for (let n = 0; n < 60; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -695,7 +694,7 @@ let downloadImageReal = function() {
       console.log(error)
     })
   }
-  for (let n = 0; n < 31; n++) {
+  for (let n = 0; n < 60; n++) {
     imgReal2[n].getMetadata().then(function(metadata) {
       images.real2.meta[n] = metadata.customMetadata.visType
       console.log(images.real2.meta[n])
@@ -704,7 +703,7 @@ let downloadImageReal = function() {
   let verifyDownloadTu1 = function() {
     setTimeout(function() {
       let completeTu = images.real1.verify[0]
-      for (let j = 1; j < 15; j++) {
+      for (let j = 1; j < 30; j++) {
         completeTu = completeTu * images.real1.verify[j]
       }
       return completeTu
@@ -713,7 +712,7 @@ let downloadImageReal = function() {
   let verifyDownloadTu2 = function() {
     setTimeout(function() {
       let completeTu = images.real2.verify[0]
-      for (let j = 1; j < 31; j++) {
+      for (let j = 1; j < 60; j++) {
         completeTu = completeTu * images.real2.verify[j]
       }
       return completeTu
@@ -767,7 +766,7 @@ let startIntervalReal1 = function() {
       //   images.real1.place.appendChild(images.black)
       // }
       if (( (images.time-6) % 3) === 0) {
-        if ((images.number) > 14) {
+        if ((images.number) > 29) {
         clearInterval(timerReal)
         console.log("timer clear")
         while (images.real1.place.firstChild) images.real1.place.removeChild(images.real1.place.firstChild);
@@ -802,7 +801,7 @@ let startIntervalReal2 = function() {
   console.log("start")
   //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
   //images.real.resultの初期化
-  for (let N = 0; N < 30; N++) {
+  for (let N = 0; N < 60; N++) {
     images.real2.result[N] = 0
   }
 
@@ -816,7 +815,7 @@ let startIntervalReal2 = function() {
       images.real2.sumMissV = 0
       images.real2.sumFarT = 0
       images.real2.sumMissT = 0
-      for (let N = 0; N < 30; N++) {
+      for (let N = 0; N < 60; N++) {
         console.log(images.real2.meta[N])
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
           images.real2.meta[N] === "vigilance") {
@@ -829,7 +828,7 @@ let startIntervalReal2 = function() {
           }
         }
       }
-      for (let N = 0; N < 30; N++) {
+      for (let N = 0; N < 60; N++) {
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
           images.real2.meta[N] === "target") {
           if (images.real2.result[N] !== 1) {
@@ -841,14 +840,14 @@ let startIntervalReal2 = function() {
           }
         }
       }
-      images.real2.FarV = images.real2.sumFarV / 15
-      images.real2.MissV = images.real2.sumMissV / 15
-      images.real2.FarT = images.real2.sumFarT / 15
-      images.real2.MissT = images.real2.sumMissT / 15
+      images.real2.FarV = images.real2.sumFarV / 30
+      images.real2.MissV = images.real2.sumMissV / 30
+      images.real2.FarT = images.real2.sumFarT / 30
+      images.real2.MissT = images.real2.sumMissT / 30
       document.getElementById("showResultReal").style.display = "none"
       //document.getElementById("showResultreal2").style.display = "none"
-      console.log("Vigilance FAR = " + images.real2.FarV)
-      console.log("Vigilance Miss = " + images.real2.MissV)
+      console.log("Target FAR = " + images.real2.FarT)
+      console.log("Target Miss = " + images.real2.MissT)
       sendData()
       //document.getElementById("goToRealPart").style.display = "block"
       //document.getElementById("goToRealPart").addEventListener("click", function() {
@@ -882,7 +881,7 @@ let startIntervalReal2 = function() {
     } else if (images.time > 5) {
       document.addEventListener("keypress", keyDownFunc, false)
       if (( (images.time-6) % 5) === 0) {
-        if ((images.number) > 29) {
+        if ((images.number) > 59) {
         clearInterval(timerReal)
         console.log("timer clear")
         while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
@@ -1028,7 +1027,7 @@ let sendData = function() {
         "Miss": images.real2.MissV
       })
       images.result = []
-      for (let n = 0; n < 15; n++) {
+      for (let n = 0; n < 30; n++) {
         images.result[n] = {}
         images.result[n].nameV = []
         images.result[n].nameT = []
@@ -1036,7 +1035,7 @@ let sendData = function() {
         images.result[n].resultT = []
       }
       let N = 0
-      for (let n = 0; n < 30; n++) {
+      for (let n = 0; n < 60; n++) {
         if (images.real2.meta[n] === "vigilance") {
           console.log(n)
           images.result[images.real1.course].nameV[N] = '' + n
@@ -1045,7 +1044,7 @@ let sendData = function() {
         }
       }
       N = 0
-      for (let n = 0; n < 30; n++) {
+      for (let n = 0; n < 60; n++) {
         if (images.real2.meta[n] === "target") {
           console.log(n)
           images.result[images.real1.course].nameT[N] = '' + n
@@ -1053,7 +1052,7 @@ let sendData = function() {
           N += 1
         }
       }
-      for (let n = 0; n < 15; n++) {
+      for (let n = 0; n < 30; n++) {
         if (typeof images.result[images.real1.course].resultV[n] !== "undefined") {
           images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
           images.addressVP = db.ref("/per-image/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
@@ -1071,7 +1070,7 @@ let sendData = function() {
           }
         }
       }
-      for (let n = 0; n < 15; n++) {
+      for (let n = 0; n < 30; n++) {
         if (typeof images.result[images.real1.course].resultT[n] !== "undefined") {
           images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
           images.addressTP = db.ref("/per-image/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
