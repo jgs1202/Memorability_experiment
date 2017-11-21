@@ -626,8 +626,8 @@ let downloadThreeR = function() {
   })
 }
 let downloadImageReal = function() {
-  let realRef1 = firebase.storage().ref("real1st")
-  let realRef2 = firebase.storage().ref("real2nd")
+  let realRef1 = firebase.storage().ref(images.real1.course + "/1st")
+  let realRef2 = firebase.storage().ref(images.real1.course + "/2nd")
   //let realRef1 = firebase.storage().ref("course" + '' + images.real1.course +"/real1st")
   //let realRef2 = firebase.storage().ref("course" + '' + images.real1.course +"/real2nd")
   //images.tutorial.verifyを初期化
