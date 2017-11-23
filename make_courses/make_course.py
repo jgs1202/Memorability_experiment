@@ -6,7 +6,7 @@ from operator import itemgetter
 import csv
 
 
-for i in range(20,21):
+for i in range(2,21):
 	image_size=500
 	tarList = []
 	filList = []
@@ -18,12 +18,12 @@ for i in range(20,21):
 
 	targetpath = "/Users/Aoyama/Documents/B4/Memorability_data/our_targets/"+ '' + str(course) + "/target"
 	fillerpath = "/Users/Aoyama/Documents/B4/Memorability_data/our_targets/"+ '' + str(course) + "/filler"
-	firstpath = "/Users/Aoyama/Documents/B4/Memorability_data/our_targets/"+ '' + str(course) + "/1st"
-	secondpath = "/Users/Aoyama/Documents/B4/Memorability_data/our_targets/"+ '' + str(course) + "/2nd"
+	firstpath = "/Users/Aoyama/Documents/B4/Memorability_data/our_targets/"+ '' + str(course) + "/First"
+	secondpath = "/Users/Aoyama/Documents/B4/Memorability_data/our_targets/"+ '' + str(course) + "/Second"
 
 
 	os.chdir(targetpath)
-	for file in os.listdir():
+	for file in os.listdir(targetpath):
 		if (file != ".DS_Store"):
 			tar += 1
 			with open(file, 'r') as f:
@@ -32,7 +32,7 @@ for i in range(20,21):
 				tarList.append(image)
 
 	os.chdir(fillerpath)
-	for file in os.listdir():
+	for file in os.listdir(fillerpath):
 		if (file != ".DS_Store"):
 			fil += 1
 			with open(file, 'r') as h:
@@ -59,29 +59,33 @@ for i in range(20,21):
 	#sort target and filler based on the rule that the order of targets is same
 	for i in range(lenTar + lenFil):
 		#random 1 or 0
-		diz = randint(0,2)
-		if diz == 1:
-			try:
-				List.append([tarList[tarNum], tarNum + filNum])
-				tarNum +=1
-			except:
+		if i < 15:
+			List.append([filList[filNum], "filler"])
+			filNum += 1
+		else:
+			diz = randint(0,2)
+			if diz == 1:
+				try:
+					List.append([tarList[tarNum], tarNum + filNum])
+					tarNum +=1
+				except:
 
+					try:
+						List.append([filList[filNum], "filler"])
+						filNum += 1
+					except:
+						break
+
+			elif diz == 0:
 				try:
 					List.append([filList[filNum], "filler"])
 					filNum += 1
 				except:
-					break
-
-		elif diz == 0:
-			try:
-				List.append([filList[filNum], "filler"])
-				filNum += 1
-			except:
-				try:
-					List.append([tarList[tarNum], tarNum + filNum])
-					tarNum += 1
-				except:
-					break
+					try:
+						List.append([tarList[tarNum], tarNum + filNum])
+						tarNum += 1
+					except:
+						break
 
 	print(tarNum + filNum)
 
@@ -89,11 +93,11 @@ for i in range(20,21):
 
 	for i in range(len(List)):
 		os.chdir(secondpath)
-		List[i][0].save("../2nd/"+ '' + str(i) + '.png')
+		List[i][0].save("../Second/"+ '' + str(i) + '.png')
 		if List[i][1] != "filler":
 			os.chdir(firstpath)
 			tarNumList.append(i)
-			List[i][0].save('../1st/' + ''+ str(numberTar) + '.png')
+			List[i][0].save('../First/' + ''+ str(numberTar) + '.png')
 			numberTar += 1
 
 

@@ -2,6 +2,7 @@
   "projects": {
     "default": "memorability-a0c21",
     "develop": "memorability-a0c21",
-    "a": "memorability-a0c21"
+    "a": "memorability-a0c21",
+    "1sec": "memorability-a0c21"
   }
 }

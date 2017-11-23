@@ -168,7 +168,7 @@ let startIntervalDisplay = function() {
   document.getElementById("imageHowTo").style.display = "none"
   document.getElementById("showImageButton").style.display = "none"
   images.place.style.display = "block"
-  let timerEx = setInterval(displayImages, 50)
+  let timerEx = setInterval(displayImages, 500)
   images.time = 0
   setTimeout(function() {
     document.getElementById("explain").style.display = "block"
@@ -184,7 +184,7 @@ let Explain2 = function() {
   document.getElementById("explain").style.display = "none"
   while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
   images.number = 0
-  let timerEx2 = setInterval(displayEx, 50)
+  let timerEx2 = setInterval(displayEx, 500)
   document.getElementById("explain2").style.display = "block"
   document.getElementById("toTutorialButton").addEventListener("click", function() {
     startTutorial()
@@ -314,7 +314,7 @@ let downloadImageTutorial = function() {
       images.tutorial1.img[n].addEventListener("load", function() {
         images.tutorial1.verify[n] = 1
         //   //img.size = ImageGetNaturalSize(img)
-        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+        //   if ((typeof images.tutorial.img[30]) !== "undefined") {
         //     document.getElementById("loadingTutorial").style.display = "none"
         //     document.getElementById("tutorialSecond").style.display = "block"
         //     //document.getElementById("loadImageTime").style.display="none"
@@ -328,7 +328,7 @@ let downloadImageTutorial = function() {
       console.log(error)
     })
   }
-  for (let n = 0; n < 31; n++) {
+  for (let n = 0; n < 30; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -341,7 +341,7 @@ let downloadImageTutorial = function() {
       images.tutorial2.img[n].addEventListener("load", function() {
         images.tutorial2.verify[n] = 1
         //   //img.size = ImageGetNaturalSize(img)
-        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+        //   if ((typeof images.tutorial.img[30]) !== "undefined") {
         //     document.getElementById("loadingTutorial").style.display = "none"
         //     document.getElementById("tutorialSecond").style.display = "block"
         //     //document.getElementById("loadImageTime").style.display="none"
@@ -355,7 +355,7 @@ let downloadImageTutorial = function() {
       console.log(error)
     })
   }
-  for (let n = 0; n < 31; n++) {
+  for (let n = 0; n < 30; n++) {
     imgTutorial2[n].getMetadata().then(function(metadata) {
       images.tutorial2.meta[n] = metadata.customMetadata.visType
       console.log(images.tutorial2.meta[n])
@@ -373,7 +373,7 @@ let downloadImageTutorial = function() {
   let verifyDownloadTu2 = function() {
     setTimeout(function() {
       let completeTu = images.tutorial2.verify[0]
-      for (let j = 1; j < 31; j++) {
+      for (let j = 1; j < 30; j++) {
         completeTu = completeTu * images.tutorial2.verify[j]
       }
       return completeTu
@@ -450,7 +450,7 @@ let startIntervalTutorial1 = function() {
   document.getElementById("tutorialSecond1").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial1, 50) //00)
+  let timerTutorial = setInterval(displayTutorial1, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
@@ -478,7 +478,7 @@ let startIntervalTutorial2 = function() {
         console.log(images.tutorial2.meta[N])
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
           images.tutorial2.meta[N] === "vigilance") {
-          if (images.tutorial2.result[N]　=== 0) {
+          if (images.tutorial2.result[N]　 === 0) {
             images.tutorial2.sumMiss += 1
           }
         } else { //if( N !== 5 && N !== 13 && N !==15 && N !== 21 && N !== 23 && N !== 24 && N !== 27 && N !== 29){
@@ -491,6 +491,7 @@ let startIntervalTutorial2 = function() {
       images.tutorial2.Miss = images.tutorial2.sumMiss / 15
       console.log("FAR = " + images.tutorial2.Far)
       console.log("Miss = " + images.tutorial2.Miss)
+      document.getElementById('tuResult').textContent= 'Your score is ' + '' + (((1 - images.tutorial2.Miss)*100).toFixed(1)).toString() + '%'
 
       //実際はここでTutorialの結果により本番に進めるか判定
       document.getElementById("showResultTutorial").style.display = "none"
@@ -567,7 +568,7 @@ let startIntervalTutorial2 = function() {
   document.getElementById("tutorial2").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial2, 50) //00)
+  let timerTutorial = setInterval(displayTutorial2, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 
@@ -576,33 +577,358 @@ let startIntervalTutorial2 = function() {
 
 
 //   //From here real experiment
+let courseVerify1 = function() {
+  n = 1
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+    }
+  })
+}
+let courseVerify2 = function() {
+  n = 2
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify3 = function() {
+  n = 3
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify4 = function() {
+  n = 4
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify5 = function() {
+  n = 5
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify6 = function() {
+  n = 6
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify7 = function() {
+  n = 7
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify8 = function() {
+  n = 8
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify9 = function() {
+  n = 9
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify10 = function() {
+  n = 10
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify11 = function() {
+  n = 11
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify12 = function() {
+  n = 12
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify13 = function() {
+  n = 13
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify14 = function() {
+  n = 14
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify15 = function() {
+  n = 15
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify16 = function() {
+  n = 16
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify17 = function() {
+  n = 17
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify18 = function() {
+  n = 18
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify19 = function() {
+  n = 19
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
+let courseVerify0 = function() {
+  n = 0
+  images.real1.course = n + 1
+  //既にプレイしたか判定
+  // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+  firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
+    console.log(snapshot._e.T)
+    if (typeof snapshot._e.T === "undefined") {
+      RealEx();
+    } else {
+      alert("You have done this course.")
+      RealEx()
+    }
+  })
+}
 
 let startReal = function() {
+  document.getElementById("lastPage").style.display = "none"
   console.log("This is Real.")
   //document.getElementById("howTo").style.display = "none"
   //document.getElementById("placeForImage").style.display = "none"
   //document.getElementById("explain").style.display = "none"
   document.getElementById("realFirst").style.display = "block"
   document.getElementById("ButtonCourse").style.display = "block"
-  for (let n = 0; n < 20; n++) {
-    document.getElementById('' + "ButtonCourse" + (n + 1) ).addEventListener("click", function() {
-      images.real1.course = n + 1
-      //既にプレイしたか判定
-      // firebase.database().ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
-      firebase.database().ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/Far").once('value').then(function(snapshot) {
-        console.log(snapshot._e.T)
-        if (typeof snapshot._e.T === "undefined") {
-          RealEx();
-        } else {
-          alert("You have done this course.")
-          RealEx()
-        }
-      })
-    }, false)
-  }
+  document.getElementById('' + "ButtonCourse" + (0 + 1)).addEventListener("click", courseVerify0)
+  document.getElementById('' + "ButtonCourse" + (1 + 1)).addEventListener("click", courseVerify1)
+  document.getElementById('' + "ButtonCourse" + (2 + 1)).addEventListener("click", courseVerify2)
+  document.getElementById('' + "ButtonCourse" + (3 + 1)).addEventListener("click", courseVerify3)
+  document.getElementById('' + "ButtonCourse" + (4 + 1)).addEventListener("click", courseVerify4)
+  document.getElementById('' + "ButtonCourse" + (5 + 1)).addEventListener("click", courseVerify5)
+  document.getElementById('' + "ButtonCourse" + (6 + 1)).addEventListener("click", courseVerify6)
+  document.getElementById('' + "ButtonCourse" + (7 + 1)).addEventListener("click", courseVerify7)
+  document.getElementById('' + "ButtonCourse" + (8 + 1)).addEventListener("click", courseVerify8)
+  document.getElementById('' + "ButtonCourse" + (9 + 1)).addEventListener("click", courseVerify9)
+  document.getElementById('' + "ButtonCourse" + (10 + 1)).addEventListener("click", courseVerify10)
+  document.getElementById('' + "ButtonCourse" + (11 + 1)).addEventListener("click", courseVerify11)
+  document.getElementById('' + "ButtonCourse" + (12 + 1)).addEventListener("click", courseVerify12)
+  document.getElementById('' + "ButtonCourse" + (13 + 1)).addEventListener("click", courseVerify13)
+  document.getElementById('' + "ButtonCourse" + (14 + 1)).addEventListener("click", courseVerify14)
+  document.getElementById('' + "ButtonCourse" + (15 + 1)).addEventListener("click", courseVerify15)
+  document.getElementById('' + "ButtonCourse" + (16 + 1)).addEventListener("click", courseVerify16)
+  document.getElementById('' + "ButtonCourse" + (17 + 1)).addEventListener("click", courseVerify17)
+  document.getElementById('' + "ButtonCourse" + (18 + 1)).addEventListener("click", courseVerify18)
+  document.getElementById('' + "ButtonCourse" + (19 + 1)).addEventListener("click", courseVerify19)
 }
 
 let RealEx = function() {
+  document.getElementById('' + "ButtonCourse" + (0 + 1)).removeEventListener("click", courseVerify0)
+  document.getElementById('' + "ButtonCourse" + (1 + 1)).removeEventListener("click", courseVerify1)
+  document.getElementById('' + "ButtonCourse" + (2 + 1)).removeEventListener("click", courseVerify2)
+  document.getElementById('' + "ButtonCourse" + (3 + 1)).removeEventListener("click", courseVerify3)
+  document.getElementById('' + "ButtonCourse" + (4 + 1)).removeEventListener("click", courseVerify4)
+  document.getElementById('' + "ButtonCourse" + (5 + 1)).removeEventListener("click", courseVerify5)
+  document.getElementById('' + "ButtonCourse" + (6 + 1)).removeEventListener("click", courseVerify6)
+  document.getElementById('' + "ButtonCourse" + (7 + 1)).removeEventListener("click", courseVerify7)
+  document.getElementById('' + "ButtonCourse" + (8 + 1)).removeEventListener("click", courseVerify8)
+  document.getElementById('' + "ButtonCourse" + (9 + 1)).removeEventListener("click", courseVerify9)
+  document.getElementById('' + "ButtonCourse" + (10 + 1)).removeEventListener("click", courseVerify10)
+  document.getElementById('' + "ButtonCourse" + (11 + 1)).removeEventListener("click", courseVerify11)
+  document.getElementById('' + "ButtonCourse" + (12 + 1)).removeEventListener("click", courseVerify12)
+  document.getElementById('' + "ButtonCourse" + (13 + 1)).removeEventListener("click", courseVerify13)
+  document.getElementById('' + "ButtonCourse" + (14 + 1)).removeEventListener("click", courseVerify14)
+  document.getElementById('' + "ButtonCourse" + (15 + 1)).removeEventListener("click", courseVerify15)
+  document.getElementById('' + "ButtonCourse" + (16 + 1)).removeEventListener("click", courseVerify16)
+  document.getElementById('' + "ButtonCourse" + (17 + 1)).removeEventListener("click", courseVerify17)
+  document.getElementById('' + "ButtonCourse" + (18 + 1)).removeEventListener("click", courseVerify18)
+  document.getElementById('' + "ButtonCourse" + (19 + 1)).removeEventListener("click", courseVerify19)
+
   document.getElementById("ButtonCourse").style.display = "none"
   document.getElementById("realExplain").style.display = "none"
   document.getElementById("loadingReal").style.display = "block"
@@ -626,23 +952,26 @@ let downloadOneR = function() {
 }
 let downloadTwoR = function() {
   images.two.srcurl.getDownloadURL().then(function(url) {
+    images.one.removeEventListener("load", downloadTwoR)
     images.two.addEventListener("load", downloadThreeR, false)
     images.two.src = url
   })
 }
 let downloadThreeR = function() {
+  images.two.removeEventListener("load", downloadThreeR)
   images.three.srcurl.getDownloadURL().then(function(url) {
     images.three.addEventListener("load", downloadImageReal, false)
     images.three.src = url
   })
 }
 let downloadImageReal = function() {
+  images.three.removeEventListener("load", downloadImageReal)
   let realRef1 = firebase.storage().ref("course" + images.real1.course + "/1st")
   let realRef2 = firebase.storage().ref("course" + images.real1.course + "/2nd")
   //let realRef1 = firebase.storage().ref("course" + '' + images.real1.course +"/real1st")
   //let realRef2 = firebase.storage().ref("course" + '' + images.real1.course +"/real2nd")
   //images.tutorial.verifyを初期化
-  for (let M = 0; M <60; M++) {
+  for (let M = 0; M < 75; M++) {
     images.real1.img[M] = 0
     images.real1.verify[M] = 0
     images.real2.img[M] = 0
@@ -665,7 +994,7 @@ let downloadImageReal = function() {
       images.real1.img[n].addEventListener("load", function() {
         images.real1.verify[n] = 1
         //   //img.size = ImageGetNaturalSize(img)
-        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+        //   if ((typeof images.tutorial.img[30]) !== "undefined") {
         //     document.getElementById("loadingTutorial").style.display = "none"
         //     document.getElementById("tutorialSecond").style.display = "block"
         //     //document.getElementById("loadImageTime").style.display="none"
@@ -679,7 +1008,7 @@ let downloadImageReal = function() {
       console.log(error)
     })
   }
-  for (let n = 0; n < 60; n++) {
+  for (let n = 0; n < 75; n++) {
     let stringPng = ".png"
     let imgName = '' + n + stringPng
     console.log(imgName)
@@ -692,7 +1021,7 @@ let downloadImageReal = function() {
       images.real2.img[n].addEventListener("load", function() {
         images.real2.verify[n] = 1
         //   //img.size = ImageGetNaturalSize(img)
-        //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+        //   if ((typeof images.tutorial.img[30]) !== "undefined") {
         //     document.getElementById("loadingTutorial").style.display = "none"
         //     document.getElementById("tutorialSecond").style.display = "block"
         //     //document.getElementById("loadImageTime").style.display="none"
@@ -706,7 +1035,7 @@ let downloadImageReal = function() {
       console.log(error)
     })
   }
-  for (let n = 0; n < 60; n++) {
+  for (let n = 0; n < 75; n++) {
     imgReal2[n].getMetadata().then(function(metadata) {
       images.real2.meta[n] = metadata.customMetadata.visType
       console.log(images.real2.meta[n])
@@ -715,7 +1044,7 @@ let downloadImageReal = function() {
   let verifyDownloadTu1 = function() {
     setTimeout(function() {
       let completeTu = images.real1.verify[0]
-      for (let j = 1; j < 60; j++) {
+      for (let j = 1; j < 75; j++) {
         completeTu = completeTu * images.real1.verify[j]
       }
       return completeTu
@@ -724,7 +1053,7 @@ let downloadImageReal = function() {
   let verifyDownloadTu2 = function() {
     setTimeout(function() {
       let completeTu = images.real2.verify[0]
-      for (let j = 1; j < 60; j++) {
+      for (let j = 1; j < 75; j++) {
         completeTu = completeTu * images.real2.verify[j]
       }
       return completeTu
@@ -740,6 +1069,11 @@ let downloadImageReal = function() {
   console.log("download finished.")
 }
 
+let callIntervalReal2 = function() {
+  document.getElementById("real2").style.display = "none"
+  startIntervalReal2()
+}
+
 let startIntervalReal1 = function() {
   console.log("start")
 
@@ -750,10 +1084,7 @@ let startIntervalReal1 = function() {
       document.getElementById("goReal2").style.display = "none"
       document.getElementById("realImage2").style.display = "block"
       document.getElementById("real2").style.display = "block"
-      document.getElementById("giveRealImage2").addEventListener("click", function() {
-        document.getElementById("real2").style.display = "none"
-        startIntervalReal2()
-      }, false)
+      document.getElementById("giveRealImage2").addEventListener("click", callIntervalReal2, false)
     }, false)
   }
 
@@ -779,10 +1110,11 @@ let startIntervalReal1 = function() {
       // }
       if (((images.time - 6) % 3) === 0) {
         if ((images.number) > 29) {
-          clearInterval(timerReal)
+          clearInterval(timerReal1)
           console.log("timer clear")
           while (images.real1.place.firstChild) images.real1.place.removeChild(images.real1.place.firstChild);
           goRealSecond()
+          document.getElementById("giveRealImage1").removeEventListener("click", startIntervalReal1)
         }
         console.log((images.number))
         while (images.real1.place.firstChild) images.real1.place.removeChild(images.real1.place.firstChild);
@@ -800,7 +1132,7 @@ let startIntervalReal1 = function() {
   document.getElementById("realSecond1").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerReal = setInterval(displayReal1, 50) //00)
+  let timerReal1 = setInterval(displayReal1, 500) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
@@ -813,7 +1145,7 @@ let startIntervalReal2 = function() {
   console.log("start")
   //HR, FARの評価は、targetとvigilanceの２枚めにはメタデータを付与しそれをプログラム上で取得、そのデータに基づき判段する。
   //images.real.resultの初期化
-  for (let N = 0; N < 60; N++) {
+  for (let N = 0; N < 75; N++) {
     images.real2.result[N] = 0
   }
 
@@ -840,8 +1172,8 @@ let startIntervalReal2 = function() {
       //   }
       // }
       console.log("input are")
-      for (let N = 0; N < 60; N++) {
-        if(images.real2.result[N] === 1){
+      for (let N = 0; N < 75; N++) {
+        if (images.real2.result[N] === 1) {
           console.log(N)
         }
         if ( //N === 5 || N === 13 || N === 15 || N === 21 || N === 23 || N === 24 || N === 27 || N === 29
@@ -891,8 +1223,10 @@ let startIntervalReal2 = function() {
       images.key = 0
     }
   }
+  let timeReal
 
   let displayReal2 = function() {
+    // let timerReal
     images.real2.place = document.getElementById("realImage2")
     if (images.real2.time === 0) {
       images.real2.place.appendChild(images.three)
@@ -906,30 +1240,34 @@ let startIntervalReal2 = function() {
       document.addEventListener("keypress", keyDownFunc, false)
       document.addEventListener("keyup", keyUpFunc, false)
       if (((images.real2.time - 6) % 5) === 0) {
-        if ((images.number) > 59) {
+        if ((images.number) > 74) {
+          console.log(timerReal)
           clearInterval(timerReal)
           console.log("timer clear")
           while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
           document.removeEventListener("keypress", keyDownFunc)
           showRealResult()
+          document.getElementById("giveRealImage2").removeEventListener("click", callIntervalReal2)
+        } else {
+          console.log((images.number))
+          while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
+          images.real2.place.appendChild(images.real2.img[images.number])
+          images.number += 1
         }
-        console.log((images.number))
-        while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
-        images.real2.place.appendChild(images.real2.img[images.number])
-        images.number += 1
       } else if (((images.real2.time - 6) % 5) === 4) {
         while (images.real2.place.firstChild) images.real2.place.removeChild(images.real2.place.firstChild);
         images.real2.place.appendChild(images.black)
       }
     }
     images.real2.time += 1
-    console.log(images.real2.time)
+    // console.log(images.real2.time)
   }
 
   document.getElementById("real2").style.display = "none"
   images.real2.time = 0
   images.number = 0
-  let timerReal = setInterval(displayReal2, 200) //00)
+  timerReal = setInterval(displayReal2, 500) //00)
+  console.log(timerReal);
   //document.getElementById("explain").style.display = "block"
 }
 //
@@ -1039,6 +1377,7 @@ let startIntervalReal2 = function() {
 let sendData = function() {
   console.log(images.newPostKey)
   let sendButton = document.getElementById("sendResult")
+  document.getElementById('reResult').textContent= 'Your score is ' + '' + (((1 - images.real2.MissT)*100).toFixed(1)).toString() + '%'
   sendButton.style.display = "block"
   sendButton.addEventListener("click", function() {
     let db = firebase.database()
@@ -1054,8 +1393,8 @@ let sendData = function() {
       //   "Miss": images.real2.MissV
       // })
       images.result = []
-        console.log("results")
-      for (let n = 0; n < 60; n++) {
+      console.log("results")
+      for (let n = 0; n < 75; n++) {
         console.log(images.real2.result[n])
         images.result[n] = {}
         images.result[n].nameV = []
@@ -1063,15 +1402,15 @@ let sendData = function() {
         images.result[n].resultV = []
         images.result[n].resultT = []
       }
-      images.addressSum = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course)
-      images.addressSum.update({
+      images.addressSum = db.ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course)
+      images.addressSum.set({
         "Far": images.real2.FarT,
         "Miss": images.real2.MissT
       })
       // Write the new post's data simultaneously in the posts list and the user's post list.
 
       let N = 0
-      for (let n = 0; n < 60; n++) {
+      for (let n = 0; n < 75; n++) {
         if (images.real2.meta[n] === "vigilance") {
           console.log(n)
           images.result[images.real1.course].nameV[N] = '' + n
@@ -1081,7 +1420,7 @@ let sendData = function() {
       }
       N = 0
       console.log("targets are")
-      for (let n = 0; n < 60; n++) {
+      for (let n = 0; n < 75; n++) {
         if (images.real2.meta[n] === "target") {
           console.log(n)
           images.result[images.real1.course].nameT[N] = '' + n
@@ -1089,7 +1428,7 @@ let sendData = function() {
           N += 1
         }
       }
-      for (let n = 0; n < 60; n++) {
+      for (let n = 0; n < 75; n++) {
         if (typeof images.result[images.real1.course].resultV[n] !== "undefined") {
           // images.addressV = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
           images.addressV = db.ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/vigilance/" + images.result[images.real1.course].nameV[n])
@@ -1108,7 +1447,7 @@ let sendData = function() {
           }
         }
       }
-      for (let n = 0; n < 60; n++) {
+      for (let n = 0; n < 75; n++) {
         if (typeof images.result[images.real1.course].resultT[n] !== "undefined") {
           // images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
           images.addressT = db.ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
@@ -1132,11 +1471,12 @@ let sendData = function() {
     }, 2000)
     sendButton.style.display = "none"
     document.getElementById("lastPage").style.display = "block"
-    document.getElementById("onemore").addEventListener("click", function() {
+    let again = function() {
       document.getElementById("lastPage").style.display = "none"
       document.getElementById("realFirst").style.display = "block"
       document.getElementById("ButtonCourse").style.display = "block"
-    }, false)
+    }
+    document.getElementById("onemore").addEventListener("click", startReal, false)
     document.getElementById("end").addEventListener("click", function() {
       document.getElementById("lastPage").style.display = "none"
       document.getElementById("realFirst").style.display = "none"
@@ -1386,14 +1726,14 @@ let sendData = function() {
 // let downloadImageTutorial = function() {
 //   let tutorialRef = firebase.storage().ref("tutorial")
 //   //images.tutorial.verifyを初期化
-//   for (let M = 0; M < 31; M++) {
+//   for (let M = 0; M < 30; M++) {
 //     images.tutorial.img[M] = 0
 //     images.tutorial.verify[M] = 0
 //   }
 
 //   let imgTutorial = []
 //   console.log("one, two, threee have been downloaded.")
-//   for (let n = 0; n < 31; n++) {
+//   for (let n = 0; n < 30; n++) {
 //     let stringPng = ".png"
 //     let imgName = '' + n + stringPng
 //     console.log(imgName)
@@ -1406,7 +1746,7 @@ let sendData = function() {
 //       images.tutorial.img[n].addEventListener("load", function() {
 //         images.tutorial.verify[n] = 1
 //         //   //img.size = ImageGetNaturalSize(img)
-//         //   if ((typeof images.tutorial.img[31]) !== "undefined") {
+//         //   if ((typeof images.tutorial.img[30]) !== "undefined") {
 //         //     document.getElementById("loadingTutorial").style.display = "none"
 //         //     document.getElementById("tutorialSecond").style.display = "block"
 //         //     //document.getElementById("loadImageTime").style.display="none"
@@ -1421,7 +1761,7 @@ let sendData = function() {
 //     })
 //   }
 
-//   for (let n = 0; n < 31; n++) {
+//   for (let n = 0; n < 30; n++) {
 //     imgTutorial[n].getMetadata().then(function(metadata) {
 //       images.tutorial.meta[n] = metadata.customMetadata.visType
 //       console.log(images.tutorial.meta[n])
@@ -1430,7 +1770,7 @@ let sendData = function() {
 //   let verifyDownloadTu = function() {
 //     setTimeout(function() {
 //       let completeTu = images.tutorial.verify[0]
-//       for (let j = 1; j < 31; j++) {
+//       for (let j = 1; j < 30; j++) {
 //         completeTu = completeTu * images.tutorial.verify[j]
 //       }
 //       return completeTu
@@ -1439,7 +1779,7 @@ let sendData = function() {
 //   let verify2 = function() {
 //     setTimeout(function() {
 //       let completeTu2 = 1
-//       for (let t = 0; t < 31; t++) {
+//       for (let t = 0; t < 30; t++) {
 //         if (typeof images.tutorial.meta[t] !== "undefined") {
 //           completeTu2 = completeTu2 * 1
 //         } else {
@@ -1638,13 +1978,13 @@ let sendData = function() {
 //   //images.real.verifyを初期化
 //   images.real.img = []
 //   images.real.verify = []
-//   for (let M = 0; M < 31; M++) {
+//   for (let M = 0; M < 30; M++) {
 //     images.real.img[M] = 0
 //     images.real.verify[M] = 0
 //   }
 //   let imgReal = []
 //   console.log("one, two, threee have been downloaded.")
-//   for (let n = 0; n < 31; n++) {
+//   for (let n = 0; n < 30; n++) {
 //     let stringPng = ".png"
 //     let imgName = '' + n + stringPng
 //     console.log(imgName)
@@ -1656,7 +1996,7 @@ let sendData = function() {
 //       images.real.img[n].addEventListener("load", function() {
 //         images.real.img[n].verify = 1
 //         //img.size = ImageGetNaturalSize(img)
-//         // if (typeof images.real[31] !== "undefined") {
+//         // if (typeof images.real[30] !== "undefined") {
 //         //   document.getElementById("loadingReal").style.display = "none"
 //         //   document.getElementById("realSecond").style.display = "block"
 //         //   //document.getElementById("loadImageTime").style.display="none"
@@ -1671,7 +2011,7 @@ let sendData = function() {
 //     })
 //   }
 
-//   for (let n = 0; n < 31; n++) {
+//   for (let n = 0; n < 30; n++) {
 //     imgReal[n].getMetadata().then(function(metadata) {
 //       images.real.meta[n] = metadata.customMetadata.visType
 //     })
@@ -1688,7 +2028,7 @@ let sendData = function() {
 //   let verify2 = function() {
 //     setTimeout(function() {
 //       let complete2 = 1
-//       for (let t = 0; t < 31; t++) {
+//       for (let t = 0; t < 30; t++) {
 //         if (typeof images.real.meta[t] !== "undefined") {
 //           complete2 = complete2 * 1
 //         } else {
