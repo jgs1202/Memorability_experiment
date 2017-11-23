@@ -14,7 +14,7 @@
   <script src="html1.js"></script>
 
   <div class="content" id="userInfo">
-    <p class="title">User Informarion</p>
+    <p class="title">User Informarion</p><br>
     <dl>
       <dt>Name  (ex. Taro Yamada)</dt>
       <dd><input type="text" id="showNameHtml"></dd>
@@ -36,6 +36,14 @@
     <p>loading images...</p>
   </div>
   <div class="content" id="imageHowTo">
+    <p>
+      <br>注意事項<br>
+      この実験は画像ごとのMemorabilityを測るためのものです。<br>
+      実験は２つのセクションに分かれています。<br>
+      1回目は画像を記憶し、２回目は沢山の画像の中から１回目に出てきた画像のみを選び出していただきます。<br>
+      この際、質問に勘や直感で答えられてしまいますと正しいデータが得られなくなります。<br>
+      以降の実験では、確信がある画像のみ選んでください。<br>
+    </p>
     <input type="button" id="showImageButton" value="click and show images"><br> Please push the bottun then the explaination will be showed.
   </div>
   <div class="content" id="placeForImage"></div>
@@ -48,7 +56,9 @@
 
   <div class="content" id="explain2">
     <p>Second, push "Space key" when you feel that you see the image showed for the second time.</p>
-    <input type="button" id="toTutorialButton" name="toTutorial" value="Go to tutorial">
+    <input type="button" id="toTutorialButton" name="toTutorial" value="Go to tutorial"><br>
+    <p>If you have done this experiment, you can skip tutorial.</p>
+    <input type="button" id="skip" value="Skip tutorial">
   </div>
 
   <div class="content" id="tutorialFirst">

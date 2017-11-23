@@ -104,6 +104,12 @@ window.addEventListener("load", function() {
   images.number = 0
 }, false)
 
+let skipTutorial = function(){
+  document.getElementById("howTo").style.display = "none"
+  document.getElementById("placeForImage").style.display = "none"
+  document.getElementById("explain2").style.display = "none"
+  again()
+}
 
 //display image file in firebase storage
 //get reference to firebase storage
@@ -185,6 +191,7 @@ let Explain2 = function() {
   while (images.place.firstChild) images.place.removeChild(images.place.firstChild);
   images.number = 0
   let timerEx2 = setInterval(displayEx, 500)
+  document.getElementById('skip').addEventListener("click", skipTutorial, false)
   document.getElementById("explain2").style.display = "block"
   document.getElementById("toTutorialButton").addEventListener("click", function() {
     startTutorial()
@@ -602,7 +609,6 @@ let courseVerify2 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -617,7 +623,6 @@ let courseVerify3 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -632,7 +637,6 @@ let courseVerify4 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -647,7 +651,6 @@ let courseVerify5 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -662,7 +665,6 @@ let courseVerify6 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -677,7 +679,6 @@ let courseVerify7 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -692,7 +693,6 @@ let courseVerify8 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -707,7 +707,6 @@ let courseVerify9 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -722,7 +721,6 @@ let courseVerify10 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -737,7 +735,6 @@ let courseVerify11 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -752,7 +749,6 @@ let courseVerify12 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -767,7 +763,6 @@ let courseVerify13 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -782,7 +777,6 @@ let courseVerify14 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -797,7 +791,6 @@ let courseVerify15 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -812,7 +805,6 @@ let courseVerify16 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -827,7 +819,6 @@ let courseVerify17 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -842,7 +833,6 @@ let courseVerify18 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -857,7 +847,6 @@ let courseVerify19 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -872,7 +861,6 @@ let courseVerify0 = function() {
       RealEx();
     } else {
       alert("You have done this course.")
-      RealEx()
     }
   })
 }
@@ -1374,6 +1362,13 @@ let startIntervalReal2 = function() {
 //   //document.getElementById("explain").style.display = "block"
 // }
 
+let again = function() {
+  document.getElementById("lastPage").style.display = "none"
+  document.getElementById("realFirst").style.display = "block"
+  document.getElementById("ButtonCourse").style.display = "block"
+  startReal()
+}
+
 let sendData = function() {
   console.log(images.newPostKey)
   let sendButton = document.getElementById("sendResult")
@@ -1452,7 +1447,7 @@ let sendData = function() {
           // images.addressT = db.ref("/user-posts/" + user.Name + "/" + images.newPostKey + "/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
           images.addressT = db.ref("/user-posts/" + user.Name + "/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
           images.addressTP = db.ref("/per-image/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n])
-          images.addressTPU = db.ref("/per-image-user/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n] + "/" + images.newPostKey)
+          images.addressTPU = db.ref("/per-image-user/course" + '' + images.real1.course + "/target/" + images.result[images.real1.course].nameT[n] + "/" + user.Name)
           images.addressT.set({
             "result": images.result[images.real1.course].resultT[n]
           })
@@ -1471,12 +1466,7 @@ let sendData = function() {
     }, 2000)
     sendButton.style.display = "none"
     document.getElementById("lastPage").style.display = "block"
-    let again = function() {
-      document.getElementById("lastPage").style.display = "none"
-      document.getElementById("realFirst").style.display = "block"
-      document.getElementById("ButtonCourse").style.display = "block"
-    }
-    document.getElementById("onemore").addEventListener("click", startReal, false)
+    document.getElementById("onemore").addEventListener("click", again, false)
     document.getElementById("end").addEventListener("click", function() {
       document.getElementById("lastPage").style.display = "none"
       document.getElementById("realFirst").style.display = "none"
