@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Memorability Test</title>
+  <link rel="stylesheet" type="text/css" href="memorability.css">
+</head>
+
+<body>
+
+  <script src="tutorial.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAEZMN_RtruC1xSkOZoECwQmdD56dx9ggo",
+      authDomain: "rankmemorabilitytest.firebaseapp.com",
+      databaseURL: "https://rankmemorabilitytest.firebaseio.com",
+      projectId: "rankmemorabilitytest",
+      storageBucket: "rankmemorabilitytest.appspot.com",
+      messagingSenderId: "47630841168"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+
+  <div class="title">Memorability Test</div>
+
+  <div class="subtitle">Tutorial</div>
+
+  <div class="text">loading images...</div>
+  <div class="content" id="start1st">
+    <p>Push this button and start 1st secrtion.</p>
+    <input type="button" id="buttonStart1st" value="Start !st Section">
+  </div>
+
+  <div class="content" id="1stTable">
+    <table border="0">
+      <tr>
+        <td id="cell0"></td>
+        <td id="cell1"></td>
+        <td id="cell2"></td>
+      </tr>
+      <tr>
+        <td id="cell3"></td>
+        <td id="cell4"></td>
+        <td id="cell5"></td>
+      </tr>
+      <tr>
+        <td id="cell6"></td>
+        <td id="cell7"></td>
+        <td id="cell8"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="content" id="toNextStep">
+    <form action="https://rankmemorabilitytest.firebaseapp.com/tutorial.html" name="h1" method="get">
+      <input type="hidden" name="v1" value="">
+      <input type="submit" name="" value="Go to Real" id="submit">
+    </form>
+  </div>
+</body>
+
+</html>

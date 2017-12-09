@@ -34,7 +34,7 @@ images.real2.img = []
 images.real2.verify = []
 images.real2.meta = []
 images.real2.result = []
-
+images.interval = 500
 let user = {}
 
 ///////////////////////////////////////////////////////////////////////
@@ -105,10 +105,7 @@ window.addEventListener("load", function() {
 }, false)
 
 let skipTutorial = function(){
-  document.getElementById("howTo").style.display = "none"
-  document.getElementById("placeForImage").style.display = "none"
-  document.getElementById("explain2").style.display = "none"
-  again()
+  images.interval = 1
 }
 
 //display image file in firebase storage
@@ -192,6 +189,10 @@ let Explain2 = function() {
   images.number = 0
   let timerEx2 = setInterval(displayEx, 500)
   document.getElementById('skip').addEventListener("click", skipTutorial, false)
+  document.getElementById("skip").addEventListener("click", function() {
+    startTutorial()
+    clearInterval(timerEx2)
+  }, false)
   document.getElementById("explain2").style.display = "block"
   document.getElementById("toTutorialButton").addEventListener("click", function() {
     startTutorial()
@@ -457,7 +458,7 @@ let startIntervalTutorial1 = function() {
   document.getElementById("tutorialSecond1").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial1, 500) //00)
+  let timerTutorial = setInterval(displayTutorial1, images.interval) //00)
   //document.getElementById("explain").style.display = "block"
 }
 // var imgWidth = $('img#sample').width();　 //img#sampleのwidthを調べてimgWidthに代入
@@ -575,7 +576,7 @@ let startIntervalTutorial2 = function() {
   document.getElementById("tutorial2").style.display = "none"
   images.time = 0
   images.number = 0
-  let timerTutorial = setInterval(displayTutorial2, 500) //00)
+  let timerTutorial = setInterval(displayTutorial2, images.interval) //00)
   //document.getElementById("explain").style.display = "block"
 }
 
@@ -866,6 +867,9 @@ let courseVerify0 = function() {
 }
 
 let startReal = function() {
+  if (typeof images.real1.precourse != 'undefined'){
+    while( images.real1.precourse === images.real1.course){}
+  }
   document.getElementById("lastPage").style.display = "none"
   console.log("This is Real.")
   //document.getElementById("howTo").style.display = "none"
@@ -920,6 +924,8 @@ let RealEx = function() {
   document.getElementById("ButtonCourse").style.display = "none"
   document.getElementById("realExplain").style.display = "none"
   document.getElementById("loadingReal").style.display = "block"
+  // document.getElementById('courseDisplay').style.display = 'block'
+  // document.getElementById('courseDisplay').textContent = 'Course'+ images.real1.course
   console.log(images.real1.course)
   images.one = new Image(500, 400)
   images.two = new Image(500, 400)
@@ -927,7 +933,7 @@ let RealEx = function() {
   images.one.srcurl = storageRef.child("one.png")
   images.two.srcurl = storageRef.child("second.png")
   images.three.srcurl = storageRef.child("theree.png")
-  downloadOneR()
+  setTimeout(downloadOneR(),1500)
 }
 //var storageRef = firebase.storage().ref("sampleImage")
 
@@ -1183,6 +1189,7 @@ let startIntervalReal2 = function() {
       //document.getElementById("showResultreal2").style.display = "none"
       console.log("Target FAR = " + images.real2.FarT)
       console.log("Target Miss = " + images.real2.MissT)
+      // document.getElementById(courseDisplay).style.display = 'none'
       sendData()
       //document.getElementById("goToRealPart").style.display = "block"
       //document.getElementById("goToRealPart").addEventListener("click", function() {
@@ -1464,8 +1471,11 @@ let sendData = function() {
 
 
     }, 2000)
+    images.real1.precourse - images.real1.course
     sendButton.style.display = "none"
-    document.getElementById("lastPage").style.display = "block"
+    setTimeout(function(){
+      document.getElementById("lastPage").style.display = "block"
+    }, 3000)
     document.getElementById("onemore").addEventListener("click", again, false)
     document.getElementById("end").addEventListener("click", function() {
       document.getElementById("lastPage").style.display = "none"

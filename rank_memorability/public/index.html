@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Memorability Test</title>
+  <link rel="stylesheet" type="text/css" href="memorability.css">
+</head>
+
+</head>
+
+<body>
+  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAEZMN_RtruC1xSkOZoECwQmdD56dx9ggo",
+    authDomain: "rankmemorabilitytest.firebaseapp.com",
+    databaseURL: "https://rankmemorabilitytest.firebaseio.com",
+    projectId: "rankmemorabilitytest",
+    storageBucket: "rankmemorabilitytest.appspot.com",
+    messagingSenderId: "47630841168"
+  };
+  firebase.initializeApp(config);
+</script>
+
+  <div class="title">Memorability Test</div>
+  <div>
+    <form action="https://rankmemorabilitytest.firebaseapp.com/tutorialEx.html" name="h1" method="get">
+      <input type="hidden" name="v1" value="">
+      <br> Thank you for joining this experiment. Please fill name here.
+      <br><br>
+      <input type="text" name="b1" value="" id="name">
+      <input type="submit" name="" value="送信" id="submit">
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    document.getElementById('submit').addEventListener('click', function() {
+      let Name = document.getElementById('name').value
+      document.h1.v1.value = Name
+    })
+  </script>
+</body>
+
+</html>
