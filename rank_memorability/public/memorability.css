@@ -1,5 +1,6 @@
 .content {
   display: none;
+  align-items: center;
 }
 
 body {
@@ -11,7 +12,6 @@ body {
   padding: 0;
   text-align: center;
 }
-
 
 
 .text {
