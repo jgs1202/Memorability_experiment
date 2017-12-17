@@ -5,7 +5,6 @@ function　 parse() {　　　 // 関数にしなくてもいいのですが、�
   　　
   var　 buffer = location.search.substr(1);　　
   var　 pairs = buffer.split("&");
-
   　　
   for (var　 i　 in 　pairs) {　　　　
     var　 pair = pairs[i].split("=");　　　　

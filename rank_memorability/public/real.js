@@ -18,13 +18,17 @@ function　 parse() {　　　 // 関数にしなくてもいいのですが、�
 images = []
 images.tutorial1 = []
 images.tutorial2 = []
-images.intervalTime = 500
 images.shuffle = []
 
-images.firstTime = 2
-images.secondTime = 5
+images.intervalTime = 500
+images.firstTime = 5
+images.secondTime = 10
 
 images.start = 0
+images.count = 0
+images.vis = 3
+images.targets = 1
+images.course = 0
 
 //////////////////////////////////////////////////////////////
 
@@ -36,53 +40,20 @@ console.log(FORM)
 
 window.addEventListener('load', function() {
   //check previous data
-  images.name = FORM.v1
-  console.log(images.name)
-  document.h1.v1.value = images.name
-  images.newPostKey = firebase.database().ref().child('posts').push().key
-  firebase.database().ref('user/' + images.name + '/times').update({
-    'keys': images.newPostKey
-  })
-  descideCourse()
-}, false)
+  images.name = FORM.name
 
+  images.parSet = FORM.course[0]
+  console.log(FORM.course[0])
+  console.log(images.parSet)
 
-let courseSelect = function() {
-  for (let m = 0; m < 3; m++) {
-    if (images.tutorial1.courseCheck[m] === 0) {
-      images.tutorial1.course = m
-      console.log(m)
-      startDownload()
-      break
-    } else if (m === 2) {
-      document.h2.v2.value = images.name
-      document.getElementById('complete').style.display = 'block'
-      document.getElementById('toNextStep2').style.display = 'block'
-      document.getElementById('loading').style.display = 'none'
+  //make course random
+  images.ref = []
+  for (let j = 0; j < images.vis; j++) {
+    for (let i = 0; i < images.targets; i++) {
+      images.ref[i + images.targets * j] = images.parSet + '/vis' + '' + j + '/' + i
     }
   }
-}
-
-let waitCheck = function() {
-  check()
-  console.log(FORM)
-}
-
-//check coursecheck
-let check = function() {
-  for (let i = 0; i < 3; i++) {
-    if (typeof images.tutorial1.courseCheck[i] === 'undefined') {
-      setTimeout(waitCheck, 300)
-      console.log(images.tutorial1.courseCheck)
-      break
-    } else if (i === 2) {
-      courseSelect()
-      console.log(images.tutorial1.courseCheck)
-    }
-  }
-}
-
-let descideCourse = function() {
+  console.log(images.ref);
 
   for (let j = 0; j < 8; j++) {
     images.shuffle[j] = j
@@ -99,23 +70,94 @@ let descideCourse = function() {
     }
   }
 
-  images.tutorial1.courseCheck = []
+  console.log(images.name)
+  document.h1.v1.value = images.name
+  images.newPostKey = firebase.database().ref().child('posts').push().key
+  firebase.database().ref('user/' + images.name + '/times').update({
+    'keys': images.newPostKey
+  })
+  descideCourse()
+}, false)
+
+
+let courseSelect = function() {
+  console.log(images.courseCheck);
+  // remove images.ref[i] when imagds.couseCheck[i] == 1
+  for (let i = 0; i < images.ref.length; i++) {
+    if (images.courseCheck[i] === 1) {
+      console.log(i)
+      images.front = images.ref.slice(0, i)
+      images.back = images.ref.slice(i + 1, images.ref.length)
+      images.ref = images.front.concat(images.back)
+      i -= 1
+    }
+    console.log(images.ref);
+  }
+  // shuffle the oder of images.ref
+  for (let i = images.ref.length - 1; i > 0; i--) {
+    let r = Math.floor(Math.random() * (i + 1));
+    let tmp = images.ref[i]
+    images.ref[i] = images.ref[r];
+    images.ref[r] = tmp;
+  }
+  console.log(images.ref.length);
+  console.log(images.ref)
+
+  VerifyEnd()
+
+}
+
+let waitCheck = function() {
+  check()
+  console.log(FORM)
+}
+
+//check coursecheck
+let check = function() {
+  for (let i = 0; i < images.ref.length; i++) {
+    if (typeof images.courseCheck[i] === 'undefined') {
+      setTimeout(waitCheck, 300)
+      console.log(images.courseCheck)
+      break
+    } else if (i === images.targets * images.vis - 1) {
+
+      console.log(images.courseCheck)
+      courseSelect()
+    }
+  }
+}
+
+let descideCourse = function() {
+  images.courseCheck = []
   images.database = firebase.database()
   //　3コースについて既にプレイしたか検証
-  for (let n = 0; n < 3; n++) {
-    images.database.ref('user/' + images.name + '/tutorial/' + '' + n).once('value').then(function(snapshot) {
-      console.log(snapshot.ge.path.n[3]) //._.B.value)
+  for (let n = 0; n < images.targets * images.vis; n++) {
+    images.database.ref('user/' + images.name + '/real/' + images.ref[n]).once('value').then(function(snapshot) {
+      console.log(snapshot._e)
+      console.log(parseInt(snapshot.ge.path.n[4][3]) * images.targets + parseInt(snapshot.ge.path.n[5])) //._.B.value)
       if (typeof snapshot._e._.B.value === "undefined") {
-        images.tutorial1.courseCheck[snapshot.ge.path.n[3]] = 0
-        console.log(snapshot.ge.path.n[3])
+        images.courseCheck[parseInt(snapshot.ge.path.n[4][3]) * images.targets + parseInt(snapshot.ge.path.n[5])] = 0
       } else {
-        images.tutorial1.courseCheck[snapshot.ge.path.n[3]] = 1
-        console.log(snapshot.ge.path.n[3])
+        images.courseCheck[parseInt(snapshot.ge.path.n[4][3]) * images.targets + parseInt(snapshot.ge.path.n[5])] = 1
+        // console.log(snapshot.ge.path.n[3])
       }
     })
   }
+
   check()
-  console.log(images.name)
+  console.log(images.ref)
+}
+
+let VerifyEnd = function() {
+  console.log('course is ' + '' + images.course)
+  if (images.course === images.ref.length) {
+    document.h2.v2.value = images.name
+    document.getElementById('complete').style.display = 'block'
+    document.getElementById('toNextStep2').style.display = 'block'
+    document.getElementById('loading').style.display = 'none'
+  } else {
+    startDownload()
+  }
 }
 
 
@@ -127,12 +169,12 @@ let descideCourse = function() {
 
 let startDownload = function() {
   console.log('Download starts.')
-  images.one = new Image(300, 200)
-  images.two = new Image(300, 200)
-  images.three = new Image(300, 200)
-  images.white = new Image(300.200)
-  images.white2 = new Image(300.200)
-  images.white3 = new Image(300.200)
+  images.one = new Image(400, 250)
+  images.two = new Image(400, 250)
+  images.three = new Image(400, 250)
+  images.white = new Image(400, 250)
+  images.white2 = new Image(400, 250)
+  images.white3 = new Image(400, 250)
   images.storageRef = firebase.storage().ref("images")
   images.one.srcurl = images.storageRef.child("one.png")
   images.two.srcurl = images.storageRef.child("second.png")
@@ -186,7 +228,7 @@ let downloadThree = function() {
 }
 let downloadImageTutorial = function() {
   images.three.removeEventListener("load", downloadImageTutorial)
-  images.tutorialRef = firebase.storage().ref("tutorial/" + images.tutorial1.course)
+  images.tutorialRef = firebase.storage().ref("real/" + images.ref[ images.course ])
   // //images.tutorial.verifyを初期化
   // images.tutorial1[0] =
   //   for (let M = 0; M < 15; M++) {
@@ -208,7 +250,7 @@ let downloadImageTutorial = function() {
 
     imgTutorial[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.img[n] = new Image(300, 200)
+      images.img[n] = new Image(400, 250)
       images.img[n].addEventListener("load", function() {
         images.verify[n] = 1
       }, false)
@@ -406,27 +448,47 @@ let showResult = function() {
   console.log(typeof images.tutorial2.answer, typeof images.targetNumber)
 
   ////////////////  send data  ////////////////////////////////////////////
-  images.address = firebase.database().ref("/user/" + images.name + '/tutorial/' + '' + images.tutorial1.course)
-
+  images.address = firebase.database().ref("/user/" + images.name + '/real/' + images.ref[images.course])
+  images.resultAdd = firebase.database().ref('/result/' + images.ref[images.course])
+  images.resultNameAdd = firebase.database().ref('/result/' + images.ref[images.course] + "/" + images.name)
   document.getElementById('1stTable').style.display = 'none'
   if (parseInt(images.tutorial2.answer) === images.targetNumber) {
     document.getElementById('correct').style.display = 'block'
+    images.resultAdd.set({
+      "result": 'correct'
+    })
+    images.resultNameAdd.set({
+      "result": 'correct'
+    })
     images.address.set({
       "result": 'correct'
     })
   } else if (images.end === 1) {
     images.end = 0
     document.getElementById('limit').style.display = 'block'
+    images.resultAdd.set({
+      "result": 'time limit'
+    })
+    images.resultNameAdd.set({
+      "result": 'time limit'
+    })
     images.address.set({
       "result": 'time limit'
     })
   } else {
     document.getElementById('miss').style.display = 'block'
+    images.resultAdd.set({
+      "result": 'miss'
+    })
+    images.resultNameAdd.set({
+      "result": 'miss'
+    })
     images.address.set({
       "result": 'miss'
     })
   }
-  descideCourse()
+  images.course += 1
+  VerifyEnd()
   images.tutorial2.answer = 100
 }
 

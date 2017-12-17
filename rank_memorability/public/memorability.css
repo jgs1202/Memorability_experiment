@@ -34,3 +34,7 @@ body {
   text-align: center;
   margin: 15px auto;
 }
+
+.swal-wide{
+    width:300px !important;
+}

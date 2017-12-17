@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Memorability Test</title>
+  <link rel="stylesheet" type="text/css" href="memorability.css">
+</head>
+
+<body>
+  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAEZMN_RtruC1xSkOZoECwQmdD56dx9ggo",
+      authDomain: "rankmemorabilitytest.firebaseapp.com",
+      databaseURL: "https://rankmemorabilitytest.firebaseio.com",
+      projectId: "rankmemorabilitytest",
+      storageBucket: "rankmemorabilitytest.appspot.com",
+      messagingSenderId: "47630841168"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <div class="title">Memorability Test</div>
+
+  <div class="subtitle">Tutorial</div>
+
+  <div>
+    <p>This is Real Part.</p>
+    <p>At 1st section, you will see an image, memorize it in a given time.</p>
+    <p>At 2nd section, you will see 8 images, click what you've seen in 1st section.</p><br>
+  </div>
+
+  <div class="" id="course">
+    <p>Choose a course.</p>
+    <input type="button" value="A0" id="A0">
+    <input type="button" value="A1" id="A1">
+    <input type="button" value="A2" id="A2">
+    <input type="button" value="A3" id="A3"><br>
+    <input type="button" value="B0" id="B0">
+    <input type="button" value="B1" id="B1">
+    <input type="button" value="B2" id="B2">
+    <input type="button" value="B3" id="B3"><br>
+    <input type="button" value="C0" id="C0">
+    <input type="button" value="C1" id="C1">
+    <input type="button" value="C2" id="C2">
+    <input type="button" value="C3" id="C3"><br>
+    <input type="button" value="D0" id="D0">
+    <input type="button" value="D1" id="D1">
+    <input type="button" value="D2" id="D2">
+    <input type="button" value="D3" id="D3"><br><br>
+  </div>
+
+  <div class="content" id="send">
+    <form action="file:///Users/Aoyama/Documents/B4/noOauth_test/rank_memorability/public/real.html" name="h1" method="get">
+      <input type="hidden" name="name" value="">
+      <input type="hidden" name="course" value="">
+      <input type="submit" name="" value="Start Real" id="submit">
+    </form>
+  </div>
+
+  <script type="text/javascript">
+
+    let mem  = {}
+
+    window.addEventListener('load', function() {
+      let FORM = new Array();
+      parse()
+      function parse() {　　　 // 関数にしなくてもいいのですが、一応  　　
+        var buffer = location.search.substr(1);　　
+        var pairs = buffer.split("&");　
+        for (let i in pairs) {　　　　
+          var　 pair = pairs[i].split("=");　　　　
+          FORM[pair[0]] = unescape(pair[1].replace("+", " "));　　
+        }
+      }
+      console.log(FORM)
+      console.log(document.getElementById('submit'))
+      mem.name = FORM.v2
+      console.log(mem.name)
+      document.h1.name.value = mem.name
+      addEv()
+    }, false)
+
+    let addEv = function(){
+        mem.letter = ['A', 'B', 'C', 'D']
+        for (let i=0; i < 4; i++){
+          for (let j=0; j<4; j++){
+            document.getElementById(mem.letter[i] + '' + j).addEventListener('click', function(){
+              mem.course = mem.letter[i] + '' + j
+              console.log(mem.course)
+              document.h1.course.value = mem.course
+              document.getElementById('course').style.display = 'none'
+              document.getElementById('send').style.display = 'block'
+            }, false)
+          }
+        }
+    }
+
+
+  </script>
+</body>
+
+</html>
