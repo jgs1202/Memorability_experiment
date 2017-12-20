@@ -21,7 +21,7 @@ images.tutorial2 = []
 images.intervalTime = 500
 images.shuffle = []
 images.totalCourse = 12
-images.firstTime = 15
+images.firstTime = 3
 images.secondTime = 60
 images.totalNumber = 4
 images.start = 0
@@ -133,7 +133,8 @@ let startDownload = function() {
   images.white = new Image(400, 250)
   images.white2 = new Image(400, 250)
   images.white3 = new Image(400, 250)
-  images.targetImg = new Image(400,250)
+  images.white4 = new Image(400, 250)
+  images.targetImg = new Image(400, 250)
   images.storageRef = firebase.storage().ref("images")
   images.one.srcurl = images.storageRef.child("one.png")
   images.two.srcurl = images.storageRef.child("second.png")
@@ -141,6 +142,7 @@ let startDownload = function() {
   images.white.srcurl = images.storageRef.child('white.png')
   images.white2.srcurl = images.storageRef.child('white.png')
   images.white3.srcurl = images.storageRef.child('white.png')
+  images.white4.srcurl = images.storageRef.child('white.png')
   images.tutorialRef = firebase.storage().ref("tutorial/" + images.tutorial1.course)
   images.targetImg.srcurl = images.tutorialRef.child('target.png')
   downloadWhite()
@@ -162,12 +164,19 @@ let downloadWhite2 = function() {
 let downloadWhite3 = function() {
   images.white2.removeEventListener("load", downloadWhite3)
   images.white3.srcurl.getDownloadURL().then(function(url) {
-    images.white3.addEventListener("load", downloadOne, false)
+    images.white3.addEventListener("load", downloadWhite4, false)
     images.white3.src = url
   })
 }
+let downloadWhite4 = function() {
+  images.white3.removeEventListener("load", downloadWhite4)
+  images.white4.srcurl.getDownloadURL().then(function(url) {
+    images.white4.addEventListener("load", downloadOne, false)
+    images.white4.src = url
+  })
+}
 let downloadOne = function() {
-  images.white3.removeEventListener("load", downloadOne)
+  images.white4.removeEventListener("load", downloadOne)
   images.one.srcurl.getDownloadURL().then(function(url) {
     images.one.addEventListener("load", downloadTwo, false)
     images.one.src = url
@@ -187,9 +196,9 @@ let downloadThree = function() {
     images.three.src = url
   })
 }
-let downloadTarget = function(){
+let downloadTarget = function() {
   images.three.removeEventListener("load", downloadTarget)
-  images.targetImg.srcurl.getDownloadURL().then(function(url){
+  images.targetImg.srcurl.getDownloadURL().then(function(url) {
     images.targetImg.addEventListener('load', downloadImageTutorial, false)
     images.targetImg.src = url
   })
@@ -248,6 +257,10 @@ let downloadImageTutorial = function() {
   document.getElementById('complete').style.display = 'none'
   document.getElementById('limit').style.display = 'none'
   document.getElementById("loading").style.display = "none"
+  images.wPlace0 = document.getElementById('W0')
+  images.wPlace1 = document.getElementById('W1')
+  images.wPlace2 = document.getElementById('W2')
+
   console.log("download finished.")
   if (images.start === 0) {
     document.getElementById('start1st').style.display = 'block'
@@ -277,6 +290,9 @@ let firstSection = function() {
 
 let displayTutorial1 = function() {
   if (images.time === 0) {
+    while (images.wPlace0.firstChild) images.wPlace0.removeChild(images.wPlace0.firstChild);
+    while (images.wPlace1.firstChild) images.wPlace1.removeChild(images.wPlace1.firstChild);
+    while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
     while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
     images.tutorial1.targetPlace[0].appendChild(images.white)
     while (images.tutorial1.targetPlace[1].firstChild) images.tutorial1.targetPlace[1].removeChild(images.tutorial1.targetPlace[1].firstChild);
@@ -295,9 +311,15 @@ let displayTutorial1 = function() {
   } else if (images.time > 5) {
     if (images.time == 6) {
       console.log((images.number))
+      while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
+      images.wPlace0.appendChild(images.white2)
+      images.wPlace1.appendChild(images.white3)
+      images.wPlace2.appendChild(images.white)
       while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
       images.tutorial1.centerPlace.appendChild(images.targetImg)
     } else if ((images.time) > 6 + images.firstTime * 2 - 1) {
+      images.tutorial1.targetPlace[1].appendChild(images.white)
+      images.tutorial1.targetPlace[0].appendChild(images.white4)
       clearInterval(images.timer1)
       console.log("timer clear")
       // for (let i = 0; i < images.totalNumber; i++) {
@@ -415,7 +437,7 @@ let chooseTarget = function(e) {
   console.log(e.path[1].id)
 }
 
-let chooseNone = function(){
+let chooseNone = function() {
   swal({
     title: "No idea?",
     // icon: "warning",
@@ -448,8 +470,6 @@ let chooseNone = function(){
 
 
 
-
-
 let showResult = function() {
   console.log(typeof images.tutorial2.answer, typeof images.targetNumber)
 
@@ -462,26 +482,27 @@ let showResult = function() {
     document.getElementById('correct').style.display = 'block'
     images.address.set({
       "result": 'correct',
-      'time' : images.extime
+      'time': images.extime
     })
   } else if (images.end === 1) {
     images.end = 0
     document.getElementById('limit').style.display = 'block'
     images.address.set({
       "result": 'time limit',
-      'time' : images.extime
+      'time': images.extime
     })
   } else {
     document.getElementById('miss').style.display = 'block'
     images.address.set({
       "result": 'miss',
-      'time' : images.extime
+      'time': images.extime
     })
   }
   descideCourse()
   images.tutorial2.answer = 100
 }
 
-// document.h1.v1.value = images.name
-// document.getElementById('toNextStep').style.display = 'block'
-// document.getElementById('submit').style.display = 'toNextStep'
+//
+// // document.h1.v1.value = images.name
+// // document.getElementById('toNextStep').style.display = 'block'
+// // document.getElementById('submit').style.display = 'toNextStep'
