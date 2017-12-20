@@ -23,7 +23,7 @@ images.shuffle = []
 images.totalCourse = 12
 images.firstTime = 15
 images.secondTime = 60
-images.totalNumber = 4
+
 images.start = 0
 
 //////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ let check = function() {
 
 let descideCourse = function() {
 
-  for (let j = 0; j < images.totalNumber; j++) {
+  for (let j = 0; j < 8; j++) {
     images.shuffle[j] = j
   }
   for (let i = images.shuffle.length - 1; i > 0; i--) {
@@ -93,7 +93,7 @@ let descideCourse = function() {
     images.shuffle[i] = images.shuffle[r];
     images.shuffle[r] = tmp;
   }
-  for (let i = 0; i < images.totalNumber; i++) {
+  for (let i = 0; i < 8; i++) {
     if (images.shuffle[i] === 0) {
       images.targetNumber = i
     }
@@ -208,7 +208,7 @@ let downloadImageTutorial = function() {
   images.verify = []
   let imgTutorial = []
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < images.totalNumber; n++) {
+  for (let n = 0; n < 8; n++) {
     images.verify[n] = 0
     images.imgName = '' + n + '.png'
     console.log(images.imgName)
@@ -236,7 +236,7 @@ let downloadImageTutorial = function() {
   let verifyDownloadTu = function() {
     setTimeout(function() {
       let completeTu = images.verify[0]
-      for (let j = 1; j < images.totalNumber; j++) {
+      for (let j = 1; j < 8; j++) {
         completeTu = completeTu * images.verify[j]
       }
       return completeTu
@@ -267,7 +267,7 @@ let firstSection = function() {
   images.number = 0
   images.tutorial1.centerPlace = document.getElementById('cellCenter')
   images.tutorial1.targetPlace = []
-  for (let i = 0; i < images.totalNumber; i++) {
+  for (let i = 0; i < 8; i++) {
     images.tutorial1.targetPlace[i] = document.getElementById('cell' + '' + i)
   }
   console.log(images.white)
@@ -277,12 +277,12 @@ let firstSection = function() {
 
 let displayTutorial1 = function() {
   if (images.time === 0) {
-    while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
-    images.tutorial1.targetPlace[0].appendChild(images.white)
     while (images.tutorial1.targetPlace[1].firstChild) images.tutorial1.targetPlace[1].removeChild(images.tutorial1.targetPlace[1].firstChild);
-    images.tutorial1.targetPlace[1].appendChild(images.white2)
-    while (images.tutorial1.targetPlace[2].firstChild) images.tutorial1.targetPlace[2].removeChild(images.tutorial1.targetPlace[2].firstChild);
-    images.tutorial1.targetPlace[2].appendChild(images.white3)
+    images.tutorial1.targetPlace[1].appendChild(images.white)
+    while (images.tutorial1.targetPlace[3].firstChild) images.tutorial1.targetPlace[3].removeChild(images.tutorial1.targetPlace[3].firstChild);
+    images.tutorial1.targetPlace[3].appendChild(images.white2)
+    while (images.tutorial1.targetPlace[4].firstChild) images.tutorial1.targetPlace[4].removeChild(images.tutorial1.targetPlace[4].firstChild);
+    images.tutorial1.targetPlace[4].appendChild(images.white3)
     // while (images.tutorial1.targetPlace[3].firstChild) images.tutorial1.targetPlace[3].removeChild(images.tutorial1.targetPlace[3].firstChild);
     // images.tutorial1.targetPlace[3].appendChild(images.white2)
     images.tutorial1.centerPlace.appendChild(images.three)
@@ -300,7 +300,7 @@ let displayTutorial1 = function() {
     } else if ((images.time) > 6 + images.firstTime * 2 - 1) {
       clearInterval(images.timer1)
       console.log("timer clear")
-      // for (let i = 0; i < images.totalNumber; i++) {
+      // for (let i = 0; i < 8; i++) {
       //   while (images.tutorial1.targetPlace[i].firstChild) images.tutorial1.targetPlace[i].removeChild(images.tutorial1.targetPlace[i].firstChild);
       // }
       while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
@@ -328,7 +328,7 @@ let secondSection = function() {
   images.time = 0
   images.tutorial2.centerPlace = document.getElementById('cellCenter')
   images.tutorial2.targetPlace = []
-  for (let i = 0; i < images.totalNumber; i++) {
+  for (let i = 0; i < 8; i++) {
     images.tutorial2.targetPlace[i] = document.getElementById('cell' + '' + i)
   }
   console.log(images.tutorial2.targetPlace[4])
@@ -354,7 +354,7 @@ let displayTutorial2 = function() {
       document.getElementById('noChoice').style.display = 'block'
       while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
       // document.getElementById('cellCenter').textContent = '' + images.secondTime
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         console.log((images.number))
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].appendChild(images.img[images.shuffle[n]])
@@ -366,7 +366,7 @@ let displayTutorial2 = function() {
       images.extime = images.time / 2
       images.end = 1
       console.log("timer clear")
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }
@@ -399,7 +399,7 @@ let chooseTarget = function(e) {
       images.extime = images.time / 2
       document.getElementById(e.path[1].id).style.border = '0'
       document.getElementById('noIdea').removeEventListener('click', chooseNone)
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }
@@ -431,7 +431,7 @@ let chooseNone = function(){
     if (result) {
       clearInterval(images.timer2)
       images.extime = images.time / 2
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }

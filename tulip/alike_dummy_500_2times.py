@@ -6,7 +6,7 @@ dif = 10
 
 for j in range(2):
     for k in range(8):
-        os.chdir('/Users/Aoyama/Documents/B4/Memorability_data/tulip/csv/500nodes/originData')
+        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/originData')
         f = open(str(j) + '.csv', 'r')
         dataReader = csv.reader(f)
         data = [ e for e in dataReader]
@@ -33,7 +33,7 @@ for j in range(2):
             except:
                 pass
 
-        os.chdir('/Users/Aoyama/Documents/B4/Memorability_data/tulip/csv/500nodes/alikeDummyData/2times/'+str(j))
+        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/alikeDummyData/2times/'+str(j))
         f = open( '' + str(k) + '.csv', 'w')
         writer = csv.writer(f)
         for i in data:

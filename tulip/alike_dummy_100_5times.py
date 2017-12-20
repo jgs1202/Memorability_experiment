@@ -18,7 +18,7 @@ for j in range(2):
         if k == 0:
             level  = int( length * dif / 100)
         else:
-            level = int( length * dif * 2 / 100)
+            level = int( length * dif * 5 / 100)
 
         for i in range( level ):
             print(i)
@@ -29,11 +29,11 @@ for j in range(2):
 
         if k == 0:
             try:
-                os.mkdir('../alikeDummyData/2times/' + str(j))
+                os.mkdir('../alikeDummyData/5times/' + str(j))
             except:
                 pass
 
-        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/100nodes/alikeDummyData/2times/'+str(j))
+        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/100nodes/alikeDummyData/5times/'+str(j))
         f = open( '' + str(k) + '.csv', 'w')
         writer = csv.writer(f)
         for i in data:
