@@ -4,7 +4,7 @@ import os
 
 dif = 10
 
-for j in range(2):
+for j in range(2,10):
     for k in range(8):
         os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/originData')
         f = open(str(j) + '.csv', 'r')

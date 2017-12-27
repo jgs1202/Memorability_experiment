@@ -12,7 +12,7 @@
   <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.css">
   <script src="real.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script>
@@ -31,7 +31,7 @@
 
   <div class="title">Memorability Test</div>
 
-  <div class="subtitle">Real Part</div>
+  <!-- <div class="subtitle">Real Part</div> -->
 
   <div class="text" id="loading">loading images...</div>
   <div class="content" id="start1st">
@@ -48,22 +48,25 @@
   <div class="content text" id="1stTable">
     <table border="0" align='center' cellspacing='10'>
       <tr>
+        <td id="W0"></td>
         <td id="cell0"></td>
+        <td id="W1"></td>
+      </tr>
+      <tr>
         <td id="cell1"></td>
+        <td id="cellCenter"></td>
         <td id="cell2"></td>
       </tr>
       <tr>
+        <td id="W2"></td>
         <td id="cell3"></td>
-        <td id="cellCenter"></td>
-        <td id="cell4"></td>
-      </tr>
-      <tr>
-        <td id="cell5"></td>
-        <td id="cell6"></td>
-        <td id="cell7"></td>
       </tr>
     </table>
+    <br><br>
   </div>
+
+  <div class="content text" id="noChoice"><input type="button" value='No idea?' id="noIdea"></div>
+
 
   <div class="content text" id="correct">Your choice was correct. Nice!</div>
   <div class="content text" id="limit">Sorry, time limit.</div>
@@ -77,12 +80,12 @@
     </form>
   </div>
 
-  <div class="content text" id="complete">You seem to have done all tutorial. Please go on to the real part.</div>
+  <div class="content text" id="complete">It's the end of this course. Please go on to the next course!</div>
 
   <div class="content" id="toNextStep2">
-    <form action="file:///Users/Aoyama/Documents/B4/noOauth_test/rank_memorability/public/real.html" name="h2" method="get">
+    <form action="file:///Users/Aoyama/Documents/B4/noOauth_test/rank_memorability/public/realEx.html" name="h2" method="get">
       <input type="hidden" name="v2" value="">
-      <input type="submit" name="" value="Go to Real Part" id="submit2">
+      <input type="submit" name="" value="Select Course" id="submit2">
     </form>
   </div>
 

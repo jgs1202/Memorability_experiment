@@ -20,8 +20,8 @@ images.tutorial1 = []
 images.tutorial2 = []
 images.intervalTime = 500
 images.shuffle = []
-images.totalCourse = 12
-images.firstTime = 3
+images.totalCourse = 1
+images.firstTime = 1
 images.secondTime = 60
 images.totalNumber = 4
 images.start = 0
@@ -127,14 +127,14 @@ let descideCourse = function() {
 
 let startDownload = function() {
   console.log('Download starts.')
-  images.one = new Image(400, 250)
-  images.two = new Image(400, 250)
-  images.three = new Image(400, 250)
-  images.white = new Image(400, 250)
-  images.white2 = new Image(400, 250)
-  images.white3 = new Image(400, 250)
-  images.white4 = new Image(400, 250)
-  images.targetImg = new Image(400, 250)
+  images.one = new Image(500, 300)
+  images.two = new Image(500, 300)
+  images.three = new Image(500, 300)
+  images.white = new Image(500, 300)
+  images.white2 = new Image(500, 300)
+  images.white3 = new Image(500, 300)
+  images.white4 = new Image(500, 300)
+  images.targetImg = new Image(500, 300)
   images.storageRef = firebase.storage().ref("images")
   images.one.srcurl = images.storageRef.child("one.png")
   images.two.srcurl = images.storageRef.child("second.png")
@@ -226,7 +226,7 @@ let downloadImageTutorial = function() {
 
     imgTutorial[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.img[n] = new Image(400, 250)
+      images.img[n] = new Image(500, 300)
       images.img[n].addEventListener("load", function() {
         images.verify[n] = 1
       }, false)
@@ -260,7 +260,6 @@ let downloadImageTutorial = function() {
   images.wPlace0 = document.getElementById('W0')
   images.wPlace1 = document.getElementById('W1')
   images.wPlace2 = document.getElementById('W2')
-
   console.log("download finished.")
   if (images.start === 0) {
     document.getElementById('start1st').style.display = 'block'
