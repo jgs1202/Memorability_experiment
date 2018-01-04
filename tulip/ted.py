@@ -6,12 +6,11 @@ import random
 import copy
 
 dif = 10
-rank = 6
+rank = 5
 # data1 = [ [0,0], [1,0], [2,1], [3,0], [4,2] ]
 # data2 = [ [0,0], [1,0], [2,1], [3,0], [4,2], [5,3], [6,1] ]
 
 # answer = (Node("1").addkid(Node("1").addkid(Node("2").addkid(Node("1")))).addkid(Node("1")))
-
 
 def func1(command, data, num):
     nodes = []
@@ -41,7 +40,7 @@ def func ( List, var ):
         com += ')'
 
 
-for j in range(0,4):
+for j in range(35,36):
 
     os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/originData')
     f = open(str(j) + '.csv', 'r')
@@ -53,7 +52,7 @@ for j in range(0,4):
     data0 = copy.deepcopy(data[1:])
     length = len(data) - 1
 
-    for k in range(4):
+    for k in range(2,3):
 
         if k == 0:
             level  = int( length * dif / 100)
@@ -82,7 +81,7 @@ for j in range(0,4):
         current = int(level*2/5)
         ted = simple_distance(tree0, tree1)
         old = copy.deepcopy(data1)
-        while  ted != level:
+        while  abs(ted - level)  > 2:
             if ted < level:
                 old = copy.deepcopy(data1)
                 if abs(ted - level) < level/10:
@@ -128,7 +127,6 @@ for j in range(0,4):
             current += int(level/10)
             print(ted)
 
-        print(simple_distance(tree1, tree0))
         if k == 0:
             try:
                 os.mkdir('../ted/' + str(rank) +'0%/' + str(j))

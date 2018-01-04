@@ -21,6 +21,13 @@ body {
   margin: 15px auto;
 }
 
+.largeText {
+  font-size: 36px;
+  font-family: Ariel sans-serif;
+  text-align: center;
+  margin: 15px auto;
+}
+
 .title {
   font-size: 32px;
   font-family: Ariel sans-serif;

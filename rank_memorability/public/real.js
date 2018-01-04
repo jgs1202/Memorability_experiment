@@ -21,12 +21,12 @@ images.tutorial2 = []
 images.shuffle = []
 
 images.intervalTime = 500
-images.firstTime = 20
+images.firstTime = 2
 images.secondTime = 60
 
 images.start = 0
 images.count = 0
-images.vis = 4
+images.vis = 3
 images.targets = 3
 images.course = 0
 images.totalNumber = 4
@@ -203,7 +203,7 @@ let startDownload = function() {
   images.one = new Image(500, 300)
   images.two = new Image(500, 300)
   images.three = new Image(500, 300)
-  images.white = new Image(500, 300)
+  images.white = new Image(500, 140)
   images.white2 = new Image(500, 300)
   images.white3 = new Image(500, 300)
   images.white4 = new Image(500, 300)
@@ -362,42 +362,52 @@ let firstSection = function() {
 
 let displayTutorial1 = function() {
   if (images.time === 0) {
-    while (images.wPlace0.firstChild) images.wPlace0.removeChild(images.wPlace0.firstChild);
-    while (images.wPlace1.firstChild) images.wPlace1.removeChild(images.wPlace1.firstChild);
-    while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
+    // while (images.wPlace0.firstChild) images.wPlace0.removeChild(images.wPlace0.firstChild);
+    // while (images.wPlace1.firstChild) images.wPlace1.removeChild(images.wPlace1.firstChild);
+    // while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
     while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
-    images.tutorial1.targetPlace[0].appendChild(images.white)
-    while (images.tutorial1.targetPlace[1].firstChild) images.tutorial1.targetPlace[1].removeChild(images.tutorial1.targetPlace[1].firstChild);
-    images.tutorial1.targetPlace[1].appendChild(images.white2)
-    while (images.tutorial1.targetPlace[2].firstChild) images.tutorial1.targetPlace[2].removeChild(images.tutorial1.targetPlace[2].firstChild);
-    images.tutorial1.targetPlace[2].appendChild(images.white3)
+    images.tutorial1.targetPlace[0].appendChild(images.white2)
+    // while (images.tutorial1.targetPlace[1].firstChild) images.tutorial1.targetPlace[1].removeChild(images.tutorial1.targetPlace[1].firstChild);
+    // images.tutorial1.targetPlace[1].appendChild(images.white2)
+    // while (images.tutorial1.targetPlace[2].firstChild) images.tutorial1.targetPlace[2].removeChild(images.tutorial1.targetPlace[2].firstChild);
+    // images.tutorial1.targetPlace[2].appendChild(images.white3)
     // while (images.tutorial1.targetPlace[3].firstChild) images.tutorial1.targetPlace[3].removeChild(images.tutorial1.targetPlace[3].firstChild);
     // images.tutorial1.targetPlace[3].appendChild(images.white2)
-    images.tutorial1.centerPlace.appendChild(images.three)
+    // images.tutorial1.centerPlace.appendChild(images.three)
+    images.tutorial1.centerPlace.textContent = '3'
   } else if (images.time === 2) {
-    while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
-    images.tutorial1.centerPlace.appendChild(images.two)
+    // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+    // images.tutorial1.centerPlace.appendChild(images.two)
+    images.tutorial1.centerPlace.textContent = '2'
   } else if (images.time === 4) {
-    while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
-    images.tutorial1.centerPlace.appendChild(images.one)
+    // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+    // images.tutorial1.centerPlace.appendChild(images.one)
+    images.tutorial1.centerPlace.textContent = '1'
   } else if (images.time > 5) {
     if (images.time == 6) {
       console.log((images.number))
-      while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
-      images.wPlace0.appendChild(images.white2)
-      images.wPlace1.appendChild(images.white3)
-      images.wPlace2.appendChild(images.white)
+      images.tutorial1.centerPlace.textContent = ''
+      while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
+      images.tutorial1.targetPlace[0].appendChild(images.white)
       while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
       images.tutorial1.centerPlace.appendChild(images.targetImg)
+      // while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
+      // images.wPlace0.appendChild(images.white2)
+      // images.wPlace1.appendChild(images.white3)
+      // images.wPlace2.appendChild(images.white)
+      // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+      // images.tutorial1.centerPlace.appendChild(images.targetImg)
     } else if ((images.time) > 6 + images.firstTime * 2 - 1) {
-      images.tutorial1.targetPlace[1].appendChild(images.white)
-      images.tutorial1.targetPlace[0].appendChild(images.white4)
+      // images.tutorial1.targetPlace[1].appendChild(images.white)
+      // images.tutorial1.targetPlace[0].appendChild(images.white4)
+      while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
+      images.tutorial1.targetPlace[0].appendChild(images.white2)
       clearInterval(images.timer1)
       console.log("timer clear")
       // for (let i = 0; i < images.totalNumber; i++) {
       //   while (images.tutorial1.targetPlace[i].firstChild) images.tutorial1.targetPlace[i].removeChild(images.tutorial1.targetPlace[i].firstChild);
       // }
-      while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+      // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
       // images.tutorial1.targetPlace[1].appendChild(images.white)
       document.getElementById('cellCenter').textContent = '+'
       // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
@@ -432,22 +442,26 @@ let secondSection = function() {
 
 let displayTutorial2 = function() {
   if (images.time === 0) {
-    images.tutorial2.centerPlace.textContent = ''
+    images.tutorial2.centerPlace.textContent = '3'
     // while (images.tutorial2.targetPlace[1].firstChild) images.tutorial2.targetPlace[1].removeChild(images.tutorial2.targetPlace[1].firstChild);
     // images.tutorial2.targetPlace[1].appendChild(images.white)
     // while (images.tutorial2.targetPlace[3].firstChild) images.tutorial2.targetPlace[3].removeChild(images.tutorial2.targetPlace[3].firstChild);
     // images.tutorial2.targetPlace[3].appendChild(images.white2)
-    images.tutorial2.centerPlace.appendChild(images.three)
+    // images.tutorial2.centerPlace.appendChild(images.three)
+    // images.tutorial1.centerPlace.textContent = '3'
   } else if (images.time === 2) {
-    while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
-    images.tutorial2.centerPlace.appendChild(images.two)
+    // while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
+    // images.tutorial2.centerPlace.appendChild(images.two)
+    images.tutorial1.centerPlace.textContent = '2'
   } else if (images.time === 4) {
-    while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
-    images.tutorial2.centerPlace.appendChild(images.one)
+    // while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
+    // images.tutorial2.centerPlace.appendChild(images.one)
+    images.tutorial1.centerPlace.textContent = '1'
   } else if (images.time > 5) {
     if (images.time == 6) {
       document.getElementById('noChoice').style.display = 'block'
-      while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
+      images.tutorial1.centerPlace.textContent = ''
+      // while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
       // document.getElementById('cellCenter').textContent = '' + images.secondTime
       for (let n = 0; n < images.totalNumber; n++) {
         console.log((images.number))
