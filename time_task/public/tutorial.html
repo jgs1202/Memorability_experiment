@@ -13,17 +13,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.css">
-  <script src="real.js"></script>
+  <script src="tutorial.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
   <script>
     // Initialize Firebase
     var config = {
-      apiKey: "AIzaSyAEZMN_RtruC1xSkOZoECwQmdD56dx9ggo",
-      authDomain: "rankmemorabilitytest.firebaseapp.com",
-      databaseURL: "https://rankmemorabilitytest.firebaseio.com",
-      projectId: "rankmemorabilitytest",
-      storageBucket: "rankmemorabilitytest.appspot.com",
-      messagingSenderId: "47630841168"
+      apiKey: "AIzaSyBO7U_jRgPWDxvex-FbBO5dgAy7N7e7vuM",
+      authDomain: "time-of-memorability.firebaseapp.com",
+      databaseURL: "https://time-of-memorability.firebaseio.com",
+      projectId: "time-of-memorability",
+      storageBucket: "time-of-memorability.appspot.com",
+      messagingSenderId: "595065317444"
     };
     firebase.initializeApp(config);
   </script>
@@ -31,17 +33,19 @@
 
   <div class="title" id="Title">Memorability Test</div>
 
-  <!-- <div class="subtitle">Real Part</div> -->
+  <!-- <div class="subtitle">Tutorial</div> -->
 
   <div class="text" id="loading">loading images...</div>
   <div class="content" id="start1st">
-    <p>This is real part.</p>
+    <p>Push this button then the experiment will start.</p>
+    <p>The target image will be shown for 20 seconds, then choose the target in 60 seconds.</p>
+    <p>If you can not find the answer, push the 'no idea' button below the images.</p>
     <input type="button" id="buttonStart1st" value="Start 1st Section">
   </div>
 
   <div class="content" id="start2nd">
-    <p>Push this button and start 2nd section.</p>
-    <p>ボタンを押すと第2セクションへ進みます。</p>
+    <p>Push this button and start 2nd secrtion.</p>
+    <p>Click a image you remember in the 1st section.</p>
     <input type="button" id="buttonStart2nd" value="Start 2nt Section">
   </div>
 
@@ -49,7 +53,7 @@
     <table border="0" align='center' cellspacing='10'>
       <tr>
         <td id="cell0"></td>
-          <td id="cell1"></td>
+        <td id="cell1"></td>
       </tr>
       <tr>
         <td id="cellCenter"></td>
@@ -63,26 +67,24 @@
 
   <div class="content text" id="noChoice"><input type="button" value='No idea?' id="noIdea"></div>
 
-
   <div class="content text" id="correct"><br><br><br>Your choice was correct. Nice!</div>
   <div class="content text" id="limit"><br><br><br>Sorry, time limit.</div>
   <div class="content text" id="miss"><br><br><br>Your choice was incorrect, but never mind.</div>
   <div class="content text" id="end"><br><br><br>Please go on to the next step.</div>
 
   <div class="content" id="toNextStep">
-    <form action="https://rankmemorabilitytest.firebaseapp.com/tutorial.html" name="h1" method="get">
+    <form action="https://time-of-memorability.firebaseapp.com/tutorial.html" name="h1" method="get">
       <input type="hidden" name="v1" value="">
       <input type="submit" name="" value="Go to Next" id="submit">
     </form>
   </div>
 
-  <div class="content text" id="complete"><br><br><br>It's the end of this course. Please go on to the next course!</div>
-  <div class="content text" id="completeEnd"><br><br><br>It's the end of this experiment. Thank you for join!</div>
+  <div class="content text" id="complete">You seem to have done all tutorial. Please go on to the real part.</div>
 
   <div class="content" id="toNextStep2">
-    <form action="https://rankmemorabilitytest.firebaseapp.com/realEx.html" name="h2" method="get">
+    <form action="https://time-of-memorability.firebaseapp.com/realEx.html" name="h2" method="get">
       <input type="hidden" name="v2" value="">
-      <input type="submit" name="" value="Select Course" id="submit2">
+      <input type="submit" name="" value="Go to Real Part" id="submit2">
     </form>
   </div>
 

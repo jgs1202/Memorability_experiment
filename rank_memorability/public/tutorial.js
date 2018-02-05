@@ -20,8 +20,8 @@ images.tutorial1 = []
 images.tutorial2 = []
 images.intervalTime = 500
 images.shuffle = []
-images.totalCourse = 1
-images.firstTime = 2
+images.totalCourse = 10
+images.firstTime = 20
 images.secondTime = 60
 images.totalNumber = 4
 images.start = 0
@@ -127,14 +127,14 @@ let descideCourse = function() {
 
 let startDownload = function() {
   console.log('Download starts.')
-  images.one = new Image(500, 300)
-  images.two = new Image(500, 300)
-  images.three = new Image(500, 300)
-  images.white = new Image(500, 140)
-  images.white2 = new Image(500, 300)
-  images.white3 = new Image(500, 300)
-  images.white4 = new Image(500, 300)
-  images.targetImg = new Image(500, 300)
+  images.one = new Image(500, 500)
+  images.two = new Image(500, 500)
+  images.three = new Image(500, 500)
+  images.white = new Image(500, 240)
+  images.white2 = new Image(500, 470)
+  images.white3 = new Image(500, 500)
+  images.white4 = new Image(500, 500)
+  images.targetImg = new Image(500, 500)
   images.storageRef = firebase.storage().ref("images")
   images.one.srcurl = images.storageRef.child("one.png")
   images.two.srcurl = images.storageRef.child("second.png")
@@ -226,7 +226,7 @@ let downloadImageTutorial = function() {
 
     imgTutorial[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.img[n] = new Image(500, 300)
+      images.img[n] = new Image(500, 500)
       images.img[n].addEventListener("load", function() {
         images.verify[n] = 1
       }, false)
@@ -252,6 +252,7 @@ let downloadImageTutorial = function() {
     }, 200)
   }
   while (verifyDownloadTu() === 0) {}
+  console.log(images.tutorialRef)
   document.getElementById('correct').style.display = 'none'
   document.getElementById('miss').style.display = 'none'
   document.getElementById('complete').style.display = 'none'
@@ -272,6 +273,7 @@ let downloadImageTutorial = function() {
 
 
 let firstSection = function() {
+  document.getElementById('Title').style.display = 'none'
   document.getElementById('buttonStart1st').removeEventListener('click', firstSection)
   document.getElementById('start1st').style.display = 'none'
   document.getElementById('1stTable').style.display = 'block'
@@ -356,7 +358,7 @@ let goTutorialSecond = function() {
 let secondSection = function() {
   console.log('start')
   document.getElementById('start2nd').style.display = 'none'
-  images.time = 0
+  images.time = 6
   images.tutorial2.centerPlace = document.getElementById('cellCenter')
   images.tutorial2.targetPlace = []
   for (let i = 0; i < images.totalNumber; i++) {

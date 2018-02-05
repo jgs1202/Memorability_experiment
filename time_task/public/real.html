@@ -14,16 +14,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.7.0/sweetalert2.css">
   <script src="real.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
   <script>
     // Initialize Firebase
     var config = {
-      apiKey: "AIzaSyAEZMN_RtruC1xSkOZoECwQmdD56dx9ggo",
-      authDomain: "rankmemorabilitytest.firebaseapp.com",
-      databaseURL: "https://rankmemorabilitytest.firebaseio.com",
-      projectId: "rankmemorabilitytest",
-      storageBucket: "rankmemorabilitytest.appspot.com",
-      messagingSenderId: "47630841168"
+      apiKey: "AIzaSyBO7U_jRgPWDxvex-FbBO5dgAy7N7e7vuM",
+      authDomain: "time-of-memorability.firebaseapp.com",
+      databaseURL: "https://time-of-memorability.firebaseio.com",
+      projectId: "time-of-memorability",
+      storageBucket: "time-of-memorability.appspot.com",
+      messagingSenderId: "595065317444"
     };
     firebase.initializeApp(config);
   </script>
@@ -48,8 +49,11 @@
   <div class="content largeText" id="1stTable">
     <table border="0" align='center' cellspacing='10'>
       <tr>
+        <td id="cellTop"></td>
+      </tr>
+      <tr>
         <td id="cell0"></td>
-          <td id="cell1"></td>
+        <td id="cell1"></td>
       </tr>
       <tr>
         <td id="cellCenter"></td>
@@ -70,7 +74,7 @@
   <div class="content text" id="end"><br><br><br>Please go on to the next step.</div>
 
   <div class="content" id="toNextStep">
-    <form action="https://rankmemorabilitytest.firebaseapp.com/tutorial.html" name="h1" method="get">
+    <form action="https://time-of-memorability.firebaseapp.com/tutorial.html" name="h1" method="get">
       <input type="hidden" name="v1" value="">
       <input type="submit" name="" value="Go to Next" id="submit">
     </form>
@@ -80,7 +84,7 @@
   <div class="content text" id="completeEnd"><br><br><br>It's the end of this experiment. Thank you for join!</div>
 
   <div class="content" id="toNextStep2">
-    <form action="https://rankmemorabilitytest.firebaseapp.com/realEx.html" name="h2" method="get">
+    <form action="https://time-of-memorability.firebaseapp.com/realEx.html" name="h2" method="get">
       <input type="hidden" name="v2" value="">
       <input type="submit" name="" value="Select Course" id="submit2">
     </form>

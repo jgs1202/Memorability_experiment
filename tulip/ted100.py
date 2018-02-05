@@ -6,7 +6,7 @@ import random
 import copy
 
 dif = 10
-rank = 3
+rank = 5
 # data1 = [ [0,0], [1,0], [2,1], [3,0], [4,2] ]
 # data2 = [ [0,0], [1,0], [2,1], [3,0], [4,2], [5,3], [6,1] ]
 
@@ -15,7 +15,7 @@ rank = 3
 def func1(command, data, num):
     nodes = []
 
-    for i in range(500):
+    for i in range(100):
         nodes.append([])
 
     for i in data:
@@ -40,9 +40,9 @@ def func ( List, var ):
         com += ')'
 
 
-for j in range(7,10):
+for j in range(0,40):
 
-    os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/originData')
+    os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/100nodes/originData')
     f = open(str(j) + '.csv', 'r')
     dataReader = csv.reader(f)
     data = [ e for e in dataReader]
@@ -133,7 +133,7 @@ for j in range(7,10):
             except:
                 pass
 
-        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/ted/' + str(rank) + '0%/'+str(j))
+        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/100nodes/ted/' + str(rank) + '0%/'+str(j))
         f = open( '' + str(k) + '.csv', 'w')
         writer = csv.writer(f)
         for i in data1:

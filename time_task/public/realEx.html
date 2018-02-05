@@ -8,16 +8,17 @@
 </head>
 
 <body>
-  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
   <script>
     // Initialize Firebase
     var config = {
-      apiKey: "AIzaSyAEZMN_RtruC1xSkOZoECwQmdD56dx9ggo",
-      authDomain: "rankmemorabilitytest.firebaseapp.com",
-      databaseURL: "https://rankmemorabilitytest.firebaseio.com",
-      projectId: "rankmemorabilitytest",
-      storageBucket: "rankmemorabilitytest.appspot.com",
-      messagingSenderId: "47630841168"
+      apiKey: "AIzaSyBO7U_jRgPWDxvex-FbBO5dgAy7N7e7vuM",
+      authDomain: "time-of-memorability.firebaseapp.com",
+      databaseURL: "https://time-of-memorability.firebaseio.com",
+      projectId: "time-of-memorability",
+      storageBucket: "time-of-memorability.appspot.com",
+      messagingSenderId: "595065317444"
     };
     firebase.initializeApp(config);
   </script>
@@ -61,7 +62,7 @@
   </div>
 
   <div class="content" id="send">
-    <form action="https://rankmemorabilitytest.firebaseapp.com/real.html" name="h1" method="get">
+    <form action="https://time-of-memorability.firebaseapp.com/real.html" name="h1" method="get">
       <input type="hidden" name="name" value="">
       <input type="hidden" name="course" value="">
       <input type="submit" name="" value="Start Real" id="submit">
@@ -69,12 +70,12 @@
   </div>
 
   <script type="text/javascript">
-
-    let mem  = {}
+    let mem = {}
 
     window.addEventListener('load', function() {
       let FORM = new Array();
       parse()
+
       function parse() {　　　 // 関数にしなくてもいいのですが、一応  　　
         var buffer = location.search.substr(1);　　
         var pairs = buffer.split("&");　
@@ -91,22 +92,20 @@
       addEv()
     }, false)
 
-    let addEv = function(){
-        mem.letter = ['A', 'B', 'C', 'D']
-        for (let i=0; i < 4; i++){
-          for (let j=0; j<4; j++){
-            document.getElementById(mem.letter[i] + '' + j).addEventListener('click', function(){
-              mem.course = mem.letter[i] + '' + j
-              console.log(mem.course)
-              document.h1.course.value = mem.course
-              document.getElementById('course').style.display = 'none'
-              document.getElementById('send').style.display = 'block'
-            }, false)
-          }
+    let addEv = function() {
+      mem.letter = ['A', 'B', 'C', 'D']
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          document.getElementById(mem.letter[i] + '' + j).addEventListener('click', function() {
+            mem.course = mem.letter[i] + '' + j
+            console.log(mem.course)
+            document.h1.course.value = mem.course
+            document.getElementById('course').style.display = 'none'
+            document.getElementById('send').style.display = 'block'
+          }, false)
         }
+      }
     }
-
-
   </script>
 </body>
 

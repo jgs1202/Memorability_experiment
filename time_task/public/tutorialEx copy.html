@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 
 <head>
   <meta charset="utf-8">
@@ -6,9 +7,8 @@
   <link rel="stylesheet" type="text/css" href="memorability.css">
 </head>
 
-</head>
-
 <body>
+  <script src="tutorialEx.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -22,25 +22,22 @@
   };
   firebase.initializeApp(config);
 </script>
-
   <div class="title">Memorability Test</div>
+
+  <div class="subtitle">Tutorial</div>
+
   <div>
-    <form action="https://rankmemorabilitytest.firebaseapp.com/tutorialEx.html" name="h1" method="get">
-      <input type="hidden" name="v1" value="">
-      <br>Thank you for joining this experiment. Please fill name here.
-      <br>実験にご参加いただきありがとうございます。下のフォームに名前を入力してください。
-      <br><br>
-      <input type="text" name="b1" value="" id="name">
-      <input type="submit" name="" value="送信" id="submit">
-    </form>
+    <p>This is tutorial. This experiment consist of 2 sections.</p>
+    <p>At 1st section, you will see an image, memorize it in a given time.</p>
+    <p>At 2nd section, you will see 8 images, click what you've seen in 1st section.</p>
   </div>
 
-  <script type="text/javascript">
-    document.getElementById('submit').addEventListener('click', function() {
-      let Name = document.getElementById('name').value
-      document.h1.v1.value = Name
-    })
-  </script>
+  <div>
+    <form action="file:///Users/Aoyama/Documents/B4/noOauth_test/rank_memorability/public/tutorial.html" name="h1" method="get">
+      <input type="hidden" name="v1" value="">
+      <input type="submit" name="" value="Go to Tutorial" id="submit">
+    </form>
+  </div>
 </body>
 
 </html>

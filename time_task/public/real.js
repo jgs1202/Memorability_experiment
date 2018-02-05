@@ -21,14 +21,14 @@ images.tutorial2 = []
 images.shuffle = []
 
 images.intervalTime = 500
-images.firstTime = 20
+images.firstTime = 10 //20
 images.secondTime = 60
 images.break = 20
 
 images.start = 0
 images.count = 0
 images.vis = 3
-images.targets = 20
+images.targets = 3 //20
 images.course = 0
 images.totalNumber = 4
 
@@ -47,6 +47,9 @@ window.addEventListener('load', function() {
   images.parSet = FORM.course[0]
   console.log(FORM.course[0])
   console.log(images.parSet)
+  if (images.parSet == "D") {
+    images.targets = 2
+  }
 
   for (let j = 0; j < images.totalNumber; j++) {
     images.shuffle[j] = j
@@ -167,14 +170,15 @@ let descideCourse = function() {
 let VerifyEnd = function() {
   console.log('course is ' + '' + images.course)
   console.log(images.ref.length)
-  if (images.course === images.break ) {
+  if (images.course === images.break) {
     document.h2.v2.value = images.name
     document.getElementById('complete').style.display = 'block'
     document.getElementById('toNextStep2').style.display = 'block'
     document.getElementById('loading').style.display = 'none'
-  } else if (images.course === images.ref.length){
+  } else if (images.course === images.ref.length) {
     document.h2.v2.value = images.name
-    document.getElementById('completeEnd').style.display = 'block'
+    document.getElementById('complete').style.display = 'block'
+    document.getElementById('toNextStep2').style.display = 'block'
     document.getElementById('loading').style.display = 'none'
   } else {
     //make the order of iamges random again
@@ -206,14 +210,25 @@ let VerifyEnd = function() {
 
 let startDownload = function() {
   console.log('Download starts.')
-  images.one = new Image(500, 500)
-  images.two = new Image(500, 500)
-  images.three = new Image(500, 500)
-  images.white = new Image(500, 240)
-  images.white2 = new Image(500, 470)
-  images.white3 = new Image(500, 500)
-  images.white4 = new Image(500, 500)
-  images.targetImg = new Image(500, 500)
+  if (images.ref[images.course][5] != 2) {
+    images.one = new Image(709, 354)
+    images.two = new Image(709, 354)
+    images.three = new Image(709, 354)
+    images.white = new Image(709, 167)
+    images.white2 = new Image(709, 320)
+    images.white3 = new Image(709, 146)
+    images.white4 = new Image(709, 354)
+    images.targetImg = new Image(709, 354)
+  } else {
+    images.one = new Image(500, 500)
+    images.two = new Image(500, 500)
+    images.three = new Image(500, 500)
+    images.white = new Image(500, 240)
+    images.white2 = new Image(500, 470)
+    images.white3 = new Image(500, 500)
+    images.white4 = new Image(500, 500)
+    images.targetImg = new Image(500, 500)
+  }
   images.storageRef = firebase.storage().ref("images")
   images.one.srcurl = images.storageRef.child("one.png")
   images.two.srcurl = images.storageRef.child("second.png")
@@ -305,7 +320,11 @@ let downloadImageTutorial = function() {
 
     imgTutorial[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.img[n] = new Image(500, 500)
+      if (images.ref[images.course][5] != 2) {
+        images.img[n] = new Image(709, 354)
+      } else {
+        images.img[n] = new Image(500, 500)
+      }
       images.img[n].addEventListener("load", function() {
         images.verify[n] = 1
       }, false)
@@ -351,6 +370,10 @@ let downloadImageTutorial = function() {
 
 
 let firstSection = function() {
+  while (document.getElementById('cellTop').firstChild) document.getElementById('cellTop').removeChild(document.getElementById('cellTop').firstChild);
+  if (images.ref[images.course][5] != 2){
+    document.getElementById('cellTop').appendChild(images.white3)
+  }
   document.getElementById('Title').style.display = 'none'
   document.getElementById('buttonStart1st').removeEventListener('click', firstSection)
   document.getElementById('start1st').style.display = 'none'
@@ -364,7 +387,11 @@ let firstSection = function() {
   }
   console.log(images.white)
   console.log(images.tutorial1.targetPlace[0])
-  images.timer1 = setInterval(displayTutorial1, images.intervalTime)
+  if (images.parSet == 'D') {
+    secondSection()
+  } else {
+    images.timer1 = setInterval(displayTutorial1, images.intervalTime)
+  }
 }
 
 let displayTutorial1 = function() {
@@ -437,7 +464,11 @@ let secondSection = function() {
   console.log('start')
   document.getElementById('start2nd').style.display = 'none'
   document.getElementById('1stTable').style.display = 'block'
-  images.time = 6
+  if (images.parSet == 'D') {
+    images.time = 0
+  } else {
+    images.time = 6
+  }
   images.tutorial2.centerPlace = document.getElementById('cellCenter')
   images.tutorial2.targetPlace = []
   for (let i = 0; i < images.totalNumber; i++) {
@@ -449,6 +480,8 @@ let secondSection = function() {
 
 let displayTutorial2 = function() {
   if (images.time === 0) {
+    while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
+    images.tutorial1.targetPlace[0].appendChild(images.white2)
     images.tutorial2.centerPlace.textContent = '3'
     // while (images.tutorial2.targetPlace[1].firstChild) images.tutorial2.targetPlace[1].removeChild(images.tutorial2.targetPlace[1].firstChild);
     // images.tutorial2.targetPlace[1].appendChild(images.white)
@@ -474,18 +507,20 @@ let displayTutorial2 = function() {
         console.log((images.number))
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].appendChild(images.img[images.shuffle[n]])
-        images.tutorial2.targetPlace[n].addEventListener('click', chooseTarget, false)
       }
+      document.addEventListener('keydown', checkKey, false)
       document.getElementById('noIdea').addEventListener('click', chooseNone, false)
+      images.startTime = new Date()
     } else if ((images.time) > 5 + images.secondTime * 2) {
+      images.endTime = new Date()
       clearInterval(images.timer2)
       images.extime = images.time / 2
       images.end = 1
       console.log("timer clear")
       for (let n = 0; n < images.totalNumber; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
-        images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }
+      document.removeEventListener('keydown', checkKey)
       showResult()
     } else if ((images.time % 2) === 0) {
       // document.getElementById('cellCenter').textContent = '' + (images.secondTime - (images.time / 2 - 3))
@@ -495,40 +530,57 @@ let displayTutorial2 = function() {
   images.time += 1
 }
 
+let checkKey = function(e) {
+  console.log(e.keyCode)
+  images.key = "None"
+  if (e.keyCode == 84) {
+    images.key = 0
+  } else if (e.keyCode == 89) {
+    images.key = 1
+  } else if (e.keyCode == 71) {
+    images.key = 2
+  } else if (e.keyCode == 72) {
+    images.key = 3
+  }
+  if (images.key != 'None') {
+    images.endTime = new Date()
+    chooseTarget()
+  }
+}
+
 let chooseTarget = function(e) {
-  console.log(document.getElementById(e.path[1].id))
-  document.getElementById(e.path[1].id).style.border = '3px solid #81F7F3'
-  swal({
-    title: "Is your chice this?",
-    // icon: "warning",
-    showCancelButton: true,
-    showConfirmButton: true,
-    buttons: true,
-    customClass: 'swal-wide'
-    // dangerMode: true,
-  }, function(inputValue) {
-    console.log(inputValue)
-  }).catch(swal.noop).then((result) => {
-    console.log(result)
-    if (result) {
-      clearInterval(images.timer2)
-      images.extime = images.time / 2
-      document.getElementById(e.path[1].id).style.border = '0'
-      document.getElementById('noIdea').removeEventListener('click', chooseNone)
-      for (let n = 0; n < images.totalNumber; n++) {
-        while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
-        images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
-      }
-      if (images.end !== 1) {
-        images.tutorial2.answer = e.path[1].id[4]
-      }
-      console.log(images.tutorial2.answer)
-      showResult()
-    } else {
-      document.getElementById(e.path[1].id).style.border = '0'
-    }
-  })
-  console.log(e.path[1].id)
+  // console.log(document.getElementById(e.path[1].id))
+  // document.getElementById(e.path[1].id).style.border = '3px solid #81F7F3'
+  // swal({
+  //   title: "Is your chice this?",
+  //   // icon: "warning",
+  //   showCancelButton: true,
+  //   showConfirmButton: true,
+  //   buttons: true,
+  //   customClass: 'swal-wide'
+  //   // dangerMode: true,
+  // }, function(inputValue) {
+  //   console.log(inputValue)
+  // }).catch(swal.noop).then((result) => {
+  //   console.log(result)
+  //   if (result) {
+  clearInterval(images.timer2)
+  images.extime = images.endTime - images.startTime
+  images.extime += ' ms'
+  // document.getElementById(e.path[1].id).style.border = '0'
+  document.getElementById('noIdea').removeEventListener('click', chooseNone)
+  for (let n = 0; n < images.totalNumber; n++) {
+    while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
+  }
+  document.removeEventListener('keydown', checkKey)
+  if (images.end !== 1) {
+    images.tutorial2.answer = images.key
+  }
+  console.log(images.tutorial2.answer)
+  showResult()
+  // } else {
+  //   document.getElementById(e.path[1].id).style.border = '0'
+  // }
 }
 
 let chooseNone = function() {
@@ -546,11 +598,10 @@ let chooseNone = function() {
     console.log(result)
     if (result) {
       clearInterval(images.timer2)
-      images.extime = images.time / 2
       for (let n = 0; n < images.totalNumber; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
-        images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }
+      document.removeEventListener('click', checkKey)
       if (images.end !== 1) {
         images.tutorial2.answer = 'None'
       }
@@ -619,6 +670,7 @@ let showResult = function() {
   images.course += 1
   VerifyEnd()
   images.tutorial2.answer = 100
+  images.key = "None"
 }
 
 // document.h1.v1.value = images.name

@@ -21,16 +21,14 @@ images.tutorial2 = []
 images.shuffle = []
 
 images.intervalTime = 500
-images.firstTime = 20
-images.secondTime = 60
-images.break = 20
+images.firstTime = 5
+images.secondTime = 10
 
 images.start = 0
 images.count = 0
 images.vis = 3
-images.targets = 20
+images.targets = 1
 images.course = 0
-images.totalNumber = 4
 
 //////////////////////////////////////////////////////////////
 
@@ -48,21 +46,6 @@ window.addEventListener('load', function() {
   console.log(FORM.course[0])
   console.log(images.parSet)
 
-  for (let j = 0; j < images.totalNumber; j++) {
-    images.shuffle[j] = j
-  }
-  for (let i = images.shuffle.length - 1; i > 0; i--) {
-    let r = Math.floor(Math.random() * (i + 1));
-    let tmp = images.shuffle[i]
-    images.shuffle[i] = images.shuffle[r];
-    images.shuffle[r] = tmp;
-  }
-  for (let i = 0; i < images.totalNumber; i++) {
-    if (images.shuffle[i] === 0) {
-      images.targetNumber = i
-    }
-  }
-
   //make course random
   images.ref = []
   for (let j = 0; j < images.vis; j++) {
@@ -71,6 +54,21 @@ window.addEventListener('load', function() {
     }
   }
   console.log(images.ref);
+
+  for (let j = 0; j < 8; j++) {
+    images.shuffle[j] = j
+  }
+  for (let i = images.shuffle.length - 1; i > 0; i--) {
+    let r = Math.floor(Math.random() * (i + 1));
+    let tmp = images.shuffle[i]
+    images.shuffle[i] = images.shuffle[r];
+    images.shuffle[r] = tmp;
+  }
+  for (let i = 0; i < 8; i++) {
+    if (images.shuffle[i] === 0) {
+      images.targetNumber = i
+    }
+  }
 
   console.log(images.name)
   document.h1.v1.value = images.name
@@ -86,25 +84,11 @@ let courseSelect = function() {
   console.log(images.courseCheck);
   // remove images.ref[i] when imagds.couseCheck[i] == 1
   for (let i = 0; i < images.ref.length; i++) {
-    images.length = images.ref.length
     if (images.courseCheck[i] === 1) {
       console.log(i)
       images.front = images.ref.slice(0, i)
-      if (i + 1 === images.length) {
-        images.back = []
-      } else {
-        images.back = images.ref.slice(i + 1, images.length)
-      }
-      console.log(images.back);
+      images.back = images.ref.slice(i + 1, images.ref.length)
       images.ref = images.front.concat(images.back)
-      images.coFront = images.courseCheck.slice(0, i)
-      if (i + 1 === images.length) {
-        images.coBack = []
-      } else {
-        images.coBack = images.courseCheck.slice(i + 1, images.length)
-      }
-      images.courseCheck = images.coFront.concat(images.coBack)
-      console.log(images.courseCheck)
       i -= 1
     }
     console.log(images.ref);
@@ -146,7 +130,7 @@ let check = function() {
 let descideCourse = function() {
   images.courseCheck = []
   images.database = firebase.database()
-  //　全コースについて既にプレイしたか検証
+  //　3コースについて既にプレイしたか検証
   for (let n = 0; n < images.targets * images.vis; n++) {
     images.database.ref('user/' + images.name + '/real/' + images.ref[n]).once('value').then(function(snapshot) {
       console.log(snapshot._e)
@@ -166,33 +150,12 @@ let descideCourse = function() {
 
 let VerifyEnd = function() {
   console.log('course is ' + '' + images.course)
-  console.log(images.ref.length)
-  if (images.course === images.break ) {
+  if (images.course === images.ref.length) {
     document.h2.v2.value = images.name
     document.getElementById('complete').style.display = 'block'
     document.getElementById('toNextStep2').style.display = 'block'
     document.getElementById('loading').style.display = 'none'
-  } else if (images.course === images.ref.length){
-    document.h2.v2.value = images.name
-    document.getElementById('completeEnd').style.display = 'block'
-    document.getElementById('loading').style.display = 'none'
   } else {
-    //make the order of iamges random again
-    for (let j = 0; j < images.totalNumber; j++) {
-      images.shuffle[j] = j
-    }
-    for (let i = images.shuffle.length - 1; i > 0; i--) {
-      let r = Math.floor(Math.random() * (i + 1));
-      let tmp = images.shuffle[i]
-      images.shuffle[i] = images.shuffle[r];
-      images.shuffle[r] = tmp;
-    }
-    for (let i = 0; i < images.totalNumber; i++) {
-      if (images.shuffle[i] === 0) {
-        images.targetNumber = i
-      }
-    }
-
     startDownload()
   }
 }
@@ -206,14 +169,12 @@ let VerifyEnd = function() {
 
 let startDownload = function() {
   console.log('Download starts.')
-  images.one = new Image(500, 500)
-  images.two = new Image(500, 500)
-  images.three = new Image(500, 500)
-  images.white = new Image(500, 240)
-  images.white2 = new Image(500, 470)
-  images.white3 = new Image(500, 500)
-  images.white4 = new Image(500, 500)
-  images.targetImg = new Image(500, 500)
+  images.one = new Image(400, 250)
+  images.two = new Image(400, 250)
+  images.three = new Image(400, 250)
+  images.white = new Image(400, 250)
+  images.white2 = new Image(400, 250)
+  images.white3 = new Image(400, 250)
   images.storageRef = firebase.storage().ref("images")
   images.one.srcurl = images.storageRef.child("one.png")
   images.two.srcurl = images.storageRef.child("second.png")
@@ -221,9 +182,6 @@ let startDownload = function() {
   images.white.srcurl = images.storageRef.child('white.png')
   images.white2.srcurl = images.storageRef.child('white.png')
   images.white3.srcurl = images.storageRef.child('white.png')
-  images.white4.srcurl = images.storageRef.child('white.png')
-  images.tutorialRef = firebase.storage().ref("real/" + images.ref[images.course])
-  images.targetImg.srcurl = images.tutorialRef.child('target.png')
   downloadWhite()
 }
 
@@ -243,19 +201,12 @@ let downloadWhite2 = function() {
 let downloadWhite3 = function() {
   images.white2.removeEventListener("load", downloadWhite3)
   images.white3.srcurl.getDownloadURL().then(function(url) {
-    images.white3.addEventListener("load", downloadWhite4, false)
+    images.white3.addEventListener("load", downloadOne, false)
     images.white3.src = url
   })
 }
-let downloadWhite4 = function() {
-  images.white3.removeEventListener("load", downloadWhite4)
-  images.white4.srcurl.getDownloadURL().then(function(url) {
-    images.white4.addEventListener("load", downloadOne, false)
-    images.white4.src = url
-  })
-}
 let downloadOne = function() {
-  images.white4.removeEventListener("load", downloadOne)
+  images.white3.removeEventListener("load", downloadOne)
   images.one.srcurl.getDownloadURL().then(function(url) {
     images.one.addEventListener("load", downloadTwo, false)
     images.one.src = url
@@ -271,19 +222,13 @@ let downloadTwo = function() {
 let downloadThree = function() {
   images.two.removeEventListener("load", downloadThree)
   images.three.srcurl.getDownloadURL().then(function(url) {
-    images.three.addEventListener("load", downloadTarget, false)
+    images.three.addEventListener("load", downloadImageTutorial, false)
     images.three.src = url
   })
 }
-let downloadTarget = function() {
-  images.three.removeEventListener("load", downloadTarget)
-  images.targetImg.srcurl.getDownloadURL().then(function(url) {
-    images.targetImg.addEventListener('load', downloadImageTutorial, false)
-    images.targetImg.src = url
-  })
-}
 let downloadImageTutorial = function() {
-  images.targetImg.removeEventListener("load", downloadImageTutorial)
+  images.three.removeEventListener("load", downloadImageTutorial)
+  images.tutorialRef = firebase.storage().ref("real/" + images.ref[ images.course ])
   // //images.tutorial.verifyを初期化
   // images.tutorial1[0] =
   //   for (let M = 0; M < 15; M++) {
@@ -296,7 +241,7 @@ let downloadImageTutorial = function() {
   images.verify = []
   let imgTutorial = []
   console.log("one, two, threee have been downloaded.")
-  for (let n = 0; n < images.totalNumber; n++) {
+  for (let n = 0; n < 8; n++) {
     images.verify[n] = 0
     images.imgName = '' + n + '.png'
     console.log(images.imgName)
@@ -305,7 +250,7 @@ let downloadImageTutorial = function() {
 
     imgTutorial[n].getDownloadURL().then(function(url) {
       //document.getElementById("imgSample").style.backgroundImage = "url("+url+")"
-      images.img[n] = new Image(500, 500)
+      images.img[n] = new Image(400, 250)
       images.img[n].addEventListener("load", function() {
         images.verify[n] = 1
       }, false)
@@ -324,7 +269,7 @@ let downloadImageTutorial = function() {
   let verifyDownloadTu = function() {
     setTimeout(function() {
       let completeTu = images.verify[0]
-      for (let j = 1; j < images.totalNumber; j++) {
+      for (let j = 1; j < 8; j++) {
         completeTu = completeTu * images.verify[j]
       }
       return completeTu
@@ -336,9 +281,6 @@ let downloadImageTutorial = function() {
   document.getElementById('complete').style.display = 'none'
   document.getElementById('limit').style.display = 'none'
   document.getElementById("loading").style.display = "none"
-  images.wPlace0 = document.getElementById('W0')
-  images.wPlace1 = document.getElementById('W1')
-  images.wPlace2 = document.getElementById('W2')
   console.log("download finished.")
   if (images.start === 0) {
     document.getElementById('start1st').style.display = 'block'
@@ -351,7 +293,6 @@ let downloadImageTutorial = function() {
 
 
 let firstSection = function() {
-  document.getElementById('Title').style.display = 'none'
   document.getElementById('buttonStart1st').removeEventListener('click', firstSection)
   document.getElementById('start1st').style.display = 'none'
   document.getElementById('1stTable').style.display = 'block'
@@ -359,7 +300,7 @@ let firstSection = function() {
   images.number = 0
   images.tutorial1.centerPlace = document.getElementById('cellCenter')
   images.tutorial1.targetPlace = []
-  for (let i = 0; i < images.totalNumber; i++) {
+  for (let i = 0; i < 8; i++) {
     images.tutorial1.targetPlace[i] = document.getElementById('cell' + '' + i)
   }
   console.log(images.white)
@@ -369,52 +310,33 @@ let firstSection = function() {
 
 let displayTutorial1 = function() {
   if (images.time === 0) {
-    // while (images.wPlace0.firstChild) images.wPlace0.removeChild(images.wPlace0.firstChild);
-    // while (images.wPlace1.firstChild) images.wPlace1.removeChild(images.wPlace1.firstChild);
-    // while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
-    while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
-    images.tutorial1.targetPlace[0].appendChild(images.white2)
-    // while (images.tutorial1.targetPlace[1].firstChild) images.tutorial1.targetPlace[1].removeChild(images.tutorial1.targetPlace[1].firstChild);
-    // images.tutorial1.targetPlace[1].appendChild(images.white2)
-    // while (images.tutorial1.targetPlace[2].firstChild) images.tutorial1.targetPlace[2].removeChild(images.tutorial1.targetPlace[2].firstChild);
-    // images.tutorial1.targetPlace[2].appendChild(images.white3)
+    while (images.tutorial1.targetPlace[1].firstChild) images.tutorial1.targetPlace[1].removeChild(images.tutorial1.targetPlace[1].firstChild);
+    images.tutorial1.targetPlace[1].appendChild(images.white)
+    while (images.tutorial1.targetPlace[3].firstChild) images.tutorial1.targetPlace[3].removeChild(images.tutorial1.targetPlace[3].firstChild);
+    images.tutorial1.targetPlace[3].appendChild(images.white2)
+    while (images.tutorial1.targetPlace[4].firstChild) images.tutorial1.targetPlace[4].removeChild(images.tutorial1.targetPlace[4].firstChild);
+    images.tutorial1.targetPlace[4].appendChild(images.white3)
     // while (images.tutorial1.targetPlace[3].firstChild) images.tutorial1.targetPlace[3].removeChild(images.tutorial1.targetPlace[3].firstChild);
     // images.tutorial1.targetPlace[3].appendChild(images.white2)
-    // images.tutorial1.centerPlace.appendChild(images.three)
-    images.tutorial1.centerPlace.textContent = '3'
+    images.tutorial1.centerPlace.appendChild(images.three)
   } else if (images.time === 2) {
-    // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
-    // images.tutorial1.centerPlace.appendChild(images.two)
-    images.tutorial1.centerPlace.textContent = '2'
+    while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+    images.tutorial1.centerPlace.appendChild(images.two)
   } else if (images.time === 4) {
-    // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
-    // images.tutorial1.centerPlace.appendChild(images.one)
-    images.tutorial1.centerPlace.textContent = '1'
+    while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+    images.tutorial1.centerPlace.appendChild(images.one)
   } else if (images.time > 5) {
     if (images.time == 6) {
       console.log((images.number))
-      images.tutorial1.centerPlace.textContent = ''
-      while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
-      images.tutorial1.targetPlace[0].appendChild(images.white)
       while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
-      images.tutorial1.centerPlace.appendChild(images.targetImg)
-      // while (images.wPlace2.firstChild) images.wPlace2.removeChild(images.wPlace2.firstChild);
-      // images.wPlace0.appendChild(images.white2)
-      // images.wPlace1.appendChild(images.white3)
-      // images.wPlace2.appendChild(images.white)
-      // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
-      // images.tutorial1.centerPlace.appendChild(images.targetImg)
+      images.tutorial1.centerPlace.appendChild(images.img[0])
     } else if ((images.time) > 6 + images.firstTime * 2 - 1) {
-      // images.tutorial1.targetPlace[1].appendChild(images.white)
-      // images.tutorial1.targetPlace[0].appendChild(images.white4)
-      while (images.tutorial1.targetPlace[0].firstChild) images.tutorial1.targetPlace[0].removeChild(images.tutorial1.targetPlace[0].firstChild);
-      images.tutorial1.targetPlace[0].appendChild(images.white2)
       clearInterval(images.timer1)
       console.log("timer clear")
-      // for (let i = 0; i < images.totalNumber; i++) {
+      // for (let i = 0; i < 8; i++) {
       //   while (images.tutorial1.targetPlace[i].firstChild) images.tutorial1.targetPlace[i].removeChild(images.tutorial1.targetPlace[i].firstChild);
       // }
-      // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
+      while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
       // images.tutorial1.targetPlace[1].appendChild(images.white)
       document.getElementById('cellCenter').textContent = '+'
       // while (images.tutorial1.centerPlace.firstChild) images.tutorial1.centerPlace.removeChild(images.tutorial1.centerPlace.firstChild);
@@ -437,10 +359,10 @@ let secondSection = function() {
   console.log('start')
   document.getElementById('start2nd').style.display = 'none'
   document.getElementById('1stTable').style.display = 'block'
-  images.time = 6
+  images.time = 0
   images.tutorial2.centerPlace = document.getElementById('cellCenter')
   images.tutorial2.targetPlace = []
-  for (let i = 0; i < images.totalNumber; i++) {
+  for (let i = 0; i < 8; i++) {
     images.tutorial2.targetPlace[i] = document.getElementById('cell' + '' + i)
   }
   console.log(images.tutorial2.targetPlace[4])
@@ -449,40 +371,33 @@ let secondSection = function() {
 
 let displayTutorial2 = function() {
   if (images.time === 0) {
-    images.tutorial2.centerPlace.textContent = '3'
+    images.tutorial2.centerPlace.textContent = ''
     // while (images.tutorial2.targetPlace[1].firstChild) images.tutorial2.targetPlace[1].removeChild(images.tutorial2.targetPlace[1].firstChild);
     // images.tutorial2.targetPlace[1].appendChild(images.white)
     // while (images.tutorial2.targetPlace[3].firstChild) images.tutorial2.targetPlace[3].removeChild(images.tutorial2.targetPlace[3].firstChild);
     // images.tutorial2.targetPlace[3].appendChild(images.white2)
-    // images.tutorial2.centerPlace.appendChild(images.three)
-    // images.tutorial1.centerPlace.textContent = '3'
+    images.tutorial2.centerPlace.appendChild(images.three)
   } else if (images.time === 2) {
-    // while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
-    // images.tutorial2.centerPlace.appendChild(images.two)
-    images.tutorial1.centerPlace.textContent = '2'
+    while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
+    images.tutorial2.centerPlace.appendChild(images.two)
   } else if (images.time === 4) {
-    // while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
-    // images.tutorial2.centerPlace.appendChild(images.one)
-    images.tutorial1.centerPlace.textContent = '1'
+    while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
+    images.tutorial2.centerPlace.appendChild(images.one)
   } else if (images.time > 5) {
     if (images.time == 6) {
-      document.getElementById('noChoice').style.display = 'block'
-      images.tutorial1.centerPlace.textContent = ''
-      // while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
+      while (images.tutorial2.centerPlace.firstChild) images.tutorial2.centerPlace.removeChild(images.tutorial2.centerPlace.firstChild);
       // document.getElementById('cellCenter').textContent = '' + images.secondTime
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         console.log((images.number))
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].appendChild(images.img[images.shuffle[n]])
         images.tutorial2.targetPlace[n].addEventListener('click', chooseTarget, false)
       }
-      document.getElementById('noIdea').addEventListener('click', chooseNone, false)
     } else if ((images.time) > 5 + images.secondTime * 2) {
       clearInterval(images.timer2)
-      images.extime = images.time / 2
       images.end = 1
       console.log("timer clear")
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }
@@ -512,10 +427,8 @@ let chooseTarget = function(e) {
     console.log(result)
     if (result) {
       clearInterval(images.timer2)
-      images.extime = images.time / 2
       document.getElementById(e.path[1].id).style.border = '0'
-      document.getElementById('noIdea').removeEventListener('click', chooseNone)
-      for (let n = 0; n < images.totalNumber; n++) {
+      for (let n = 0; n < 8; n++) {
         while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
         images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
       }
@@ -531,89 +444,47 @@ let chooseTarget = function(e) {
   console.log(e.path[1].id)
 }
 
-let chooseNone = function() {
-  swal({
-    title: "No idea?",
-    // icon: "warning",
-    showCancelButton: true,
-    showConfirmButton: true,
-    buttons: true,
-    customClass: 'swal-wide'
-    // dangerMode: true,
-  }, function(inputValue) {
-    console.log(inputValue)
-  }).catch(swal.noop).then((result) => {
-    console.log(result)
-    if (result) {
-      clearInterval(images.timer2)
-      images.extime = images.time / 2
-      for (let n = 0; n < images.totalNumber; n++) {
-        while (images.tutorial2.targetPlace[n].firstChild) images.tutorial2.targetPlace[n].removeChild(images.tutorial2.targetPlace[n].firstChild);
-        images.tutorial2.targetPlace[n].removeEventListener('click', chooseTarget)
-      }
-      if (images.end !== 1) {
-        images.tutorial2.answer = 'None'
-      }
-      console.log(images.tutorial2.answer)
-      showResult()
-    } else {
-      document.getElementById(e.path[1].id).style.border = '0'
-    }
-  })
-}
-
 let showResult = function() {
   console.log(typeof images.tutorial2.answer, typeof images.targetNumber)
-  document.getElementById('1stTable').style.display = 'none'
-  document.getElementById('noChoice').style.display = 'none'
 
   ////////////////  send data  ////////////////////////////////////////////
   images.address = firebase.database().ref("/user/" + images.name + '/real/' + images.ref[images.course])
-  // images.resultAdd = firebase.database().ref('/resultOnly/' + images.ref[images.course])
-  images.resultNameAdd = firebase.database().ref('/resultName/' + images.ref[images.course] + "/" + images.name)
+  images.resultAdd = firebase.database().ref('/result/' + images.ref[images.course])
+  images.resultNameAdd = firebase.database().ref('/result/' + images.ref[images.course] + "/" + images.name)
   document.getElementById('1stTable').style.display = 'none'
   if (parseInt(images.tutorial2.answer) === images.targetNumber) {
     document.getElementById('correct').style.display = 'block'
-    // images.resultAdd.set({
-    //   "result": 'correct',
-    //   'time': images.extime
-    // })
+    images.resultAdd.set({
+      "result": 'correct'
+    })
     images.resultNameAdd.set({
-      "result": 'correct',
-      'time': images.extime
+      "result": 'correct'
     })
     images.address.set({
-      "result": 'correct',
-      'time': images.extime
+      "result": 'correct'
     })
   } else if (images.end === 1) {
     images.end = 0
     document.getElementById('limit').style.display = 'block'
-    // images.resultAdd.set({
-    //   "result": 'time limit',
-    //   'time': images.extime
-    // })
+    images.resultAdd.set({
+      "result": 'time limit'
+    })
     images.resultNameAdd.set({
-      "result": 'time limit',
-      'time': images.extime
+      "result": 'time limit'
     })
     images.address.set({
-      "result": 'time limit',
-      'time': images.extime
+      "result": 'time limit'
     })
   } else {
     document.getElementById('miss').style.display = 'block'
-    // images.resultAdd.set({
-    //   "result": 'miss',
-    //   'time': images.extime
-    // })
+    images.resultAdd.set({
+      "result": 'miss'
+    })
     images.resultNameAdd.set({
-      "result": 'miss',
-      'time': images.extime
+      "result": 'miss'
     })
     images.address.set({
-      "result": 'miss',
-      'time': images.extime
+      "result": 'miss'
     })
   }
   images.course += 1

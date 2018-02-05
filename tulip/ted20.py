@@ -6,7 +6,7 @@ import random
 import copy
 
 dif = 10
-rank = 3
+rank = 5
 # data1 = [ [0,0], [1,0], [2,1], [3,0], [4,2] ]
 # data2 = [ [0,0], [1,0], [2,1], [3,0], [4,2], [5,3], [6,1] ]
 
@@ -15,7 +15,7 @@ rank = 3
 def func1(command, data, num):
     nodes = []
 
-    for i in range(500):
+    for i in range(20):
         nodes.append([])
 
     for i in data:
@@ -40,9 +40,9 @@ def func ( List, var ):
         com += ')'
 
 
-for j in range(7,10):
+for j in range(0,40):
 
-    os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/originData')
+    os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/20nodes/originData')
     f = open(str(j) + '.csv', 'r')
     dataReader = csv.reader(f)
     data = [ e for e in dataReader]
@@ -55,15 +55,16 @@ for j in range(7,10):
     for k in range(4):
 
         if k == 0:
-            level  = int( length * dif / 100)
+            level  = 2#int( length * dif / 100)
         else:
-            level = int( length * dif * rank / 100)
+            level = 10#int( length * dif * rank / 100)
+
         print('level is ' + str(level))
 
         data1 = copy.deepcopy(data[1:])
 
         ################### まずレベル分変更 ######################
-        for i in range( int(level*2/5) ):
+        for i in range( 1):#int(level*2/5) ):
             nodeNum = random.randint(0, length - i - 1 )
             while nodeNum == (length - i - 1):
                 nodeNum = random.randint(0, length - i - 1 )
@@ -81,7 +82,7 @@ for j in range(7,10):
         current = int(level*2/5)
         ted = simple_distance(tree0, tree1)
         old = copy.deepcopy(data1)
-        while  abs(ted - level)  > 2:
+        while  ted != level:
             if ted < level:
                 old = copy.deepcopy(data1)
                 if abs(ted - level) < level/10:
@@ -92,9 +93,10 @@ for j in range(7,10):
                     step = int(level/10)
             else:
                 step = int(abs(ted - level)/2)
-                if step < 2:
-                    step = 1
-            print(step)
+            if step < 2:
+                step = 1
+            step =1
+            print('step is '+ str(step) )
             if ted > level:
                 data1 = copy.deepcopy(old)
                 # if abs(ted - level) < abs(old - level):
@@ -133,7 +135,7 @@ for j in range(7,10):
             except:
                 pass
 
-        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/500nodes/ted/' + str(rank) + '0%/'+str(j))
+        os.chdir('/Users/Aoyama/Documents/B4/noOauth_test/tulip/csv/20nodes/ted/' + str(rank) + '0%/'+str(j))
         f = open( '' + str(k) + '.csv', 'w')
         writer = csv.writer(f)
         for i in data1:
